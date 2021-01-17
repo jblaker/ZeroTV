@@ -1,0 +1,501 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		953DEB25A1F83B5EAC116DA6 /* Pods_ZeroTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3B3A05329400755117839C1 /* Pods_ZeroTV.framework */; };
+		E903E83F25940AD100F754A2 /* OpenSubtitlesAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E83E25940AD100F754A2 /* OpenSubtitlesAdapter.m */; };
+		E903E8432594149E00F754A2 /* DownloadUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E8422594149E00F754A2 /* DownloadUploadManager.m */; };
+		E903E84725941C5A00F754A2 /* M3U8Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E84625941C5A00F754A2 /* M3U8Manager.m */; };
+		E903E84B2594643C00F754A2 /* SearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E84A2594643C00F754A2 /* SearchResultsController.m */; };
+		E903E8582594FDFD00F754A2 /* CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E8572594FDFD00F754A2 /* CacheManager.m */; };
+		E903E85C25951FC500F754A2 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E85B25951FC500F754A2 /* FavoritesViewController.m */; };
+		E903E8642597988800F754A2 /* UIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E8632597988800F754A2 /* UIViewController+Additions.m */; };
+		E903E86825979D0200F754A2 /* EpisodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E86725979D0200F754A2 /* EpisodeManager.m */; };
+		E9318231259181440003D686 /* VLCPlaybackService.m in Sources */ = {isa = PBXBuildFile; fileRef = E9318230259181440003D686 /* VLCPlaybackService.m */; };
+		E93182352591815F0003D686 /* VLCFullscreenMovieTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E93182342591815F0003D686 /* VLCFullscreenMovieTVViewController.m */; };
+		E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823B2591AA650003D686 /* SubtitlesViewController.m */; };
+		E93182402591AC630003D686 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823F2591AC630003D686 /* BaseTableViewController.m */; };
+		E969160D25914098005D5217 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E969160C25914098005D5217 /* AppDelegate.m */; };
+		E969161025914098005D5217 /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E969160F25914098005D5217 /* GroupsViewController.m */; };
+		E969161325914098005D5217 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E969161125914098005D5217 /* Main.storyboard */; };
+		E96916152591409A005D5217 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96916142591409A005D5217 /* Assets.xcassets */; };
+		E96916182591409A005D5217 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96916162591409A005D5217 /* LaunchScreen.storyboard */; };
+		E969161B2591409A005D5217 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E969161A2591409A005D5217 /* main.m */; };
+		E969162E25914AF6005D5217 /* StreamingGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E969162D25914AF6005D5217 /* StreamingGroup.m */; };
+		E969163225914B2A005D5217 /* StreamInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E969163125914B2A005D5217 /* StreamInfo.m */; };
+		E969163625914E36005D5217 /* StreamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E969163525914E36005D5217 /* StreamsViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5880426583F72DE6CB1317E4 /* Pods-ZeroTV.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZeroTV.debug.xcconfig"; path = "Target Support Files/Pods-ZeroTV/Pods-ZeroTV.debug.xcconfig"; sourceTree = "<group>"; };
+		7671CFB1FBFC77C98FF1DA09 /* Pods-ZeroTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZeroTV.release.xcconfig"; path = "Target Support Files/Pods-ZeroTV/Pods-ZeroTV.release.xcconfig"; sourceTree = "<group>"; };
+		E903E83D25940AD100F754A2 /* OpenSubtitlesAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenSubtitlesAdapter.h; sourceTree = "<group>"; };
+		E903E83E25940AD100F754A2 /* OpenSubtitlesAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenSubtitlesAdapter.m; sourceTree = "<group>"; };
+		E903E8412594149E00F754A2 /* DownloadUploadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadUploadManager.h; sourceTree = "<group>"; };
+		E903E8422594149E00F754A2 /* DownloadUploadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadUploadManager.m; sourceTree = "<group>"; };
+		E903E84525941C5A00F754A2 /* M3U8Manager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = M3U8Manager.h; sourceTree = "<group>"; };
+		E903E84625941C5A00F754A2 /* M3U8Manager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = M3U8Manager.m; sourceTree = "<group>"; };
+		E903E8492594643C00F754A2 /* SearchResultsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultsController.h; sourceTree = "<group>"; };
+		E903E84A2594643C00F754A2 /* SearchResultsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultsController.m; sourceTree = "<group>"; };
+		E903E8562594FDFD00F754A2 /* CacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheManager.h; sourceTree = "<group>"; };
+		E903E8572594FDFD00F754A2 /* CacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CacheManager.m; sourceTree = "<group>"; };
+		E903E85A25951FC500F754A2 /* FavoritesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FavoritesViewController.h; sourceTree = "<group>"; };
+		E903E85B25951FC500F754A2 /* FavoritesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FavoritesViewController.m; sourceTree = "<group>"; };
+		E903E8622597988800F754A2 /* UIViewController+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Additions.h"; sourceTree = "<group>"; };
+		E903E8632597988800F754A2 /* UIViewController+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additions.m"; sourceTree = "<group>"; };
+		E903E86625979D0200F754A2 /* EpisodeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EpisodeManager.h; sourceTree = "<group>"; };
+		E903E86725979D0200F754A2 /* EpisodeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EpisodeManager.m; sourceTree = "<group>"; };
+		E931822F259181440003D686 /* VLCPlaybackService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCPlaybackService.h; sourceTree = "<group>"; };
+		E9318230259181440003D686 /* VLCPlaybackService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLCPlaybackService.m; sourceTree = "<group>"; };
+		E93182332591815F0003D686 /* VLCFullscreenMovieTVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCFullscreenMovieTVViewController.h; sourceTree = "<group>"; };
+		E93182342591815F0003D686 /* VLCFullscreenMovieTVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLCFullscreenMovieTVViewController.m; sourceTree = "<group>"; };
+		E9318237259184120003D686 /* VLCConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCConstants.h; sourceTree = "<group>"; };
+		E931823A2591AA650003D686 /* SubtitlesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubtitlesViewController.h; sourceTree = "<group>"; };
+		E931823B2591AA650003D686 /* SubtitlesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubtitlesViewController.m; sourceTree = "<group>"; };
+		E931823E2591AC630003D686 /* BaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
+		E931823F2591AC630003D686 /* BaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
+		E969160825914098005D5217 /* ZeroTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E969160B25914098005D5217 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E969160C25914098005D5217 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E969160E25914098005D5217 /* GroupsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
+		E969160F25914098005D5217 /* GroupsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
+		E969161225914098005D5217 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E96916142591409A005D5217 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E96916172591409A005D5217 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E96916192591409A005D5217 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E969161A2591409A005D5217 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E969162C25914AF6005D5217 /* StreamingGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamingGroup.h; sourceTree = "<group>"; };
+		E969162D25914AF6005D5217 /* StreamingGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StreamingGroup.m; sourceTree = "<group>"; };
+		E969163025914B2A005D5217 /* StreamInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamInfo.h; sourceTree = "<group>"; };
+		E969163125914B2A005D5217 /* StreamInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StreamInfo.m; sourceTree = "<group>"; };
+		E969163425914E36005D5217 /* StreamsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamsViewController.h; sourceTree = "<group>"; };
+		E969163525914E36005D5217 /* StreamsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StreamsViewController.m; sourceTree = "<group>"; };
+		F3B3A05329400755117839C1 /* Pods_ZeroTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZeroTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E969160525914098005D5217 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				953DEB25A1F83B5EAC116DA6 /* Pods_ZeroTV.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		61E972C250CAE40E3C47C936 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5880426583F72DE6CB1317E4 /* Pods-ZeroTV.debug.xcconfig */,
+				7671CFB1FBFC77C98FF1DA09 /* Pods-ZeroTV.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D02B17004E99482C10A5C053 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F3B3A05329400755117839C1 /* Pods_ZeroTV.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E931817A259173840003D686 /* VLC */ = {
+			isa = PBXGroup;
+			children = (
+				E9318237259184120003D686 /* VLCConstants.h */,
+				E93182332591815F0003D686 /* VLCFullscreenMovieTVViewController.h */,
+				E93182342591815F0003D686 /* VLCFullscreenMovieTVViewController.m */,
+				E931822F259181440003D686 /* VLCPlaybackService.h */,
+				E9318230259181440003D686 /* VLCPlaybackService.m */,
+			);
+			path = VLC;
+			sourceTree = "<group>";
+		};
+		E96915FF25914098005D5217 = {
+			isa = PBXGroup;
+			children = (
+				E969160A25914098005D5217 /* ZeroTV */,
+				E969160925914098005D5217 /* Products */,
+				61E972C250CAE40E3C47C936 /* Pods */,
+				D02B17004E99482C10A5C053 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E969160925914098005D5217 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E969160825914098005D5217 /* ZeroTV.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E969160A25914098005D5217 /* ZeroTV */ = {
+			isa = PBXGroup;
+			children = (
+				E969160B25914098005D5217 /* AppDelegate.h */,
+				E969160C25914098005D5217 /* AppDelegate.m */,
+				E903E8622597988800F754A2 /* UIViewController+Additions.h */,
+				E903E8632597988800F754A2 /* UIViewController+Additions.m */,
+				E931823E2591AC630003D686 /* BaseTableViewController.h */,
+				E931823F2591AC630003D686 /* BaseTableViewController.m */,
+				E969160E25914098005D5217 /* GroupsViewController.h */,
+				E969160F25914098005D5217 /* GroupsViewController.m */,
+				E903E85A25951FC500F754A2 /* FavoritesViewController.h */,
+				E903E85B25951FC500F754A2 /* FavoritesViewController.m */,
+				E969163425914E36005D5217 /* StreamsViewController.h */,
+				E969163525914E36005D5217 /* StreamsViewController.m */,
+				E931823A2591AA650003D686 /* SubtitlesViewController.h */,
+				E931823B2591AA650003D686 /* SubtitlesViewController.m */,
+				E969162C25914AF6005D5217 /* StreamingGroup.h */,
+				E969162D25914AF6005D5217 /* StreamingGroup.m */,
+				E969163025914B2A005D5217 /* StreamInfo.h */,
+				E969163125914B2A005D5217 /* StreamInfo.m */,
+				E903E83D25940AD100F754A2 /* OpenSubtitlesAdapter.h */,
+				E903E83E25940AD100F754A2 /* OpenSubtitlesAdapter.m */,
+				E903E8412594149E00F754A2 /* DownloadUploadManager.h */,
+				E903E8422594149E00F754A2 /* DownloadUploadManager.m */,
+				E903E84525941C5A00F754A2 /* M3U8Manager.h */,
+				E903E84625941C5A00F754A2 /* M3U8Manager.m */,
+				E903E8492594643C00F754A2 /* SearchResultsController.h */,
+				E903E84A2594643C00F754A2 /* SearchResultsController.m */,
+				E903E8562594FDFD00F754A2 /* CacheManager.h */,
+				E903E8572594FDFD00F754A2 /* CacheManager.m */,
+				E903E86625979D0200F754A2 /* EpisodeManager.h */,
+				E903E86725979D0200F754A2 /* EpisodeManager.m */,
+				E931817A259173840003D686 /* VLC */,
+				E969161125914098005D5217 /* Main.storyboard */,
+				E96916142591409A005D5217 /* Assets.xcassets */,
+				E96916162591409A005D5217 /* LaunchScreen.storyboard */,
+				E96916192591409A005D5217 /* Info.plist */,
+				E969161A2591409A005D5217 /* main.m */,
+			);
+			path = ZeroTV;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E969160725914098005D5217 /* ZeroTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E969161E2591409A005D5217 /* Build configuration list for PBXNativeTarget "ZeroTV" */;
+			buildPhases = (
+				E99054A2FBF2FC360AC364D0 /* [CP] Check Pods Manifest.lock */,
+				E969160425914098005D5217 /* Sources */,
+				E969160525914098005D5217 /* Frameworks */,
+				E969160625914098005D5217 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZeroTV;
+			productName = ZeroTV;
+			productReference = E969160825914098005D5217 /* ZeroTV.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E969160025914098005D5217 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1220;
+				TargetAttributes = {
+					E969160725914098005D5217 = {
+						CreatedOnToolsVersion = 12.2;
+					};
+				};
+			};
+			buildConfigurationList = E969160325914098005D5217 /* Build configuration list for PBXProject "ZeroTV" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E96915FF25914098005D5217;
+			productRefGroup = E969160925914098005D5217 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E969160725914098005D5217 /* ZeroTV */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E969160625914098005D5217 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E96916182591409A005D5217 /* LaunchScreen.storyboard in Resources */,
+				E96916152591409A005D5217 /* Assets.xcassets in Resources */,
+				E969161325914098005D5217 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E99054A2FBF2FC360AC364D0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZeroTV-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E969160425914098005D5217 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E93182352591815F0003D686 /* VLCFullscreenMovieTVViewController.m in Sources */,
+				E903E8582594FDFD00F754A2 /* CacheManager.m in Sources */,
+				E969161025914098005D5217 /* GroupsViewController.m in Sources */,
+				E969161B2591409A005D5217 /* main.m in Sources */,
+				E969163225914B2A005D5217 /* StreamInfo.m in Sources */,
+				E903E86825979D0200F754A2 /* EpisodeManager.m in Sources */,
+				E93182402591AC630003D686 /* BaseTableViewController.m in Sources */,
+				E903E85C25951FC500F754A2 /* FavoritesViewController.m in Sources */,
+				E903E83F25940AD100F754A2 /* OpenSubtitlesAdapter.m in Sources */,
+				E903E84B2594643C00F754A2 /* SearchResultsController.m in Sources */,
+				E903E8432594149E00F754A2 /* DownloadUploadManager.m in Sources */,
+				E903E84725941C5A00F754A2 /* M3U8Manager.m in Sources */,
+				E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */,
+				E903E8642597988800F754A2 /* UIViewController+Additions.m in Sources */,
+				E969162E25914AF6005D5217 /* StreamingGroup.m in Sources */,
+				E969163625914E36005D5217 /* StreamsViewController.m in Sources */,
+				E9318231259181440003D686 /* VLCPlaybackService.m in Sources */,
+				E969160D25914098005D5217 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E969161125914098005D5217 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E969161225914098005D5217 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E96916162591409A005D5217 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E96916172591409A005D5217 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E969161C2591409A005D5217 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 14.2;
+			};
+			name = Debug;
+		};
+		E969161D2591409A005D5217 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 14.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E969161F2591409A005D5217 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5880426583F72DE6CB1317E4 /* Pods-ZeroTV.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C3M494T2TQ;
+				INFOPLIST_FILE = ZeroTV/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
+		E96916202591409A005D5217 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7671CFB1FBFC77C98FF1DA09 /* Pods-ZeroTV.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C3M494T2TQ;
+				INFOPLIST_FILE = ZeroTV/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E969160325914098005D5217 /* Build configuration list for PBXProject "ZeroTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E969161C2591409A005D5217 /* Debug */,
+				E969161D2591409A005D5217 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E969161E2591409A005D5217 /* Build configuration list for PBXNativeTarget "ZeroTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E969161F2591409A005D5217 /* Debug */,
+				E96916202591409A005D5217 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E969160025914098005D5217 /* Project object */;
+}
