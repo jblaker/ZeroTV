@@ -16,7 +16,7 @@ static NSString * const kLineInfoPrefix = @"#EXTINF:";
 
 + (void)fetchManifest:(void (^)(NSData * _Nullable, NSError * _Nullable))completionHandler
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Config" ofType:@"plist"];
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
     NSURL *manifestURL = [NSURL URLWithString:dict[@"ManifestURL"]];

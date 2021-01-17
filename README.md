@@ -16,9 +16,10 @@ ZeroTV is an IPTV application for tvOS. It relies on [TVVLCKit](https://code.vid
 
 ## Setup
 
-* Add your IPTV manifest URL to `ManifestURL` in `Info.plist`
-* Add your OpenSubtitles.org API Key to `OpenSubtitlesAPIKey` in `Info.plist`
-* Configure the `favorites` array in `FavoritesViewController` with the titles of your favorite shows.
+* Create `Config.plist` at `ZeroTV/Config.plist`
+* Add your IPTV manifest URL to `ManifestURL` in `Config.plist`
+* Add your OpenSubtitles.org API Key to `OpenSubtitlesAPIKey` in `Config.plist`
+* Configure the `FavoriteShows` array in `Config.plist` with the titles of your favorite shows.
 
 ## Possible Future Features
 

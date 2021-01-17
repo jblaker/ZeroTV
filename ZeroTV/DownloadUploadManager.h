@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DownloadUploadManager : NSObject
 
-+ (void)fetchSubtitleFileData:(NSDictionary *)dictionary completionHandler:(void (^)(NSData * _Nullable data, NSError * _Nullable error))completionHandler;
++ (void)fetchSubtitleFileData:(NSURL *)url completionHandler:(void (^)(NSData * _Nullable data, NSError * _Nullable error))completionHandler;
 
 @end
 

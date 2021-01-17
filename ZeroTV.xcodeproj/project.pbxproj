@@ -20,6 +20,7 @@
 		E93182352591815F0003D686 /* VLCFullscreenMovieTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E93182342591815F0003D686 /* VLCFullscreenMovieTVViewController.m */; };
 		E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823B2591AA650003D686 /* SubtitlesViewController.m */; };
 		E93182402591AC630003D686 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823F2591AC630003D686 /* BaseTableViewController.m */; };
+		E9473CE925B4D43C00C3CA8C /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9473CE825B4D43C00C3CA8C /* Config.plist */; };
 		E969160D25914098005D5217 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E969160C25914098005D5217 /* AppDelegate.m */; };
 		E969161025914098005D5217 /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E969160F25914098005D5217 /* GroupsViewController.m */; };
 		E969161325914098005D5217 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E969161125914098005D5217 /* Main.storyboard */; };
@@ -59,6 +60,7 @@
 		E931823B2591AA650003D686 /* SubtitlesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubtitlesViewController.m; sourceTree = "<group>"; };
 		E931823E2591AC630003D686 /* BaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
 		E931823F2591AC630003D686 /* BaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
+		E9473CE825B4D43C00C3CA8C /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		E969160825914098005D5217 /* ZeroTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E969160B25914098005D5217 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E969160C25914098005D5217 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				E96916142591409A005D5217 /* Assets.xcassets */,
 				E96916162591409A005D5217 /* LaunchScreen.storyboard */,
 				E96916192591409A005D5217 /* Info.plist */,
+				E9473CE825B4D43C00C3CA8C /* Config.plist */,
 				E969161A2591409A005D5217 /* main.m */,
 			);
 			path = ZeroTV;
@@ -237,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9473CE925B4D43C00C3CA8C /* Config.plist in Resources */,
 				E96916182591409A005D5217 /* LaunchScreen.storyboard in Resources */,
 				E96916152591409A005D5217 /* Assets.xcassets in Resources */,
 				E969161325914098005D5217 /* Main.storyboard in Resources */,

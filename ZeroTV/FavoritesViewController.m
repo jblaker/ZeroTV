@@ -27,7 +27,11 @@ static NSString * const kTableCellId = @"TableViewCell";
     [super viewDidLoad];
     
     self.title = @"Favorites";
-    self.favorites = @[];
+    
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Config" ofType:@"plist"];
+    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    
+    self.favorites = dict[@"FavoriteShows"];
     
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:kTableCellId];
 }

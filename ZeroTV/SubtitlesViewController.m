@@ -42,7 +42,7 @@ static NSString * const kTableCellId = @"SubtitleTableCell";
 {
     if (section == 0)
     {
-        return 1;
+        return 2;
     }
     
     if (section == 1)
@@ -64,8 +64,16 @@ static NSString * const kTableCellId = @"SubtitleTableCell";
     
     if (indexPath.section == 0)
     {
-        cell.textLabel.text = @"None";
-        cell.detailTextLabel.text = nil;
+        if (indexPath.row == 0)
+        {
+            cell.textLabel.text = @"None";
+            cell.detailTextLabel.text = nil;
+        }
+        if (indexPath.row == 1)
+        {
+            cell.textLabel.text = @"Use Uploaded";
+            cell.detailTextLabel.text = nil;
+        }
     }
     
     if (indexPath.section == 1)
@@ -93,7 +101,19 @@ static NSString * const kTableCellId = @"SubtitleTableCell";
 
     if (indexPath.section == 0)
     {
-        [self.delegate didConfigureSubtitles:NO];
+        if (indexPath.row == 0)
+        {
+            [self.delegate didConfigureSubtitles:NO];
+        }
+        if (indexPath.row == 1)
+        {
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Config" ofType:@"plist"];
+            NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+            NSDictionary *fauxResponse = @{
+                @"link":dict[@"UploadedSubtitleFileURL"]
+            };
+            [self fetchSubtitleData:fauxResponse];
+        }
     }
     
     if (indexPath.section == 1)
@@ -135,8 +155,10 @@ static NSString * const kTableCellId = @"SubtitleTableCell";
 - (void)fetchSubtitleData:(NSDictionary *)response
 {
     __weak typeof(self) weakSelf = self;
+    
+    NSURL *downloadURL = [NSURL URLWithString:response[@"link"]];
 
-    [DownloadUploadManager fetchSubtitleFileData:response completionHandler:^(NSData * _Nullable data, NSError * _Nullable error) {
+    [DownloadUploadManager fetchSubtitleFileData:downloadURL completionHandler:^(NSData * _Nullable data, NSError * _Nullable error) {
         
         __strong typeof(weakSelf) strongSelf = weakSelf;
         

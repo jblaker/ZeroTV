@@ -181,7 +181,8 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     
     if (subtitleOptions.count == 0)
     {
-        [self setUpPlayer:self.selectedStream];
+        //[self setUpPlayer:self.selectedStream];
+        [self performSegueWithIdentifier:kSubtitleOptionsSegueId sender:nil];
     }
     else
     {

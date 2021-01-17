@@ -88,7 +88,7 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
         if (self.selectedStream.isVOD)
         {
             NSNumber *episodeProgress = [EpisodeManager progressForEpisode:self.selectedStream];
-            if (episodeProgress.intValue > 10)
+            if (episodeProgress.intValue > 60)
             {
                 [self handleEpisodePartiallyWatched:episodeProgress];
             }
@@ -193,28 +193,50 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
     [self toggleProgressContainerVisibility];
 }
 
-- (IBAction)jumpForward15ButtonPressed
+- (IBAction)jumpButtonPressed:(UIButton *)button
 {
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
-    [vpc jumpForward:15];
+
+    switch(button.tag)
+    {
+        case 0:
+            [vpc jumpBackward:15];
+            break;
+        case 1:
+            [vpc jumpBackward:30];
+            break;
+        case 2:
+            [vpc jumpForward:15];
+            break;
+        case 3:
+            [vpc jumpForward:30];
+            break;
+    }
 }
 
-- (IBAction)jumpForward30ButtonPressed
+- (IBAction)subtitleOffsetButtonPressed:(UIButton *)button
 {
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
-    [vpc jumpForward:30];
-}
-
-- (IBAction)jumpBackward15ButtonPressed
-{
-    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
-    [vpc jumpBackward:15];
-}
-
-- (IBAction)jumpBackward30ButtonPressed
-{
-    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
-    [vpc jumpBackward:30];
+    
+    NSInteger oneMil = 1000000;
+    
+    switch(button.tag)
+    {
+        case 0:
+            vpc.mediaPlayer.currentVideoSubTitleDelay -= (oneMil/2);
+            break;
+        case 1:
+            vpc.mediaPlayer.currentVideoSubTitleDelay -= oneMil;
+            break;
+        case 2:
+            vpc.mediaPlayer.currentVideoSubTitleDelay += (oneMil/2);
+            break;
+        case 3:
+            vpc.mediaPlayer.currentVideoSubTitleDelay += oneMil;
+            break;
+    }
+    
+    NSLog(@"Subtitle offset is now %li", (long)vpc.mediaPlayer.currentVideoSubTitleDelay);
 }
 
 #pragma mark - Gestures

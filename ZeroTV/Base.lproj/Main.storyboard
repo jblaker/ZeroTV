@@ -301,49 +301,98 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ybH-zD-Jm7" userLabel="Top">
-                                        <rect key="frame" x="0.0" y="0.0" width="1920" height="125"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1920" height="314"/>
                                         <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rx3-4a-BfI">
+                                                <rect key="frame" x="20" y="20" width="150" height="46"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cBY-Yg-tTe">
-                                                <rect key="frame" x="20" y="20" width="900" height="85"/>
+                                                <rect key="frame" x="20" y="71" width="890" height="86"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Y2-cd-Srp">
-                                                        <rect key="frame" x="0.0" y="0.0" width="166" height="85"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="186" height="86"/>
                                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                                        <state key="normal" title="Subs"/>
+                                                        <state key="normal" title="Select"/>
                                                         <connections>
                                                             <action selector="subtitlesButtonPressed:" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="E3g-4P-fw6"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lE4-s7-HiQ">
-                                                        <rect key="frame" x="186" y="0.0" width="156" height="85"/>
+                                                        <rect key="frame" x="206" y="0.0" width="172" height="86"/>
+                                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                        <state key="normal" title="-0.5s"/>
+                                                        <connections>
+                                                            <action selector="subtitleOffsetButtonPressed:" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="K8A-hN-rEo"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7i-OM-ly7">
+                                                        <rect key="frame" x="398" y="0.0" width="133" height="86"/>
+                                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                        <state key="normal" title="-1s"/>
+                                                        <connections>
+                                                            <action selector="subtitleOffsetButtonPressed:" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="SSD-XZ-uhQ"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9lm-CR-nyo">
+                                                        <rect key="frame" x="551" y="0.0" width="179" height="86"/>
+                                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                        <state key="normal" title="+0.5s"/>
+                                                        <connections>
+                                                            <action selector="subtitleOffsetButtonPressed:" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="JgX-Em-wDn"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84C-ha-oQ2">
+                                                        <rect key="frame" x="750" y="0.0" width="140" height="86"/>
+                                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                        <state key="normal" title="+1s"/>
+                                                        <connections>
+                                                            <action selector="subtitleOffsetButtonPressed:" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="wLP-rN-7r3"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seeking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7f-Xc-lmF">
+                                                <rect key="frame" x="20" y="177" width="136" height="46"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8et-Cr-esF">
+                                                <rect key="frame" x="20" y="228" width="714" height="86"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQi-PY-LTN">
+                                                        <rect key="frame" x="0.0" y="0.0" width="156" height="86"/>
                                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                         <state key="normal" title="-15s"/>
                                                         <connections>
-                                                            <action selector="jumpBackward15ButtonPressed" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="G5d-2a-bJC"/>
+                                                            <action selector="jumpButtonPressed:" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="3Ww-Ny-vcb"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7i-OM-ly7">
-                                                        <rect key="frame" x="362" y="0.0" width="164" height="85"/>
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iea-e8-Tlh">
+                                                        <rect key="frame" x="176" y="0.0" width="164" height="86"/>
                                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                         <state key="normal" title="-30s"/>
                                                         <connections>
-                                                            <action selector="jumpBackward30ButtonPressed" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="62p-Wl-vj9"/>
+                                                            <action selector="jumpButtonPressed:" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="c3E-3o-7vc"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9lm-CR-nyo">
-                                                        <rect key="frame" x="546" y="0.0" width="163" height="85"/>
+                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jdv-Od-lAL">
+                                                        <rect key="frame" x="360" y="0.0" width="163" height="86"/>
                                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                         <state key="normal" title="+15s"/>
                                                         <connections>
-                                                            <action selector="jumpForward15ButtonPressed" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="U9z-BJ-l7a"/>
+                                                            <action selector="jumpButtonPressed:" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="hDh-g5-ZpP"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84C-ha-oQ2">
-                                                        <rect key="frame" x="729" y="0.0" width="171" height="85"/>
+                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xPu-xv-QrM">
+                                                        <rect key="frame" x="543" y="0.0" width="171" height="86"/>
                                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                         <state key="normal" title="+30s"/>
                                                         <connections>
-                                                            <action selector="jumpForward30ButtonPressed" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="emh-Gc-W5h"/>
+                                                            <action selector="jumpButtonPressed:" destination="svt-SE-Q6i" eventType="primaryActionTriggered" id="vPL-am-tsJ"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -351,10 +400,15 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="125" id="E0x-w3-ISz"/>
-                                            <constraint firstItem="cBY-Yg-tTe" firstAttribute="top" secondItem="ybH-zD-Jm7" secondAttribute="top" constant="20" id="FFK-YR-AGJ"/>
-                                            <constraint firstAttribute="bottom" secondItem="cBY-Yg-tTe" secondAttribute="bottom" constant="20" id="I9x-YM-zlH"/>
+                                            <constraint firstItem="8et-Cr-esF" firstAttribute="leading" secondItem="ybH-zD-Jm7" secondAttribute="leading" constant="20" symbolic="YES" id="5TX-pn-R6L"/>
+                                            <constraint firstItem="x7f-Xc-lmF" firstAttribute="leading" secondItem="ybH-zD-Jm7" secondAttribute="leading" constant="20" symbolic="YES" id="6l8-Db-Vf7"/>
+                                            <constraint firstItem="rx3-4a-BfI" firstAttribute="top" secondItem="ybH-zD-Jm7" secondAttribute="top" constant="20" id="BbJ-dH-Imw"/>
+                                            <constraint firstAttribute="bottom" secondItem="8et-Cr-esF" secondAttribute="bottom" id="JKk-Xa-DoH"/>
                                             <constraint firstItem="cBY-Yg-tTe" firstAttribute="leading" secondItem="ybH-zD-Jm7" secondAttribute="leading" constant="20" id="ZJy-W7-9wO"/>
+                                            <constraint firstItem="8et-Cr-esF" firstAttribute="top" secondItem="x7f-Xc-lmF" secondAttribute="bottom" constant="5" id="fTr-dd-48E"/>
+                                            <constraint firstItem="x7f-Xc-lmF" firstAttribute="top" secondItem="cBY-Yg-tTe" secondAttribute="bottom" constant="20" id="fdl-sE-KHq"/>
+                                            <constraint firstItem="cBY-Yg-tTe" firstAttribute="top" secondItem="rx3-4a-BfI" secondAttribute="bottom" constant="5" id="hEK-Oh-vr5"/>
+                                            <constraint firstItem="rx3-4a-BfI" firstAttribute="leading" secondItem="ybH-zD-Jm7" secondAttribute="leading" constant="20" id="qKs-vv-hyj"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -388,10 +442,6 @@
                         <outlet property="progressContainer" destination="lV1-vE-Wa4" id="Yem-W8-iyp"/>
                         <outlet property="progressView" destination="FVe-aO-Y4B" id="cub-s1-zeD"/>
                         <outlet property="remainingTimeLabel" destination="reG-Cn-iWu" id="rDz-jG-Ra1"/>
-                        <outletCollection property="jumpButtons" destination="lE4-s7-HiQ" id="nKA-vW-FGS"/>
-                        <outletCollection property="jumpButtons" destination="A7i-OM-ly7" id="Ybe-8A-yse"/>
-                        <outletCollection property="jumpButtons" destination="9lm-CR-nyo" id="iHR-0H-4mx"/>
-                        <outletCollection property="jumpButtons" destination="84C-ha-oQ2" id="MOK-BH-gzn"/>
                         <segue destination="ZRs-dg-RYA" kind="presentation" identifier="SubtitleSelection" id="Wwn-oU-zpb"/>
                     </connections>
                 </viewController>

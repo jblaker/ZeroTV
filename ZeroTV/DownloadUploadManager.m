@@ -9,11 +9,9 @@
 
 @implementation DownloadUploadManager
 
-+ (void)fetchSubtitleFileData:(NSDictionary *)dictionary completionHandler:(void (^)(NSData * _Nullable, NSError * _Nullable))completionHandler
++ (void)fetchSubtitleFileData:(NSURL *)url completionHandler:(void (^)(NSData * _Nullable, NSError * _Nullable))completionHandler
 {
-    NSString *downloadURL = dictionary[@"link"];
-
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:downloadURL]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 
     NSURLSessionDataTask *task = [NSURLSession.sharedSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         

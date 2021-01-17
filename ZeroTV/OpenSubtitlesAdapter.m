@@ -14,7 +14,7 @@ NSString * const kAPIKeyKey = @"Api-Key";
 
 + (NSString *)APIKey
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Config" ofType:@"plist"];
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
     return dict[@"OpenSubtitlesAPIKey"];
