@@ -17,9 +17,11 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
 @property (nonatomic, weak) IBOutlet UIView *movieView;
 @property (nonatomic, weak) IBOutlet UILabel *remainingTimeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *playedTimeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *subtitlesLabel;
+@property (nonatomic, weak) IBOutlet UILabel *seekLabel;
 @property (nonatomic, weak) IBOutlet UIView *progressContainer;
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;
-@property (nonatomic, strong) IBOutletCollection(UIButton) NSArray *jumpButtons;
+@property (nonatomic, weak) IBOutlet UIStackView *seekingStackView;
 
 @property (nonatomic, strong) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *playPauseButtonRecognizer;
@@ -56,12 +58,11 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
             
         }];
         
-        for(UIButton *jumpButton in self.jumpButtons)
-        {
-            jumpButton.hidden = YES;
-        }
+        self.seekLabel.hidden = YES;
+        self.seekingStackView.hidden = YES;
+        
     }
-    
+
     [self setUpGestures];
 }
 
@@ -88,7 +89,7 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
         if (self.selectedStream.isVOD)
         {
             NSNumber *episodeProgress = [EpisodeManager progressForEpisode:self.selectedStream];
-            if (episodeProgress.intValue > 60)
+            if (episodeProgress.intValue > (60 * 1000))
             {
                 [self handleEpisodePartiallyWatched:episodeProgress];
             }
@@ -236,7 +237,7 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
             break;
     }
     
-    NSLog(@"Subtitle offset is now %li", (long)vpc.mediaPlayer.currentVideoSubTitleDelay);
+    self.subtitlesLabel.text = [NSString stringWithFormat:@"Subtitles (current offset: %.2fs)", (float)vpc.mediaPlayer.currentVideoSubTitleDelay/oneMil];
 }
 
 #pragma mark - Gestures

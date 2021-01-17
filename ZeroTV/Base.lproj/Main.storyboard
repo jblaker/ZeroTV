@@ -304,13 +304,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="1920" height="314"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rx3-4a-BfI">
-                                                <rect key="frame" x="20" y="20" width="150" height="46"/>
+                                                <rect key="frame" x="50" y="20" width="150" height="46"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cBY-Yg-tTe">
-                                                <rect key="frame" x="20" y="71" width="890" height="86"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cBY-Yg-tTe" userLabel="Subtitles Stack View">
+                                                <rect key="frame" x="50" y="71" width="890" height="86"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Y2-cd-Srp">
                                                         <rect key="frame" x="0.0" y="0.0" width="186" height="86"/>
@@ -355,13 +355,13 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seeking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7f-Xc-lmF">
-                                                <rect key="frame" x="20" y="177" width="136" height="46"/>
+                                                <rect key="frame" x="50" y="177" width="136" height="46"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8et-Cr-esF">
-                                                <rect key="frame" x="20" y="228" width="714" height="86"/>
+                                                <rect key="frame" x="50" y="228" width="714" height="86"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQi-PY-LTN">
                                                         <rect key="frame" x="0.0" y="0.0" width="156" height="86"/>
@@ -400,15 +400,15 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="8et-Cr-esF" firstAttribute="leading" secondItem="ybH-zD-Jm7" secondAttribute="leading" constant="20" symbolic="YES" id="5TX-pn-R6L"/>
-                                            <constraint firstItem="x7f-Xc-lmF" firstAttribute="leading" secondItem="ybH-zD-Jm7" secondAttribute="leading" constant="20" symbolic="YES" id="6l8-Db-Vf7"/>
+                                            <constraint firstItem="x7f-Xc-lmF" firstAttribute="leading" secondItem="rx3-4a-BfI" secondAttribute="leading" id="0Nd-mc-5Z4"/>
                                             <constraint firstItem="rx3-4a-BfI" firstAttribute="top" secondItem="ybH-zD-Jm7" secondAttribute="top" constant="20" id="BbJ-dH-Imw"/>
+                                            <constraint firstItem="cBY-Yg-tTe" firstAttribute="leading" secondItem="rx3-4a-BfI" secondAttribute="leading" id="GT0-y0-z21"/>
                                             <constraint firstAttribute="bottom" secondItem="8et-Cr-esF" secondAttribute="bottom" id="JKk-Xa-DoH"/>
-                                            <constraint firstItem="cBY-Yg-tTe" firstAttribute="leading" secondItem="ybH-zD-Jm7" secondAttribute="leading" constant="20" id="ZJy-W7-9wO"/>
+                                            <constraint firstItem="8et-Cr-esF" firstAttribute="leading" secondItem="rx3-4a-BfI" secondAttribute="leading" id="fL9-I0-2Rv"/>
                                             <constraint firstItem="8et-Cr-esF" firstAttribute="top" secondItem="x7f-Xc-lmF" secondAttribute="bottom" constant="5" id="fTr-dd-48E"/>
                                             <constraint firstItem="x7f-Xc-lmF" firstAttribute="top" secondItem="cBY-Yg-tTe" secondAttribute="bottom" constant="20" id="fdl-sE-KHq"/>
                                             <constraint firstItem="cBY-Yg-tTe" firstAttribute="top" secondItem="rx3-4a-BfI" secondAttribute="bottom" constant="5" id="hEK-Oh-vr5"/>
-                                            <constraint firstItem="rx3-4a-BfI" firstAttribute="leading" secondItem="ybH-zD-Jm7" secondAttribute="leading" constant="20" id="qKs-vv-hyj"/>
+                                            <constraint firstItem="rx3-4a-BfI" firstAttribute="leading" secondItem="ybH-zD-Jm7" secondAttribute="leading" constant="50" id="qKs-vv-hyj"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -442,6 +442,9 @@
                         <outlet property="progressContainer" destination="lV1-vE-Wa4" id="Yem-W8-iyp"/>
                         <outlet property="progressView" destination="FVe-aO-Y4B" id="cub-s1-zeD"/>
                         <outlet property="remainingTimeLabel" destination="reG-Cn-iWu" id="rDz-jG-Ra1"/>
+                        <outlet property="seekLabel" destination="x7f-Xc-lmF" id="KdX-Ta-rTJ"/>
+                        <outlet property="seekingStackView" destination="8et-Cr-esF" id="cAM-aY-2tK"/>
+                        <outlet property="subtitlesLabel" destination="rx3-4a-BfI" id="4md-vq-7RM"/>
                         <segue destination="ZRs-dg-RYA" kind="presentation" identifier="SubtitleSelection" id="Wwn-oU-zpb"/>
                     </connections>
                 </viewController>
