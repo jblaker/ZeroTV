@@ -376,14 +376,22 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 
 - (void)jumpForward:(NSTimeInterval)interval
 {
-    [self.mediaPlayer jumpForward:interval];
-    [self play];
+    if (self.mediaPlayer.isPlaying)
+    {
+        [self pause];
+        [self.mediaPlayer jumpForward:interval];
+        [self play];
+    }
 }
 
 - (void)jumpBackward:(NSTimeInterval)interval
 {
-    [self.mediaPlayer jumpBackward:interval];
-    [self play];
+    if (self.mediaPlayer.isPlaying)
+    {
+        [self pause];
+        [self.mediaPlayer jumpBackward:interval];
+        [self play];
+    }
 }
 
 #pragma mark - KVO
@@ -465,41 +473,5 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 {
     return self.videoOutputViewWrapper;
 }
-
-#pragma mark - Unused Methods
-
-//- (void)setNeedsMetadataUpdate
-//{
-//    if (_needsMetadataUpdate == NO) {
-//        _needsMetadataUpdate = YES;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//#if TARGET_OS_IOS
-//            VLCMLMedia *media = self->_mediaPlayer.media ? [self->_delegate mediaForPlayingMedia:self->_mediaPlayer.media] : nil;
-//            [self->_metadata updateMetadataFromMedia:media mediaPlayer:self->_mediaPlayer];
-//#else
-//            [self->_metadata updateMetadataFromMediaPlayer:self->_mediaPlayer];
-//#endif
-//            self->_needsMetadataUpdate = NO;
-//            [self recoverDisplayedMetadata];
-//        });
-//    }
-//}
-
-//- (VLCRemoteControlService *)remoteControlService
-//{
-//    if (!_remoteControlService) {
-//        _remoteControlService = [[VLCRemoteControlService alloc] init];
-//        _remoteControlService.remoteControlServiceDelegate = self;
-//    }
-//    return _remoteControlService;
-//}
-
-//- (void)recoverDisplayedMetadata
-//{
-//    if ([self.delegate respondsToSelector:@selector(displayMetadataForPlaybackService:metadata:)])
-//    {
-//        [self.delegate displayMetadataForPlaybackService:self metadata:_metadata];
-//    }
-//}
 
 @end

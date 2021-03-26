@@ -10,24 +10,41 @@
 #import "UIViewController+Additions.h"
 #import "EpisodeManager.h"
 
+#import <GameController/GameController.h>
+
 static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
 
-@interface VLCFullscreenMovieTVViewController ()<SubtitlesViewControllerDelegate, UIGestureRecognizerDelegate>
+typedef NS_ENUM(NSUInteger, GamepadEdge)
+{
+    GamepadEdgeCenter = 0,
+    GamepadEdgeLeft,
+    GamepadEdgeRight
+};
+
+@interface VLCFullscreenMovieTVViewController ()<SubtitlesViewControllerDelegate, UIGestureRecognizerDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *movieView;
 @property (nonatomic, weak) IBOutlet UILabel *remainingTimeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *playedTimeLabel;
-@property (nonatomic, weak) IBOutlet UILabel *subtitlesLabel;
-@property (nonatomic, weak) IBOutlet UILabel *seekLabel;
-@property (nonatomic, weak) IBOutlet UIView *progressContainer;
+@property (nonatomic, weak) IBOutlet UIView *topContainerView;
+@property (nonatomic, weak) IBOutlet UIView *bottomContainerView;
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;
-@property (nonatomic, weak) IBOutlet UIStackView *seekingStackView;
+@property (nonatomic, weak) IBOutlet UILabel *subtitleOffsetLabel;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *topContainerTopConstraint;
+@property (nonatomic, weak) IBOutlet UIButton *selectSubtitlesButton;
 
 @property (nonatomic, strong) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *playPauseButtonRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *singleClickRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *upSwipeGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *downSwipeGestureRecognizer;
 @property (nonatomic, assign) BOOL presentingSubtitleOptions;
 @property (nonatomic, assign) BOOL elementarySubsAvailable;
+@property (nonatomic, assign) BOOL topContainerVisible;
 @property (nonatomic, strong) NSTimer *subtitleCheckTimer;
+@property (nonatomic, strong) NSTimer *bottomContainerTimer;
+@property (nonatomic, strong) GCMicroGamepad *gamepad;
+@property (nonatomic, assign) GamepadEdge activeGamepadEdge;
 
 @end
 
@@ -38,8 +55,15 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
     [super viewDidLoad];
     
     self.movieView.backgroundColor = [UIColor blackColor];
-    self.progressContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-    self.progressContainer.alpha = 0.0;
+    
+    self.topContainerView.layer.cornerRadius = 50;
+        
+    self.subtitleOffsetLabel.text = nil;
+    
+    self.bottomContainerView.alpha = 0.0;
+    
+    // Hide the top container initially
+    self.topContainerTopConstraint.constant = -(CGRectGetHeight(self.topContainerView.frame) + 70);
     
     if (!self.selectedStream.isVOD)
     {
@@ -57,13 +81,15 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
             }
             
         }];
-        
-        self.seekLabel.hidden = YES;
-        self.seekingStackView.hidden = YES;
-        
+
     }
 
     [self setUpGestures];
+    
+    if (![self setUpGameController])
+    {
+        NSLog(@"Failed to set up game controller");
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -141,22 +167,6 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
     }];
 }
 
-- (void)toggleProgressContainerVisibility
-{
-    if (self.progressContainer.alpha == 1.0)
-    {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.progressContainer.alpha = 0.0;
-        }];
-    }
-    else
-    {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.progressContainer.alpha = 1.0;
-        }];
-    }
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:kSubtitleOptionsSegueId])
@@ -170,15 +180,126 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
     }
 }
 
+- (BOOL)setUpGameController
+{
+    for (GCController *controller in GCController.controllers)
+    {
+        if (controller.microGamepad)
+        {
+            self.gamepad = controller.microGamepad;
+            break;
+        }
+    }
+
+    __weak typeof(self) weakSelf = self;
+    self.gamepad.reportsAbsoluteDpadValues = YES;
+    self.gamepad.dpad.valueChangedHandler = ^void(GCControllerDirectionPad *dpad, float xValue, float yValue)
+    {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+
+        CGFloat threshold = 0.5;
+        if (xValue > threshold)
+        {
+            strongSelf.activeGamepadEdge = GamepadEdgeRight;
+        }
+        else if (xValue < -threshold)
+        {
+            strongSelf.activeGamepadEdge = GamepadEdgeLeft;
+        }
+        else
+        {
+            strongSelf.activeGamepadEdge = GamepadEdgeCenter;
+        }
+    };
+
+    return self.gamepad != nil;
+}
+
 #pragma mark - IBActions
+
+- (void)swipeGestureRecognized:(UISwipeGestureRecognizer *)gestureRecognizer
+{
+    switch (gestureRecognizer.state)
+    {
+        case UIGestureRecognizerStateRecognized:
+        {
+            if (gestureRecognizer.direction == UISwipeGestureRecognizerDirectionDown && !self.topContainerVisible)
+            {
+                self.selectSubtitlesButton.userInteractionEnabled = YES;
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.topContainerTopConstraint.constant = 0;
+                    [self.view layoutIfNeeded];
+                } completion:^(BOOL finished) {
+                    self.topContainerVisible = YES;
+                }];
+            }
+            
+            if (gestureRecognizer.direction == UISwipeGestureRecognizerDirectionUp && self.topContainerVisible)
+            {
+                self.selectSubtitlesButton.userInteractionEnabled = NO;
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.topContainerTopConstraint.constant = -(CGRectGetHeight(self.topContainerView.frame) + 70);
+                    [self.view layoutIfNeeded];
+                } completion:^(BOOL finished) {
+                    self.topContainerVisible = NO;
+                }];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)singleClickHandler:(UITapGestureRecognizer *)singleClicker
+{
+    if (singleClicker.state == UIGestureRecognizerStateRecognized)
+    {
+        VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+
+        switch(self.activeGamepadEdge)
+        {
+            case GamepadEdgeRight:
+                [vpc jumpForward:10];
+                [self showThenHideBottomContainer];
+                break;
+            case GamepadEdgeLeft:
+                [vpc jumpBackward:10];
+                [self showThenHideBottomContainer];
+                break;
+            default:
+                [self playPauseHandler:nil];
+                break;
+        }
+    }
+}
 
 - (void)singleTapHandler:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    [self toggleProgressContainerVisibility];
+    [self showThenHideBottomContainer];
 }
 
-- (IBAction)subtitlesButtonPressed:(id)sender
+- (void)showThenHideBottomContainer
 {
+    if (self.bottomContainerTimer.isValid)
+    {
+        [self.bottomContainerTimer invalidate];
+    }
+    
+    self.bottomContainerView.alpha = 1.0;
+    
+    self.bottomContainerTimer = [NSTimer scheduledTimerWithTimeInterval:5 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        self.bottomContainerView.alpha = 0;
+    }];
+}
+
+- (IBAction)subtitlesButtonPressed:(UIButton *)sender
+{
+    if (!self.topContainerVisible)
+    {
+        return;
+    }
+    
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     [vpc pause];
 
@@ -191,53 +312,41 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
 
     [vpc playPause];
     
-    [self toggleProgressContainerVisibility];
-}
-
-- (IBAction)jumpButtonPressed:(UIButton *)button
-{
-    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
-
-    switch(button.tag)
+    if (vpc.mediaPlayer.isPlaying)
     {
-        case 0:
-            [vpc jumpBackward:15];
-            break;
-        case 1:
-            [vpc jumpBackward:30];
-            break;
-        case 2:
-            [vpc jumpForward:15];
-            break;
-        case 3:
-            [vpc jumpForward:30];
-            break;
+        //[UIView animateWithDuration:0.25 animations:^{
+            self.bottomContainerView.alpha = 1.0;
+        //}];
     }
+    else
+    {
+        //[UIView animateWithDuration:0.25 animations:^{
+            self.bottomContainerView.alpha = 0.0;
+        //}];
+    }
+        
 }
 
-- (IBAction)subtitleOffsetButtonPressed:(UIButton *)button
+- (IBAction)subtitleOffsetButtonPressed:(UIButton *)sender
 {
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     
     NSInteger oneMil = 1000000;
     
-    switch(button.tag)
+    switch(sender.tag)
     {
-        case 0:
-            vpc.mediaPlayer.currentVideoSubTitleDelay -= (oneMil/2);
-            break;
         case 1:
-            vpc.mediaPlayer.currentVideoSubTitleDelay -= oneMil;
+            vpc.mediaPlayer.currentVideoSubTitleDelay -= (oneMil/2);
             break;
         case 2:
             vpc.mediaPlayer.currentVideoSubTitleDelay += (oneMil/2);
             break;
         case 3:
-            vpc.mediaPlayer.currentVideoSubTitleDelay += oneMil;
+            vpc.mediaPlayer.currentVideoSubTitleDelay = 0;
             break;
     }
     
-    self.subtitlesLabel.text = [NSString stringWithFormat:@"Subtitles (current offset: %.2fs)", (float)vpc.mediaPlayer.currentVideoSubTitleDelay/oneMil];
+    self.subtitleOffsetLabel.text = [NSString stringWithFormat:@"Current Offset: %.2fs", (float)vpc.mediaPlayer.currentVideoSubTitleDelay/oneMil];
 }
 
 #pragma mark - Gestures
@@ -254,6 +363,19 @@ static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
     self.singleTapRecognizer.allowedPressTypes = @[ ];
     self.singleTapRecognizer.allowedTouchTypes = @[ @(UITouchTypeIndirect) ];
     [self.view addGestureRecognizer:self.singleTapRecognizer];
+    
+    self.upSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognized:)];
+    self.upSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
+    self.upSwipeGestureRecognizer.delegate = self;
+    [self.view addGestureRecognizer:self.upSwipeGestureRecognizer];
+    
+    self.downSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognized:)];
+    self.downSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.view addGestureRecognizer:self.downSwipeGestureRecognizer];
+    
+    self.singleClickRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleClickHandler:)];
+    self.singleClickRecognizer.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:self.singleClickRecognizer];
 }
 
 #pragma mark -
@@ -371,6 +493,18 @@ currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
         
         [weakSelf playPauseHandler:nil];
     }];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer == self.upSwipeGestureRecognizer)
+    {
+        return self.selectSubtitlesButton.isFocused;
+    }
+    
+    return YES;
 }
 
 @end
