@@ -21,14 +21,57 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     GamepadEdgeRight
 };
 
+@interface ProgressBar ()
+
+@property (nonatomic, assign) float progress;
+@property (nonatomic, strong) UIView *progressIndicatorView;
+
+@property (nonatomic, weak) IBOutlet UILabel *remainingTimeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *playedTimeLabel;
+@property (nonatomic, weak) IBOutlet UIView *playedTimeLabelContainer;
+
+@end
+
+@implementation ProgressBar
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    UIColor *zeroPink = [UIColor colorWithRed:179.0/255.0 green:50.0/255.0 blue:58.0/255.0 alpha:1.0];
+    
+    self.clipsToBounds = YES;
+    self.layer.cornerRadius = 5;
+    
+    self.backgroundColor =  [UIColor colorWithRed:90.0/255.0 green:90.0/255.0 blue:90.0/255.0 alpha:0.75];
+    
+    self.progressIndicatorView = [UIView new];
+    [self addSubview:self.progressIndicatorView];
+    self.progressIndicatorView.backgroundColor = zeroPink;
+    
+    self.playedTimeLabel.textColor = zeroPink;
+    
+    self.playedTimeLabelContainer.layer.cornerRadius = 7;
+    self.playedTimeLabelContainer.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.75];
+}
+
+- (void)setProgress:(float)progress
+{
+    _progress = progress;
+    
+    CGRect frame = self.frame;
+    frame.size.width = CGRectGetWidth(self.frame) * progress;
+    self.progressIndicatorView.frame =  frame;
+}
+
+@end
+
 @interface VLCFullscreenMovieTVViewController ()<SubtitlesViewControllerDelegate, UIGestureRecognizerDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *movieView;
-@property (nonatomic, weak) IBOutlet UILabel *remainingTimeLabel;
-@property (nonatomic, weak) IBOutlet UILabel *playedTimeLabel;
 @property (nonatomic, weak) IBOutlet UIView *topContainerView;
 @property (nonatomic, weak) IBOutlet UIView *bottomContainerView;
-@property (nonatomic, weak) IBOutlet UIProgressView *progressView;
+@property (nonatomic, weak) IBOutlet ProgressBar *progressView;
 @property (nonatomic, weak) IBOutlet UILabel *subtitleOffsetLabel;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *topContainerTopConstraint;
 @property (nonatomic, weak) IBOutlet UIButton *selectSubtitlesButton;
@@ -388,8 +431,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     NSString *playedTime = controller.playedTime.stringValue;
     
     self.progressView.progress = playbackService.playbackPosition;
-    self.remainingTimeLabel.text = remainingTime;
-    self.playedTimeLabel.text = playedTime;
+    self.progressView.remainingTimeLabel.text = remainingTime;
+    self.progressView.playedTimeLabel.text = playedTime;
     
     //NSLog(@"Played Time: %@ | Remaining Time: %@", playedTime, remainingTime);
 }

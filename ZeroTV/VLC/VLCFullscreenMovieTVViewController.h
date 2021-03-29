@@ -12,6 +12,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface ProgressBar : UIView
+
+@end
+
 @interface VLCFullscreenMovieTVViewController : UIViewController <VLCPlaybackServiceDelegate>
 
 @property (nonatomic, strong) StreamInfo *selectedStream;

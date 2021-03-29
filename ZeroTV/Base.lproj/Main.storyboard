@@ -261,40 +261,55 @@
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBa-yp-Vay" userLabel="Bottom">
-                                <rect key="frame" x="85" y="970" width="1750" height="50"/>
+                                <rect key="frame" x="85" y="968" width="1750" height="52"/>
                                 <subviews>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="FVe-aO-Y4B">
-                                        <rect key="frame" x="130" y="20" width="1490" height="10"/>
-                                    </progressView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1xO-EG-3Sh">
-                                        <rect key="frame" x="0.0" y="7" width="110" height="36"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4d8-E7-OwI" customClass="ProgressBar">
+                                        <rect key="frame" x="0.0" y="0.0" width="1750" height="10"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="110" id="zE7-nd-iwJ"/>
+                                            <constraint firstAttribute="height" constant="10" id="kCp-Re-S81"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <connections>
+                                            <outlet property="playedTimeLabel" destination="1xO-EG-3Sh" id="WVc-fI-pt5"/>
+                                            <outlet property="playedTimeLabelContainer" destination="CBi-Fh-p3J" id="qKZ-Eo-iDF"/>
+                                            <outlet property="remainingTimeLabel" destination="reG-Cn-iWu" id="YG2-eO-ws2"/>
+                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBi-Fh-p3J">
+                                        <rect key="frame" x="0.0" y="17" width="88" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1xO-EG-3Sh">
+                                                <rect key="frame" x="10" y="5" width="68" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="1xO-EG-3Sh" firstAttribute="leading" secondItem="CBi-Fh-p3J" secondAttribute="leading" constant="10" id="BHg-Rk-6gt"/>
+                                            <constraint firstAttribute="trailing" secondItem="1xO-EG-3Sh" secondAttribute="trailing" constant="10" id="Bjg-t3-kFk"/>
+                                            <constraint firstAttribute="bottom" secondItem="1xO-EG-3Sh" secondAttribute="bottom" constant="5" id="V1b-xR-YDq"/>
+                                            <constraint firstItem="1xO-EG-3Sh" firstAttribute="top" secondItem="CBi-Fh-p3J" secondAttribute="top" constant="5" id="uOZ-PN-Z7y"/>
+                                        </constraints>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="reG-Cn-iWu">
-                                        <rect key="frame" x="1640" y="7" width="110" height="36"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="110" id="h0M-7F-yvn"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <rect key="frame" x="1682" y="22" width="68" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="FVe-aO-Y4B" firstAttribute="leading" secondItem="1xO-EG-3Sh" secondAttribute="trailing" constant="20" id="Gnl-SN-vkS"/>
-                                    <constraint firstItem="1xO-EG-3Sh" firstAttribute="leading" secondItem="gBa-yp-Vay" secondAttribute="leading" id="ZpV-tE-kxJ"/>
-                                    <constraint firstAttribute="trailing" secondItem="reG-Cn-iWu" secondAttribute="trailing" id="dtC-aC-pIl"/>
-                                    <constraint firstItem="1xO-EG-3Sh" firstAttribute="centerY" secondItem="gBa-yp-Vay" secondAttribute="centerY" id="lU8-TR-R89"/>
-                                    <constraint firstItem="FVe-aO-Y4B" firstAttribute="centerY" secondItem="gBa-yp-Vay" secondAttribute="centerY" id="myK-w3-P7L"/>
-                                    <constraint firstAttribute="height" constant="50" id="rbR-BZ-ccc"/>
-                                    <constraint firstItem="reG-Cn-iWu" firstAttribute="centerY" secondItem="gBa-yp-Vay" secondAttribute="centerY" id="rwj-Ii-8hF"/>
-                                    <constraint firstItem="reG-Cn-iWu" firstAttribute="leading" secondItem="FVe-aO-Y4B" secondAttribute="trailing" constant="20" id="yKq-Mi-2DV"/>
+                                    <constraint firstItem="4d8-E7-OwI" firstAttribute="top" secondItem="gBa-yp-Vay" secondAttribute="top" id="6un-e7-c3Y"/>
+                                    <constraint firstItem="CBi-Fh-p3J" firstAttribute="leading" secondItem="gBa-yp-Vay" secondAttribute="leading" id="BUN-hd-f8U"/>
+                                    <constraint firstAttribute="trailing" secondItem="4d8-E7-OwI" secondAttribute="trailing" id="Yws-I4-KP2"/>
+                                    <constraint firstItem="4d8-E7-OwI" firstAttribute="leading" secondItem="gBa-yp-Vay" secondAttribute="leading" id="Z9V-O4-UyJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="reG-Cn-iWu" secondAttribute="trailing" id="ZEP-CW-C6B"/>
+                                    <constraint firstAttribute="bottom" secondItem="reG-Cn-iWu" secondAttribute="bottom" id="fOe-k3-Ckg"/>
+                                    <constraint firstItem="CBi-Fh-p3J" firstAttribute="top" secondItem="4d8-E7-OwI" secondAttribute="bottom" constant="7" id="nXv-jF-zHc"/>
+                                    <constraint firstItem="reG-Cn-iWu" firstAttribute="centerY" secondItem="1xO-EG-3Sh" secondAttribute="centerY" id="wEk-4g-4RC"/>
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ybH-zD-Jm7" userLabel="Top">
@@ -422,9 +437,7 @@
                     <connections>
                         <outlet property="bottomContainerView" destination="gBa-yp-Vay" id="jdN-dJ-7rD"/>
                         <outlet property="movieView" destination="UC8-nm-q8q" id="JfY-jl-PTH"/>
-                        <outlet property="playedTimeLabel" destination="1xO-EG-3Sh" id="ZbW-2P-xXd"/>
-                        <outlet property="progressView" destination="FVe-aO-Y4B" id="cub-s1-zeD"/>
-                        <outlet property="remainingTimeLabel" destination="reG-Cn-iWu" id="rDz-jG-Ra1"/>
+                        <outlet property="progressView" destination="4d8-E7-OwI" id="e5F-rZ-VR3"/>
                         <outlet property="selectSubtitlesButton" destination="6fy-od-h3h" id="57R-kI-ALn"/>
                         <outlet property="subtitleOffsetLabel" destination="sdy-Ct-qqE" id="T7K-0i-fWz"/>
                         <outlet property="topContainerTopConstraint" destination="Fci-tM-vHq" id="arl-Gk-n2l"/>
