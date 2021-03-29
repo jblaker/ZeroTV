@@ -329,10 +329,10 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         [self.bottomContainerTimer invalidate];
     }
     
-    self.bottomContainerView.alpha = 1.0;
+    [self showHideProgressView:YES];
     
     self.bottomContainerTimer = [NSTimer scheduledTimerWithTimeInterval:5 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        self.bottomContainerView.alpha = 0;
+        [self showHideProgressView:NO];
     }];
 }
 
@@ -355,19 +355,14 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
     [vpc playPause];
     
-    if (vpc.mediaPlayer.isPlaying)
-    {
-        //[UIView animateWithDuration:0.25 animations:^{
-            self.bottomContainerView.alpha = 1.0;
-        //}];
-    }
-    else
-    {
-        //[UIView animateWithDuration:0.25 animations:^{
-            self.bottomContainerView.alpha = 0.0;
-        //}];
-    }
-        
+    [self showHideProgressView:vpc.mediaPlayer.isPlaying];
+}
+
+- (void)showHideProgressView:(BOOL)show
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.bottomContainerView.alpha = show ? 1.0 : 0.0;
+    }];
 }
 
 - (IBAction)subtitleOffsetButtonPressed:(UIButton *)sender
