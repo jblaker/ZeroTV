@@ -355,6 +355,12 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
     return self.mediaPlayer.position;
 }
 
+- (NSInteger)mediaDuration
+{
+    return self.mediaPlayer.media.length.intValue;
+    
+}
+
 #pragma mark - playback controls
 
 - (void)playPause

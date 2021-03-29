@@ -43,6 +43,7 @@ currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
 
 - (VLCTime *)playedTime;
 - (VLCTime *)remainingTime;
+- (NSInteger)mediaDuration;
 
 - (void)playMediaList:(VLCMediaList *)mediaList hasSubs:(BOOL)hasSubs completion:(void (^ __nullable)(BOOL success, float playbackPosition))completion;
 

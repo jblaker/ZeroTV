@@ -23,12 +23,18 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
 @interface ProgressBar ()
 
-@property (nonatomic, assign) float progress;
+@property (nonatomic, assign) CGFloat playbackFraction;
+@property (nonatomic, assign) CGFloat scrubbingFraction;
 @property (nonatomic, strong) UIView *progressIndicatorView;
+@property (nonatomic, assign) BOOL scrubbing;
 
 @property (nonatomic, weak) IBOutlet UILabel *remainingTimeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *playedTimeLabel;
 @property (nonatomic, weak) IBOutlet UIView *playedTimeLabelContainer;
+@property (nonatomic, weak) IBOutlet UILabel *scrubTimeLabel;
+@property (nonatomic, weak) IBOutlet UIView *scrubLine;
+@property (nonatomic, weak) IBOutlet UIView *scrubContainer;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *scrubContainerLeadingConstraint;
 
 @end
 
@@ -53,15 +59,42 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     
     self.playedTimeLabelContainer.layer.cornerRadius = 7;
     self.playedTimeLabelContainer.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.75];
+    
+    self.scrubLine.backgroundColor = UIColor.whiteColor;
+    
+    self.scrubContainer.hidden = YES;
 }
 
-- (void)setProgress:(float)progress
+- (void)setScrubbing:(BOOL)scrubbing
 {
-    _progress = progress;
+    _scrubbing = scrubbing;
+    
+    self.scrubContainer.hidden = !scrubbing;
+}
+
+- (void)setPlaybackFraction:(CGFloat)playbackFraction
+{
+    _playbackFraction = MAX(0.0, MIN(playbackFraction, 1.0));
+    
+    self.scrubbingFraction = _playbackFraction;
     
     CGRect frame = self.frame;
-    frame.size.width = CGRectGetWidth(self.frame) * progress;
+    frame.size.width = CGRectGetWidth(self.frame) * _playbackFraction;
     self.progressIndicatorView.frame =  frame;
+}
+
+- (void)setScrubbingFraction:(CGFloat)scrubbingFraction
+{
+    _scrubbingFraction = MAX(0.0, MIN(scrubbingFraction, 1.0));
+    
+    if (self.scrubbing)
+    {
+        // Position scrub container
+        [UIView animateWithDuration:0.25 animations:^{
+            self.scrubContainerLeadingConstraint.constant = (CGRectGetWidth(self.frame) * scrubbingFraction) - (CGRectGetWidth(self.scrubContainer.frame) / 2);
+            [self layoutIfNeeded];
+        }];
+    }
 }
 
 @end
@@ -79,8 +112,10 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 @property (nonatomic, strong) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *playPauseButtonRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *singleClickRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *menuTapRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *upSwipeGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *downSwipeGestureRecognizer;
+@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, assign) BOOL presentingSubtitleOptions;
 @property (nonatomic, assign) BOOL elementarySubsAvailable;
 @property (nonatomic, assign) BOOL topContainerVisible;
@@ -92,6 +127,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 @end
 
 @implementation VLCFullscreenMovieTVViewController
+
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
@@ -189,6 +226,21 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:kSubtitleOptionsSegueId])
+    {
+        SubtitlesViewController *vc = segue.destinationViewController;
+        vc.selectedStream = self.selectedStream;
+        vc.videoSubTitlesNames = [VLCPlaybackService.sharedInstance.mediaPlayer videoSubTitlesNames];
+        vc.delegate = self;
+        
+        self.presentingSubtitleOptions = YES;
+    }
+}
+
+#pragma mark - Helper Methods
+
 - (void)handleEpisodePartiallyWatched:(NSNumber *)progress
 {
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
@@ -208,19 +260,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     [self presentViewController:alertController animated:YES completion:^{
         [vpc pause];
     }];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:kSubtitleOptionsSegueId])
-    {
-        SubtitlesViewController *vc = segue.destinationViewController;
-        vc.selectedStream = self.selectedStream;
-        vc.videoSubTitlesNames = [VLCPlaybackService.sharedInstance.mediaPlayer videoSubTitlesNames];
-        vc.delegate = self;
-        
-        self.presentingSubtitleOptions = YES;
-    }
 }
 
 - (BOOL)setUpGameController
@@ -258,68 +297,11 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     return self.gamepad != nil;
 }
 
-#pragma mark - IBActions
-
-- (void)swipeGestureRecognized:(UISwipeGestureRecognizer *)gestureRecognizer
+- (void)showHideProgressView:(BOOL)show
 {
-    switch (gestureRecognizer.state)
-    {
-        case UIGestureRecognizerStateRecognized:
-        {
-            if (gestureRecognizer.direction == UISwipeGestureRecognizerDirectionDown && !self.topContainerVisible)
-            {
-                self.selectSubtitlesButton.userInteractionEnabled = YES;
-                [UIView animateWithDuration:0.25 animations:^{
-                    self.topContainerTopConstraint.constant = 0;
-                    [self.view layoutIfNeeded];
-                } completion:^(BOOL finished) {
-                    self.topContainerVisible = YES;
-                }];
-            }
-            
-            if (gestureRecognizer.direction == UISwipeGestureRecognizerDirectionUp && self.topContainerVisible)
-            {
-                self.selectSubtitlesButton.userInteractionEnabled = NO;
-                [UIView animateWithDuration:0.25 animations:^{
-                    self.topContainerTopConstraint.constant = -(CGRectGetHeight(self.topContainerView.frame) + 70);
-                    [self.view layoutIfNeeded];
-                } completion:^(BOOL finished) {
-                    self.topContainerVisible = NO;
-                }];
-            }
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-- (void)singleClickHandler:(UITapGestureRecognizer *)singleClicker
-{
-    if (singleClicker.state == UIGestureRecognizerStateRecognized)
-    {
-        VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
-
-        switch(self.activeGamepadEdge)
-        {
-            case GamepadEdgeRight:
-                [vpc jumpForward:10];
-                [self showThenHideBottomContainer];
-                break;
-            case GamepadEdgeLeft:
-                [vpc jumpBackward:10];
-                [self showThenHideBottomContainer];
-                break;
-            default:
-                [self playPauseHandler:nil];
-                break;
-        }
-    }
-}
-
-- (void)singleTapHandler:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-    [self showThenHideBottomContainer];
+    [UIView animateWithDuration:0.25 animations:^{
+        self.bottomContainerView.alpha = show ? 1.0 : 0.0;
+    }];
 }
 
 - (void)showThenHideBottomContainer
@@ -336,6 +318,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     }];
 }
 
+#pragma mark - IBActions
+
 - (IBAction)subtitlesButtonPressed:(UIButton *)sender
 {
     if (!self.topContainerVisible)
@@ -347,22 +331,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     [vpc pause];
 
     [self performSegueWithIdentifier:kSubtitleOptionsSegueId sender:nil];
-}
-
-- (void)playPauseHandler:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
-
-    [vpc playPause];
-    
-    [self showHideProgressView:vpc.mediaPlayer.isPlaying];
-}
-
-- (void)showHideProgressView:(BOOL)show
-{
-    [UIView animateWithDuration:0.25 animations:^{
-        self.bottomContainerView.alpha = show ? 1.0 : 0.0;
-    }];
 }
 
 - (IBAction)subtitleOffsetButtonPressed:(UIButton *)sender
@@ -414,9 +382,194 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     self.singleClickRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleClickHandler:)];
     self.singleClickRecognizer.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:self.singleClickRecognizer];
+    
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    self.panGestureRecognizer.delegate = self;
+    [self.view addGestureRecognizer:self.panGestureRecognizer];
+    
+    self.menuTapRecognizer  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleMenuTapGesture:)];
+    self.menuTapRecognizer.allowedPressTypes = @[@(UIPressTypeMenu)];
+    self.menuTapRecognizer.delegate = self;
+    [self.view addGestureRecognizer:self.menuTapRecognizer];
 }
 
-#pragma mark -
+- (void)playPauseHandler:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+
+    [vpc playPause];
+    
+    [self showHideProgressView:vpc.mediaPlayer.isPlaying];
+}
+
+- (void)swipeGestureRecognized:(UISwipeGestureRecognizer *)gestureRecognizer
+{
+    switch (gestureRecognizer.state)
+    {
+        case UIGestureRecognizerStateRecognized:
+        {
+            if (gestureRecognizer.direction == UISwipeGestureRecognizerDirectionDown && !self.topContainerVisible)
+            {
+                self.selectSubtitlesButton.userInteractionEnabled = YES;
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.topContainerTopConstraint.constant = 0;
+                    [self.view layoutIfNeeded];
+                } completion:^(BOOL finished) {
+                    self.topContainerVisible = YES;
+                }];
+            }
+            
+            if (gestureRecognizer.direction == UISwipeGestureRecognizerDirectionUp && self.topContainerVisible)
+            {
+                self.selectSubtitlesButton.userInteractionEnabled = NO;
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.topContainerTopConstraint.constant = -(CGRectGetHeight(self.topContainerView.frame) + 70);
+                    [self.view layoutIfNeeded];
+                } completion:^(BOOL finished) {
+                    self.topContainerVisible = NO;
+                }];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)singleClickHandler:(UITapGestureRecognizer *)singleClicker
+{
+    if (singleClicker.state == UIGestureRecognizerStateRecognized)
+    {
+        VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+
+        if (self.progressView.scrubbing)
+        {
+            // Confirm scrubbing
+            [self stopScrubbing];
+            [vpc.mediaPlayer setPosition:self.progressView.scrubbingFraction];
+            [vpc play];
+        }
+        else
+        {
+        
+            switch(self.activeGamepadEdge)
+            {
+                case GamepadEdgeRight:
+                    [vpc jumpForward:10];
+                    [self showThenHideBottomContainer];
+                    break;
+                case GamepadEdgeLeft:
+                    [vpc jumpBackward:10];
+                    [self showThenHideBottomContainer];
+                    break;
+                default:
+                    [self playPauseHandler:nil];
+                    break;
+            }
+            
+        }
+    }
+}
+
+- (void)singleTapHandler:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    [self showThenHideBottomContainer];
+}
+
+- (void)handleMenuTapGesture:(UITapGestureRecognizer *)gestureRecognizer
+{
+    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+    
+    [self stopScrubbing];
+    [vpc play];
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+
+    if (!vpc.mediaPlayer.isSeekable)
+    {
+        return;
+    }
+
+    switch (gestureRecognizer.state) {
+        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateFailed:
+            return;
+        default:
+            break;
+    }
+    
+    ProgressBar *bar = self.progressView;
+    
+    CGPoint translation = [gestureRecognizer translationInView:self.view];
+    
+    if (!bar.scrubbing)
+    {
+        if (ABS(translation.x) > 150.0)
+        {
+            [self startScrubbing];
+        }
+        else
+        {
+            return;
+        }
+    }
+    
+    const CGFloat scaleFactor = 8.0;
+    CGFloat fractionInView = translation.x / CGRectGetWidth(self.view.bounds) / scaleFactor;
+    CGFloat scrubbingFraction = MAX(0.0, MIN(bar.scrubbingFraction + fractionInView, 1.0));
+
+    if (ABS(scrubbingFraction - bar.playbackFraction) < 0.005)
+    {
+        scrubbingFraction = bar.playbackFraction;
+    }
+    else
+    {
+        translation.x = 0.0;
+        [gestureRecognizer setTranslation:translation inView:self.view];
+    }
+    
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         bar.scrubbingFraction = scrubbingFraction;
+                     }
+                     completion:nil];
+    [self updateTimeLabelsForScrubbingFraction:scrubbingFraction];
+}
+
+- (void)startScrubbing
+{
+    // Add menu and select gestures to confirm or cancel scrubbing
+    self.progressView.scrubbing = YES;
+}
+
+- (void)stopScrubbing
+{
+    self.progressView.scrubbing = NO;
+    
+    [self showHideProgressView:NO];
+}
+
+- (void)updateTimeLabelsForScrubbingFraction:(CGFloat)scrubbingFraction
+{
+    ProgressBar *bar = self.progressView;
+    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+    
+    // MAX 1, _ is ugly hack to prevent --:-- instead of 00:00
+    int scrubbingTimeInt = MAX(1, vpc.mediaDuration * scrubbingFraction);
+    
+    VLCTime *scrubbingTime = [VLCTime timeWithInt:scrubbingTimeInt];
+    bar.scrubTimeLabel.text = [scrubbingTime stringValue];
+    
+    VLCTime *remainingTime = [VLCTime timeWithInt:-(int)(vpc.mediaDuration - scrubbingTime.intValue)];
+    bar.remainingTimeLabel.text = [remainingTime stringValue];
+}
+
+#pragma mark - Playback Monitoring
 
 - (void)playbackPositionUpdated:(VLCPlaybackService *)playbackService
 {
@@ -425,7 +578,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     NSString *remainingTime = controller.remainingTime.stringValue;
     NSString *playedTime = controller.playedTime.stringValue;
     
-    self.progressView.progress = playbackService.playbackPosition;
+    self.progressView.playbackFraction = playbackService.playbackPosition;
     self.progressView.remainingTimeLabel.text = remainingTime;
     self.progressView.playedTimeLabel.text = playedTime;
     
@@ -537,9 +690,21 @@ currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
+    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+
     if (gestureRecognizer == self.upSwipeGestureRecognizer)
     {
         return self.selectSubtitlesButton.isFocused;
+    }
+    
+    if (gestureRecognizer == self.panGestureRecognizer)
+    {
+        return !vpc.mediaPlayer.isPlaying;
+    }
+    
+    if (gestureRecognizer == self.menuTapRecognizer)
+    {
+        return self.progressView.scrubbing;
     }
     
     return YES;
