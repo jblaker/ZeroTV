@@ -56,23 +56,41 @@ static NSString * const kLineInfoPrefix = @"#EXTINF:";
     for (NSString *line in lines)
     {
         // Group name line
-        if ([line hasPrefix:kGroupPrefix])
-        {
-            NSArray *parts = [line componentsSeparatedByString:kGroupPrefix];
-            NSString *groupName = parts.lastObject;
-            
-            StreamingGroup *group = groups[groupName];
-            if (!group)
-            {
-                group = [[StreamingGroup alloc] initWithName:groupName];
-                groups[groupName] = group;
-            }
-            
-            currentGroup = group;
-        }
+//        if ([line hasPrefix:kGroupPrefix])
+//        {
+//            NSArray *parts = [line componentsSeparatedByString:kGroupPrefix];
+//            NSString *groupName = parts.lastObject;
+//
+//            StreamingGroup *group = groups[groupName];
+//            if (!group)
+//            {
+//                group = [[StreamingGroup alloc] initWithName:groupName];
+//                groups[groupName] = group;
+//            }
+//
+//            currentGroup = group;
+//        }
         
         if ([line hasPrefix:kLineInfoPrefix])
         {
+            // Alternate group detection
+            {
+                NSError *regexError;
+                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"group-title=\"(.*?)\"" options:NSRegularExpressionCaseInsensitive error:&regexError];
+                NSArray *matches = [regex matchesInString:line options:0 range:NSMakeRange(0, line.length)];
+                NSTextCheckingResult *firstMatch = matches.firstObject;
+                NSString *groupName = [line substringWithRange:[firstMatch rangeAtIndex:1]];
+                
+                StreamingGroup *group = groups[groupName];
+                if (!group)
+                {
+                    group = [[StreamingGroup alloc] initWithName:groupName];
+                    groups[groupName] = group;
+                }
+                
+                currentGroup = group;
+            }
+            
             NSArray *parts = [line componentsSeparatedByString:@","];
             streamName = parts.lastObject;
         }
