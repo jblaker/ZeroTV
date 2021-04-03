@@ -51,6 +51,7 @@ static NSString * const kTableCellId = @"TableViewCell";
 {
     NSString *favName = self.favorites[indexPath.row];
     StreamingGroup *favoriteGroup = [[StreamingGroup alloc] initWithName:favName];
+    favoriteGroup.isFavorite = YES;
         
     NSMutableArray *addedTitles = @[].mutableCopy;
     

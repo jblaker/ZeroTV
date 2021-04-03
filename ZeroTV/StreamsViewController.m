@@ -44,7 +44,7 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     
     self.title = self.selectedGroup.name;
     
-    if (self.selectedGroup.streams.count > 10)
+    if (self.selectedGroup.streams.count > 10 && !self.selectedGroup.isFavorite)
     {
         self.searchButton.hidden = NO;
     }
@@ -58,9 +58,34 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     [self setUpLongPressGesture];
 }
 
-//- (void)setSelectedGroup:(StreamingGroup *)selectedGroup
-//{
-//    _selectedGroup = selectedGroup;
+- (void)setSelectedGroup:(StreamingGroup *)selectedGroup
+{
+    if (selectedGroup.isFavorite)
+    {
+        NSMutableArray *sdStreams = @[].mutableCopy;
+        NSMutableArray *hdStreams = @[].mutableCopy;
+        
+        for (StreamInfo *streamInfo in selectedGroup.streams)
+        {
+            if ([streamInfo.name hasPrefix:@"SD :"])
+            {
+                [sdStreams addObject:streamInfo];
+            }
+            if ([streamInfo.name hasPrefix:@"HD :"])
+            {
+                [hdStreams addObject:streamInfo];
+            }
+        }
+        
+        selectedGroup.streams = [hdStreams arrayByAddingObjectsFromArray:sdStreams].mutableCopy;
+        
+        _selectedGroup = selectedGroup;
+    }
+    else
+    {
+        _selectedGroup = selectedGroup;
+    }
+    
 //
 //    NSMutableArray *_dupeFree = @[].mutableCopy;
 //
@@ -78,7 +103,7 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 //    self.dupeFreeStreamsArray = _dupeFree;
 //
 //    NSLog(@"Filtered out %lu duplicate titles", _selectedGroup.streams.count - _dupeFree.count);
-//}
+}
 
 - (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments
 {

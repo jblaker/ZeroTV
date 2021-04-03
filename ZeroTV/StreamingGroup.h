@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSMutableArray<StreamInfo *> *streams;
+@property (nonatomic, assign) BOOL isFavorite;
 
 @end
 
