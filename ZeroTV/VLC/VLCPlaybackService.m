@@ -279,8 +279,8 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
             /* on-the-fly values through hidden API */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
-            [self.mediaPlayer performSelector:@selector(setTextRendererFont:) withObject:@"Helvetica Neue"];
-            [self.mediaPlayer performSelector:@selector(setTextRendererFontSize:) withObject:@"16"];
+            [self.mediaPlayer performSelector:@selector(setTextRendererFont:) withObject:@"System"];
+            [self.mediaPlayer performSelector:@selector(setTextRendererFontSize:) withObject:@"25"];
             [self.mediaPlayer performSelector:@selector(setTextRendererFontColor:) withObject:@"16777215"];
             [self.mediaPlayer performSelector:@selector(setTextRendererFontForceBold:) withObject:@(YES)];
 #pragma clang diagnostic pop
