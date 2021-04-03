@@ -7,10 +7,12 @@ ZeroTV is an IPTV application for tvOS. It relies on [TVVLCKit](https://code.vid
 * Quick access to your list of favorite shows
 * Subtitle support for VOD episodes (powered by OpenSubtitles.org, API key required)
 * Subtitle selection for Live channels with subtitle tracks
+* Subtitle offset adjustment
 * Episodes that have been watched will be marked with a checkmark
 * Manually marking an episode as watched or unwatched
 * Resuming a partially watched episode
-* Jumping forward/backward 15 or 30 seconds
+* Jumping forward/backward 10 seconds
+* Scrubbing (for non-linear content)
 * Search
 * Manifest will be cached and is easily updated within app
 
@@ -23,8 +25,6 @@ ZeroTV is an IPTV application for tvOS. It relies on [TVVLCKit](https://code.vid
 
 ## Possible Future Features
 
-* Scrubbing functionality
-* Setting subtitle offset
 * Bookmarking specific episodes
 
 ## License
