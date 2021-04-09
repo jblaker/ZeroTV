@@ -9,6 +9,7 @@
 #import "SubtitlesViewController.h"
 #import "UIViewController+Additions.h"
 #import "EpisodeManager.h"
+#import "ProgressView.h"
 
 #import <GameController/GameController.h>
 
@@ -21,90 +22,11 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     GamepadEdgeRight
 };
 
-@interface ProgressBar ()
-
-@property (nonatomic, assign) CGFloat playbackFraction;
-@property (nonatomic, assign) CGFloat scrubbingFraction;
-@property (nonatomic, strong) UIView *progressIndicatorView;
-@property (nonatomic, assign) BOOL scrubbing;
-
-@property (nonatomic, weak) IBOutlet UILabel *remainingTimeLabel;
-@property (nonatomic, weak) IBOutlet UILabel *playedTimeLabel;
-@property (nonatomic, weak) IBOutlet UIView *playedTimeLabelContainer;
-@property (nonatomic, weak) IBOutlet UILabel *scrubTimeLabel;
-@property (nonatomic, weak) IBOutlet UIView *scrubLine;
-@property (nonatomic, weak) IBOutlet UIView *scrubContainer;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *scrubContainerLeadingConstraint;
-
-@end
-
-@implementation ProgressBar
-
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-    
-    UIColor *zeroPink = [UIColor colorWithRed:179.0/255.0 green:50.0/255.0 blue:58.0/255.0 alpha:1.0];
-    
-    self.clipsToBounds = YES;
-    self.layer.cornerRadius = 5;
-    
-    self.backgroundColor =  [UIColor colorWithRed:90.0/255.0 green:90.0/255.0 blue:90.0/255.0 alpha:0.75];
-    
-    self.progressIndicatorView = [UIView new];
-    [self addSubview:self.progressIndicatorView];
-    self.progressIndicatorView.backgroundColor = zeroPink;
-    
-    self.playedTimeLabel.textColor = zeroPink;
-    
-    self.playedTimeLabelContainer.layer.cornerRadius = 7;
-    self.playedTimeLabelContainer.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.75];
-    
-    self.scrubLine.backgroundColor = UIColor.whiteColor;
-    
-    self.scrubContainer.hidden = YES;
-}
-
-- (void)setScrubbing:(BOOL)scrubbing
-{
-    _scrubbing = scrubbing;
-    
-    self.scrubContainer.hidden = !scrubbing;
-}
-
-- (void)setPlaybackFraction:(CGFloat)playbackFraction
-{
-    _playbackFraction = MAX(0.0, MIN(playbackFraction, 1.0));
-    
-    self.scrubbingFraction = _playbackFraction;
-    
-    CGRect frame = self.frame;
-    frame.size.width = CGRectGetWidth(self.frame) * _playbackFraction;
-    self.progressIndicatorView.frame =  frame;
-}
-
-- (void)setScrubbingFraction:(CGFloat)scrubbingFraction
-{
-    _scrubbingFraction = MAX(0.0, MIN(scrubbingFraction, 1.0));
-    
-    if (self.scrubbing)
-    {
-        // Position scrub container
-        [UIView animateWithDuration:0.25 animations:^{
-            self.scrubContainerLeadingConstraint.constant = (CGRectGetWidth(self.frame) * scrubbingFraction) - (CGRectGetWidth(self.scrubContainer.frame) / 2);
-            [self layoutIfNeeded];
-        }];
-    }
-}
-
-@end
-
 @interface VLCFullscreenMovieTVViewController ()<SubtitlesViewControllerDelegate, UIGestureRecognizerDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *movieView;
 @property (nonatomic, weak) IBOutlet UIView *topContainerView;
-@property (nonatomic, weak) IBOutlet UIView *bottomContainerView;
-@property (nonatomic, weak) IBOutlet ProgressBar *progressView;
+@property (nonatomic, weak) IBOutlet ProgressView *progressView;
 @property (nonatomic, weak) IBOutlet UILabel *subtitleOffsetLabel;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *topContainerTopConstraint;
 @property (nonatomic, weak) IBOutlet UIButton *selectSubtitlesButton;
@@ -140,7 +62,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         
     self.subtitleOffsetLabel.text = nil;
     
-    self.bottomContainerView.alpha = 0.0;
+    self.progressView.alpha = 0.0;
     
     // Hide the top container initially
     self.topContainerTopConstraint.constant = -(CGRectGetHeight(self.topContainerView.frame) + 70);
@@ -300,7 +222,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 - (void)showHideProgressView:(BOOL)show
 {
     [UIView animateWithDuration:0.25 animations:^{
-        self.bottomContainerView.alpha = show ? 1.0 : 0.0;
+        self.progressView.alpha = show ? 1.0 : 0.0;
     }];
 }
 
@@ -501,11 +423,11 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
             break;
     }
     
-    ProgressBar *bar = self.progressView;
+    ProgressView *progressView = self.progressView;
     
     CGPoint translation = [gestureRecognizer translationInView:self.view];
     
-    if (!bar.scrubbing)
+    if (!progressView.scrubbing)
     {
         if (ABS(translation.x) > 150.0)
         {
@@ -519,11 +441,11 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     
     const CGFloat scaleFactor = 8.0;
     CGFloat fractionInView = translation.x / CGRectGetWidth(self.view.bounds) / scaleFactor;
-    CGFloat scrubbingFraction = MAX(0.0, MIN(bar.scrubbingFraction + fractionInView, 1.0));
+    CGFloat scrubbingFraction = MAX(0.0, MIN(progressView.scrubbingFraction + fractionInView, 1.0));
 
-    if (ABS(scrubbingFraction - bar.playbackFraction) < 0.005)
+    if (ABS(scrubbingFraction - progressView.playbackFraction) < 0.005)
     {
-        scrubbingFraction = bar.playbackFraction;
+        scrubbingFraction = progressView.playbackFraction;
     }
     else
     {
@@ -535,9 +457,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
                           delay:0.0
                         options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         bar.scrubbingFraction = scrubbingFraction;
-                     }
-                     completion:nil];
+        progressView.scrubbingFraction = scrubbingFraction;
+    } completion:nil];
     [self updateTimeLabelsForScrubbingFraction:scrubbingFraction];
 }
 
@@ -556,17 +477,17 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
 - (void)updateTimeLabelsForScrubbingFraction:(CGFloat)scrubbingFraction
 {
-    ProgressBar *bar = self.progressView;
+    ProgressView *progressView = self.progressView;
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     
     // MAX 1, _ is ugly hack to prevent --:-- instead of 00:00
     int scrubbingTimeInt = MAX(1, vpc.mediaDuration * scrubbingFraction);
     
     VLCTime *scrubbingTime = [VLCTime timeWithInt:scrubbingTimeInt];
-    bar.scrubTimeLabel.text = [scrubbingTime stringValue];
+    [progressView updatesScrubbingTime:[scrubbingTime stringValue]];
     
     VLCTime *remainingTime = [VLCTime timeWithInt:-(int)(vpc.mediaDuration - scrubbingTime.intValue)];
-    bar.remainingTimeLabel.text = [remainingTime stringValue];
+    [progressView updateRemainingTime:[remainingTime stringValue]];
 }
 
 #pragma mark - Playback Monitoring
@@ -579,8 +500,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     NSString *playedTime = controller.playedTime.stringValue;
     
     self.progressView.playbackFraction = playbackService.playbackPosition;
-    self.progressView.remainingTimeLabel.text = remainingTime;
-    self.progressView.playedTimeLabel.text = playedTime;
+    [self.progressView updateRemainingTime:remainingTime];
+    [self.progressView updatePlayedTime:playedTime];
     
     //NSLog(@"Played Time: %@ | Remaining Time: %@", playedTime, remainingTime);
 }

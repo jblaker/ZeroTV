@@ -15,6 +15,7 @@
 		E903E85C25951FC500F754A2 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E85B25951FC500F754A2 /* FavoritesViewController.m */; };
 		E903E8642597988800F754A2 /* UIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E8632597988800F754A2 /* UIViewController+Additions.m */; };
 		E903E86825979D0200F754A2 /* EpisodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E86725979D0200F754A2 /* EpisodeManager.m */; };
+		E91D1249261FD452009F3DA1 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = E91D1247261FD452009F3DA1 /* ProgressView.m */; };
 		E9318231259181440003D686 /* VLCPlaybackService.m in Sources */ = {isa = PBXBuildFile; fileRef = E9318230259181440003D686 /* VLCPlaybackService.m */; };
 		E93182352591815F0003D686 /* VLCFullscreenMovieTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E93182342591815F0003D686 /* VLCFullscreenMovieTVViewController.m */; };
 		E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823B2591AA650003D686 /* SubtitlesViewController.m */; };
@@ -48,6 +49,8 @@
 		E903E8632597988800F754A2 /* UIViewController+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additions.m"; sourceTree = "<group>"; };
 		E903E86625979D0200F754A2 /* EpisodeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EpisodeManager.h; sourceTree = "<group>"; };
 		E903E86725979D0200F754A2 /* EpisodeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EpisodeManager.m; sourceTree = "<group>"; };
+		E91D1247261FD452009F3DA1 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		E91D1248261FD452009F3DA1 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
 		E931822F259181440003D686 /* VLCPlaybackService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCPlaybackService.h; sourceTree = "<group>"; };
 		E9318230259181440003D686 /* VLCPlaybackService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLCPlaybackService.m; sourceTree = "<group>"; };
 		E93182332591815F0003D686 /* VLCFullscreenMovieTVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCFullscreenMovieTVViewController.h; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 				E903E8572594FDFD00F754A2 /* CacheManager.m */,
 				E903E86625979D0200F754A2 /* EpisodeManager.h */,
 				E903E86725979D0200F754A2 /* EpisodeManager.m */,
+				E91D1248261FD452009F3DA1 /* ProgressView.h */,
+				E91D1247261FD452009F3DA1 /* ProgressView.m */,
 				E931817A259173840003D686 /* VLC */,
 				E969161125914098005D5217 /* Main.storyboard */,
 				E96916142591409A005D5217 /* Assets.xcassets */,
@@ -242,6 +247,7 @@
 				E903E8432594149E00F754A2 /* DownloadUploadManager.m in Sources */,
 				E903E84725941C5A00F754A2 /* M3U8Manager.m in Sources */,
 				E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */,
+				E91D1249261FD452009F3DA1 /* ProgressView.m in Sources */,
 				E903E8642597988800F754A2 /* UIViewController+Additions.m in Sources */,
 				E969162E25914AF6005D5217 /* StreamingGroup.m in Sources */,
 				E969163625914E36005D5217 /* StreamsViewController.m in Sources */,
