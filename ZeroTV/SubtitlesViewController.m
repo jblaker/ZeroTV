@@ -80,8 +80,21 @@ static NSString * const kTableCellId = @"SubtitleTableCell";
     {
         NSDictionary *option = self.selectedStream.subtitleOptions[indexPath.row];
         
-        cell.textLabel.text = option[@"release"];
-        cell.detailTextLabel.text = option[@"comments"];
+        NSString *subName = @"???";
+        NSString *comments = nil;
+        
+        if ([option[@"release"] isKindOfClass:NSString.class])
+        {
+            subName = option[@"release"];
+        }
+        
+        if ([option[@"comments"] isKindOfClass:NSString.class])
+        {
+            comments = option[@"comments"];
+        }
+        
+        cell.textLabel.text = subName;
+        cell.detailTextLabel.text = comments;
     }
     
     if (indexPath.section == 2)
