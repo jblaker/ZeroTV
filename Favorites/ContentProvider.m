@@ -27,7 +27,7 @@
         NSString *name = favoriteShow[@"name"];
         NSString *imageURL = favoriteShow[@"imageURL"];
         TVTopShelfSectionedItem *item = [[TVTopShelfSectionedItem alloc] initWithIdentifier:name];
-        item.imageShape = TVTopShelfSectionedItemImageShapeHDTV;
+        item.imageShape = TVTopShelfSectionedItemImageShapePoster;
         item.title = name;
         if (imageURL)
         {
