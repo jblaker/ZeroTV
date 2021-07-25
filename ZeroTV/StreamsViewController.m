@@ -107,7 +107,11 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 
 - (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments
 {
-    return @[self.tableView, self.searchButton];
+    if (self.tableView && self.searchButton)
+    {
+        return @[self.tableView, self.searchButton];
+    }
+    return @[];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

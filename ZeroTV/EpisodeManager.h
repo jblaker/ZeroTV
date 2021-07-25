@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)saveProgressForEpisode:(StreamInfo *)episode withPlaybackTime:(int)playbackTime;
 
-+ (NSNumber *)progressForEpisode:(StreamInfo *)episode;
++ (NSNumber * _Nullable)progressForEpisode:(StreamInfo *)episode;
 
 @end
 

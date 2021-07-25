@@ -98,12 +98,15 @@ static NSString * const kLineInfoPrefix = @"#EXTINF:";
         
         if ([line hasPrefix:@"https:"] || [line hasPrefix:@"http:"])
         {
-            StreamInfo *streamInfo = [[StreamInfo alloc] initWithName:streamName streamURL:line];
-            if ([currentGroup.name isEqualToString:@"TV VOD"] || [currentGroup.name isEqualToString:@"Movie VOD"])
+            if (streamName)
             {
-                streamInfo.isVOD = YES;
+                StreamInfo *streamInfo = [[StreamInfo alloc] initWithName:streamName streamURL:line];
+                if ([currentGroup.name isEqualToString:@"TV VOD"] || [currentGroup.name isEqualToString:@"Movie VOD"])
+                {
+                    streamInfo.isVOD = YES;
+                }
+                [currentGroup.streams addObject:streamInfo];
             }
-            [currentGroup.streams addObject:streamInfo];
         }
     }
     

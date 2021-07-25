@@ -512,36 +512,36 @@ currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
         currentMediaHasChapters:(BOOL)currentMediaHasChapters
              forPlaybackService:(VLCPlaybackService *)playbackService
 {
-    NSString *state;
-    switch (currentState)
-    {
-        case VLCMediaPlayerStateStopped:
-            state = @"VLCMediaPlayerStateStopped";
-            break;
-        case VLCMediaPlayerStateOpening:
-            state = @"VLCMediaPlayerStateOpening";
-            break;
-        case VLCMediaPlayerStateBuffering:
-            state = @"VLCMediaPlayerStateBuffering";
-            break;
-        case VLCMediaPlayerStateEnded:
-            state = @"VLCMediaPlayerStateEnded";
-            break;
-        case VLCMediaPlayerStateError:
-            state = @"VLCMediaPlayerStateError";
-            break;
-        case VLCMediaPlayerStatePlaying:
-            state = @"VLCMediaPlayerStatePlaying";
-            break;
-        case VLCMediaPlayerStatePaused:
-            state = @"VLCMediaPlayerStatePaused";
-            break;
-        case VLCMediaPlayerStateESAdded:
-        {
-            state = @"VLCMediaPlayerStateESAdded";
-            break;
-        }
-    }
+//    NSString *state;
+//    switch (currentState)
+//    {
+//        case VLCMediaPlayerStateStopped:
+//            state = @"VLCMediaPlayerStateStopped";
+//            break;
+//        case VLCMediaPlayerStateOpening:
+//            state = @"VLCMediaPlayerStateOpening";
+//            break;
+//        case VLCMediaPlayerStateBuffering:
+//            state = @"VLCMediaPlayerStateBuffering";
+//            break;
+//        case VLCMediaPlayerStateEnded:
+//            state = @"VLCMediaPlayerStateEnded";
+//            break;
+//        case VLCMediaPlayerStateError:
+//            state = @"VLCMediaPlayerStateError";
+//            break;
+//        case VLCMediaPlayerStatePlaying:
+//            state = @"VLCMediaPlayerStatePlaying";
+//            break;
+//        case VLCMediaPlayerStatePaused:
+//            state = @"VLCMediaPlayerStatePaused";
+//            break;
+//        case VLCMediaPlayerStateESAdded:
+//        {
+//            state = @"VLCMediaPlayerStateESAdded";
+//            break;
+//        }
+//    }
         
     //NSLog(@"State changed: %@ | Playing: %@ | Tracks: %@ | Chapters: %@", state, isPlaying ? @"YES" : @"NO", currentMediaHasTrackToChooseFrom ? @"YES" : @"NO", currentMediaHasChapters ? @"YES" : @"NO");
 }

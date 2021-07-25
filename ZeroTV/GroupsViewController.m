@@ -17,6 +17,7 @@
 static NSString * const kTableCellId = @"TableViewCell";
 static NSString * const kStreamsSegue = @"ShowStreams";
 static NSString * const kFavoritesSegue = @"ShowFavorites";
+static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
 
 @interface GroupsViewController ()
 
@@ -52,6 +53,27 @@ static NSString * const kFavoritesSegue = @"ShowFavorites";
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:kTableCellId];
 }
 
+- (void)setDeepLinkShowName:(NSString *)deepLinkShowName
+{
+    _deepLinkShowName = deepLinkShowName;
+    
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    NSDate *currentDate = [NSDate date];
+    NSTimeInterval currentInterval = currentDate.timeIntervalSince1970;
+    NSDate *cacheDate = [NSUserDefaults.standardUserDefaults objectForKey:@"cacheDate"];
+    NSTimeInterval lastRefreshInterval = cacheDate.timeIntervalSince1970;
+    NSTimeInterval intervalDiff = currentInterval - lastRefreshInterval;
+    // Refresh the manifest if it hasn't been refreshed for over 24 hours
+    if (intervalDiff > (60 * 24))
+    {
+        [self fetchManifest:NO];
+    }
+    else
+    {
+        [self fetchManifest:YES];
+    }
+}
+
 - (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments
 {
     return @[self.tableView, self.refreshButton];
@@ -69,6 +91,14 @@ static NSString * const kFavoritesSegue = @"ShowFavorites";
     {
         FavoritesViewController *vc = segue.destinationViewController;
         vc.vodGroup = self.groups[@"TV VOD"];
+    }
+    
+    if ([segue.identifier isEqualToString:kFavoritesNASegue])
+    {
+        FavoritesViewController *vc = segue.destinationViewController;
+        vc.vodGroup = self.groups[@"TV VOD"];
+        vc.deepLinkShowName = self.deepLinkShowName;
+        self.deepLinkShowName = nil;
     }
 }
 
@@ -89,6 +119,12 @@ static NSString * const kFavoritesSegue = @"ShowFavorites";
             self.groups = [M3U8Manager parseManifest:cachedData];
             [self.tableView reloadData];
             NSLog(@"Using cached data");
+            
+            if (self.deepLinkShowName)
+            {
+                [self performSegueWithIdentifier:kFavoritesNASegue sender:nil];
+            }
+            
             return;
         }
     }
@@ -129,6 +165,11 @@ static NSString * const kFavoritesSegue = @"ShowFavorites";
                 
                 strongSelf.groups = [M3U8Manager parseManifest:data];
                 [strongSelf.tableView reloadData];
+                
+                if (strongSelf.deepLinkShowName)
+                {
+                    [strongSelf performSegueWithIdentifier:kFavoritesNASegue sender:nil];
+                }
             }
         }
         
@@ -138,7 +179,7 @@ static NSString * const kFavoritesSegue = @"ShowFavorites";
 - (void)updateLastUpdatedLabel:(NSDate *)date
 {
     NSDateFormatter *formatter = [NSDateFormatter new];
-    formatter.dateStyle = kCFDateFormatterShortStyle;
+    formatter.dateStyle = NSDateFormatterShortStyle;
     NSString *dateString = [formatter stringFromDate:date];
     self.cachedDateLabel.text = [NSString stringWithFormat:@"Last updated %@", dateString];
 }
