@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BBDDA588C8C45A4D27DC267 /* Pods_ZeroTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700B29A687243943683E0CEA /* Pods_ZeroTV.framework */; };
 		E903E83F25940AD100F754A2 /* OpenSubtitlesAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E83E25940AD100F754A2 /* OpenSubtitlesAdapter.m */; };
 		E903E8432594149E00F754A2 /* DownloadUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E8422594149E00F754A2 /* DownloadUploadManager.m */; };
 		E903E84725941C5A00F754A2 /* M3U8Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E84625941C5A00F754A2 /* M3U8Manager.m */; };
@@ -20,6 +21,10 @@
 		E93182352591815F0003D686 /* VLCFullscreenMovieTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E93182342591815F0003D686 /* VLCFullscreenMovieTVViewController.m */; };
 		E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823B2591AA650003D686 /* SubtitlesViewController.m */; };
 		E93182402591AC630003D686 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823F2591AC630003D686 /* BaseTableViewController.m */; };
+		E93BEA4626AD0BA700C381AF /* TVServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93BE9F026ACFA3B00C381AF /* TVServices.framework */; };
+		E93BEA4A26AD0BA700C381AF /* ContentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E93BEA4926AD0BA700C381AF /* ContentProvider.m */; };
+		E93BEA4E26AD0BA700C381AF /* Favorites.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E93BEA4526AD0BA700C381AF /* Favorites.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E93BEA5226AD0C9200C381AF /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9473CE825B4D43C00C3CA8C /* Config.plist */; };
 		E9473CE925B4D43C00C3CA8C /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9473CE825B4D43C00C3CA8C /* Config.plist */; };
 		E969160D25914098005D5217 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E969160C25914098005D5217 /* AppDelegate.m */; };
 		E969161025914098005D5217 /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E969160F25914098005D5217 /* GroupsViewController.m */; };
@@ -32,7 +37,34 @@
 		E969163625914E36005D5217 /* StreamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E969163525914E36005D5217 /* StreamsViewController.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E93BEA4C26AD0BA700C381AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E969160025914098005D5217 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E93BEA4426AD0BA700C381AF;
+			remoteInfo = Favorites;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E93BE9F926ACFA3B00C381AF /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E93BEA4E26AD0BA700C381AF /* Favorites.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		043B7A104D7B3379CC650C1A /* Pods-ZeroTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZeroTV.release.xcconfig"; path = "Target Support Files/Pods-ZeroTV/Pods-ZeroTV.release.xcconfig"; sourceTree = "<group>"; };
+		092F86C92D5103BE6417C9C7 /* Pods-ZeroTV.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZeroTV.debug.xcconfig"; path = "Target Support Files/Pods-ZeroTV/Pods-ZeroTV.debug.xcconfig"; sourceTree = "<group>"; };
+		700B29A687243943683E0CEA /* Pods_ZeroTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZeroTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E903E83D25940AD100F754A2 /* OpenSubtitlesAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenSubtitlesAdapter.h; sourceTree = "<group>"; };
 		E903E83E25940AD100F754A2 /* OpenSubtitlesAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenSubtitlesAdapter.m; sourceTree = "<group>"; };
 		E903E8412594149E00F754A2 /* DownloadUploadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadUploadManager.h; sourceTree = "<group>"; };
@@ -60,6 +92,11 @@
 		E931823B2591AA650003D686 /* SubtitlesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubtitlesViewController.m; sourceTree = "<group>"; };
 		E931823E2591AC630003D686 /* BaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
 		E931823F2591AC630003D686 /* BaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
+		E93BE9F026ACFA3B00C381AF /* TVServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVServices.framework; path = System/Library/Frameworks/TVServices.framework; sourceTree = SDKROOT; };
+		E93BEA4526AD0BA700C381AF /* Favorites.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Favorites.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E93BEA4826AD0BA700C381AF /* ContentProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContentProvider.h; sourceTree = "<group>"; };
+		E93BEA4926AD0BA700C381AF /* ContentProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContentProvider.m; sourceTree = "<group>"; };
+		E93BEA4B26AD0BA700C381AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9473CE825B4D43C00C3CA8C /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		E969160825914098005D5217 /* ZeroTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E969160B25914098005D5217 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -80,16 +117,34 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E93BEA4226AD0BA700C381AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E93BEA4626AD0BA700C381AF /* TVServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E969160525914098005D5217 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BBDDA588C8C45A4D27DC267 /* Pods_ZeroTV.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E5108D29BEA7A6571B2352ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				700B29A687243943683E0CEA /* Pods_ZeroTV.framework */,
+				E93BE9F026ACFA3B00C381AF /* TVServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E931817A259173840003D686 /* VLC */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,11 +157,24 @@
 			path = VLC;
 			sourceTree = "<group>";
 		};
+		E93BEA4726AD0BA700C381AF /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				E93BEA4826AD0BA700C381AF /* ContentProvider.h */,
+				E93BEA4926AD0BA700C381AF /* ContentProvider.m */,
+				E93BEA4B26AD0BA700C381AF /* Info.plist */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
 		E96915FF25914098005D5217 = {
 			isa = PBXGroup;
 			children = (
 				E969160A25914098005D5217 /* ZeroTV */,
+				E93BEA4726AD0BA700C381AF /* Favorites */,
 				E969160925914098005D5217 /* Products */,
+				EDC6EF9F65FAAFC752B9DAC2 /* Pods */,
+				E5108D29BEA7A6571B2352ED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				E969160825914098005D5217 /* ZeroTV.app */,
+				E93BEA4526AD0BA700C381AF /* Favorites.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,20 +233,50 @@
 			path = ZeroTV;
 			sourceTree = "<group>";
 		};
+		EDC6EF9F65FAAFC752B9DAC2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				092F86C92D5103BE6417C9C7 /* Pods-ZeroTV.debug.xcconfig */,
+				043B7A104D7B3379CC650C1A /* Pods-ZeroTV.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E969160725914098005D5217 /* ZeroTV */ = {
+		E93BEA4426AD0BA700C381AF /* Favorites */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E969161E2591409A005D5217 /* Build configuration list for PBXNativeTarget "ZeroTV" */;
+			buildConfigurationList = E93BEA4F26AD0BA700C381AF /* Build configuration list for PBXNativeTarget "Favorites" */;
 			buildPhases = (
-				E969160425914098005D5217 /* Sources */,
-				E969160525914098005D5217 /* Frameworks */,
-				E969160625914098005D5217 /* Resources */,
+				E93BEA4126AD0BA700C381AF /* Sources */,
+				E93BEA4226AD0BA700C381AF /* Frameworks */,
+				E93BEA4326AD0BA700C381AF /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+			);
+			name = Favorites;
+			productName = Favorites;
+			productReference = E93BEA4526AD0BA700C381AF /* Favorites.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		E969160725914098005D5217 /* ZeroTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E969161E2591409A005D5217 /* Build configuration list for PBXNativeTarget "ZeroTV" */;
+			buildPhases = (
+				0B6A2774E5D28B8F15136FD1 /* [CP] Check Pods Manifest.lock */,
+				E969160425914098005D5217 /* Sources */,
+				E969160525914098005D5217 /* Frameworks */,
+				E969160625914098005D5217 /* Resources */,
+				701E47CB72A7E01E788CFDBB /* [CP] Embed Pods Frameworks */,
+				E93BE9F926ACFA3B00C381AF /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E93BEA4D26AD0BA700C381AF /* PBXTargetDependency */,
 			);
 			name = ZeroTV;
 			productName = ZeroTV;
@@ -190,8 +289,12 @@
 		E969160025914098005D5217 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
+					E93BEA4426AD0BA700C381AF = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
 					E969160725914098005D5217 = {
 						CreatedOnToolsVersion = 12.2;
 					};
@@ -211,11 +314,20 @@
 			projectRoot = "";
 			targets = (
 				E969160725914098005D5217 /* ZeroTV */,
+				E93BEA4426AD0BA700C381AF /* Favorites */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E93BEA4326AD0BA700C381AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E93BEA5226AD0C9200C381AF /* Config.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E969160625914098005D5217 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,7 +341,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0B6A2774E5D28B8F15136FD1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZeroTV-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		701E47CB72A7E01E788CFDBB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZeroTV/Pods-ZeroTV-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZeroTV/Pods-ZeroTV-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZeroTV/Pods-ZeroTV-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		E93BEA4126AD0BA700C381AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E93BEA4A26AD0BA700C381AF /* ContentProvider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E969160425914098005D5217 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -258,6 +420,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E93BEA4D26AD0BA700C381AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E93BEA4426AD0BA700C381AF /* Favorites */;
+			targetProxy = E93BEA4C26AD0BA700C381AF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		E969161125914098005D5217 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -278,6 +448,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E93BEA5026AD0BA700C381AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C3M494T2TQ;
+				INFOPLIST_FILE = Favorites/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTV.Favorites;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 14.5;
+			};
+			name = Debug;
+		};
+		E93BEA5126AD0BA700C381AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C3M494T2TQ;
+				INFOPLIST_FILE = Favorites/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTV.Favorites;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 14.5;
+			};
+			name = Release;
+		};
 		E969161C2591409A005D5217 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -392,7 +602,9 @@
 		};
 		E969161F2591409A005D5217 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 092F86C92D5103BE6417C9C7 /* Pods-ZeroTV.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -413,7 +625,9 @@
 		};
 		E96916202591409A005D5217 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 043B7A104D7B3379CC650C1A /* Pods-ZeroTV.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -435,6 +649,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E93BEA4F26AD0BA700C381AF /* Build configuration list for PBXNativeTarget "Favorites" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E93BEA5026AD0BA700C381AF /* Debug */,
+				E93BEA5126AD0BA700C381AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E969160325914098005D5217 /* Build configuration list for PBXProject "ZeroTV" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

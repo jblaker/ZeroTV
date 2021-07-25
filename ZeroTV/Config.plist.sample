@@ -10,6 +10,12 @@
 	<string></string>
 	<key>FavoriteShows</key>
 	<array>
+		<dict>
+			<key>name</key>
+			<string>An Awesome Show</string>
+			<key>imageURL</key>
+			<string>https://awesomeshow.com/appleTV.jpg</string>
+		</dict>
 	</array>
 </dict>
 </plist>

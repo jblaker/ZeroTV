@@ -17,6 +17,7 @@
 static NSString * const kTableCellId = @"TableViewCell";
 static NSString * const kStreamsSegue = @"ShowStreams";
 static NSString * const kFavoritesSegue = @"ShowFavorites";
+static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
 
 @interface GroupsViewController ()
 
@@ -25,6 +26,7 @@ static NSString * const kFavoritesSegue = @"ShowFavorites";
 
 @property (nonatomic, strong) NSDictionary *groups;
 @property (nonatomic, strong) StreamingGroup *selectedGroup;
+@property (nonatomic, copy) NSString *deepLinkShowName;
 
 @end
 
@@ -50,6 +52,20 @@ static NSString * const kFavoritesSegue = @"ShowFavorites";
     }
     
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:kTableCellId];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesDeepLinkNotificationReceived:) name:@"FavoritesDeepLinkNotification" object:nil];
+}
+
+- (void)favoritesDeepLinkNotificationReceived:(NSNotification *)notification
+{
+    NSString *showName = notification.userInfo[@"name"];
+    
+    if (showName)
+    {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+        self.deepLinkShowName = showName;
+        [self performSegueWithIdentifier:kFavoritesNASegue sender:nil];
+    }
 }
 
 - (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments
@@ -69,6 +85,13 @@ static NSString * const kFavoritesSegue = @"ShowFavorites";
     {
         FavoritesViewController *vc = segue.destinationViewController;
         vc.vodGroup = self.groups[@"TV VOD"];
+    }
+    
+    if ([segue.identifier isEqualToString:kFavoritesNASegue])
+    {
+        FavoritesViewController *vc = segue.destinationViewController;
+        vc.vodGroup = self.groups[@"TV VOD"];
+        vc.deepLinkShowName = self.deepLinkShowName;
     }
 }
 
@@ -138,7 +161,7 @@ static NSString * const kFavoritesSegue = @"ShowFavorites";
 - (void)updateLastUpdatedLabel:(NSDate *)date
 {
     NSDateFormatter *formatter = [NSDateFormatter new];
-    formatter.dateStyle = kCFDateFormatterShortStyle;
+    formatter.dateStyle = NSDateFormatterShortStyle;
     NSString *dateString = [formatter stringFromDate:date];
     self.cachedDateLabel.text = [NSString stringWithFormat:@"Last updated %@", dateString];
 }

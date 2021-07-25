@@ -11,6 +11,7 @@
 #import "StreamsViewController.h"
 
 static NSString * const kStreamsSegue = @"ShowStreams";
+static NSString * const kStreamsNASegue = @"ShowStreamsNA";
 static NSString * const kTableCellId = @"TableViewCell";
 
 @interface FavoritesViewController ()
@@ -36,9 +37,30 @@ static NSString * const kTableCellId = @"TableViewCell";
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:kTableCellId];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (self.deepLinkShowName)
+    {
+        int counter = 0;
+        for (NSDictionary *show in self.favorites)
+        {
+            NSString *name = show[@"name"];
+            if ([name isEqualToString:self.deepLinkShowName])
+            {
+                NSIndexPath *matchingIndexdPath = [NSIndexPath indexPathForRow:counter inSection:0];
+                [self tableView:self.tableView didSelectRowAtIndexPath:matchingIndexdPath];
+                break;
+            }
+            counter += 1;
+        }
+    }
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:kStreamsSegue])
+    if ([segue.identifier isEqualToString:kStreamsSegue] || [segue.identifier isEqualToString:kStreamsNASegue])
     {
         StreamsViewController *vc = segue.destinationViewController;
         vc.selectedGroup = self.selectedGroup;
@@ -49,7 +71,8 @@ static NSString * const kTableCellId = @"TableViewCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *favName = self.favorites[indexPath.row];
+    NSDictionary *showDict = self.favorites[indexPath.row];
+    NSString *favName = showDict[@"name"];
     StreamingGroup *favoriteGroup = [[StreamingGroup alloc] initWithName:favName];
     favoriteGroup.isFavorite = YES;
         
@@ -69,7 +92,15 @@ static NSString * const kTableCellId = @"TableViewCell";
     
     self.selectedGroup = favoriteGroup;
     
-    [self performSegueWithIdentifier:kStreamsSegue sender:nil];
+    if (self.deepLinkShowName)
+    {
+        self.deepLinkShowName = nil;
+        [self performSegueWithIdentifier:kStreamsNASegue sender:nil];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:kStreamsSegue sender:nil];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -78,7 +109,8 @@ static NSString * const kTableCellId = @"TableViewCell";
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTableCellId];
     
-    cell.textLabel.text = self.favorites[indexPath.row];
+    NSDictionary *showDict = self.favorites[indexPath.row];
+    cell.textLabel.text = showDict[@"name"];
     
     return cell;
 }

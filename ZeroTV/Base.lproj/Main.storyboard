@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="17701" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TaA-2f-xmF">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="18122" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TaA-2f-xmF">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -66,6 +66,7 @@
                         <outlet property="tableView" destination="Gdu-12-wIK" id="D86-H6-8In"/>
                         <segue destination="Qs4-K0-fa5" kind="show" identifier="ShowStreams" id="GqQ-Do-qOU"/>
                         <segue destination="kVA-cF-Yjn" kind="show" identifier="ShowFavorites" id="WnN-Ku-xQA"/>
+                        <segue destination="kVA-cF-Yjn" kind="show" identifier="ShowFavoritesNA" animates="NO" id="ajP-de-yN1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -104,6 +105,7 @@
                     <connections>
                         <outlet property="tableView" destination="kez-8H-LQS" id="3Av-EV-kdl"/>
                         <segue destination="Qs4-K0-fa5" kind="show" identifier="ShowStreams" id="oZF-2H-7PK"/>
+                        <segue destination="Qs4-K0-fa5" kind="show" identifier="ShowStreamsNA" animates="NO" id="9hh-XQ-RhL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQh-az-hUg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -406,7 +408,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Wwn-oU-zpb"/>
-        <segue reference="oZF-2H-7PK"/>
+        <segue reference="9hh-XQ-RhL"/>
+        <segue reference="ajP-de-yN1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemRedColor">
