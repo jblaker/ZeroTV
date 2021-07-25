@@ -41,6 +41,7 @@
     }
     
     TVTopShelfItemCollection *collection = [[TVTopShelfItemCollection alloc] initWithItems:items];
+    collection.title = @"Favorite Shows";
     
     self.content = [[TVTopShelfSectionedContent alloc] initWithSections:@[collection]];
     

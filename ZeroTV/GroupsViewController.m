@@ -26,7 +26,6 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
 
 @property (nonatomic, strong) NSDictionary *groups;
 @property (nonatomic, strong) StreamingGroup *selectedGroup;
-@property (nonatomic, copy) NSString *deepLinkShowName;
 
 @end
 
@@ -52,19 +51,26 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
     }
     
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:kTableCellId];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesDeepLinkNotificationReceived:) name:@"FavoritesDeepLinkNotification" object:nil];
 }
 
-- (void)favoritesDeepLinkNotificationReceived:(NSNotification *)notification
+- (void)setDeepLinkShowName:(NSString *)deepLinkShowName
 {
-    NSString *showName = notification.userInfo[@"name"];
+    _deepLinkShowName = deepLinkShowName;
     
-    if (showName)
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    NSDate *currentDate = [NSDate date];
+    NSTimeInterval currentInterval = currentDate.timeIntervalSince1970;
+    NSDate *cacheDate = [NSUserDefaults.standardUserDefaults objectForKey:@"cacheDate"];
+    NSTimeInterval lastRefreshInterval = cacheDate.timeIntervalSince1970;
+    NSTimeInterval intervalDiff = currentInterval - lastRefreshInterval;
+    // Refresh the manifest if it hasn't been refreshed for over 24 hours
+    if (intervalDiff > (60 * 24))
     {
-        [self.navigationController popToRootViewControllerAnimated:NO];
-        self.deepLinkShowName = showName;
-        [self performSegueWithIdentifier:kFavoritesNASegue sender:nil];
+        [self fetchManifest:NO];
+    }
+    else
+    {
+        [self fetchManifest:YES];
     }
 }
 
@@ -92,6 +98,7 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
         FavoritesViewController *vc = segue.destinationViewController;
         vc.vodGroup = self.groups[@"TV VOD"];
         vc.deepLinkShowName = self.deepLinkShowName;
+        self.deepLinkShowName = nil;
     }
 }
 
@@ -112,6 +119,12 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
             self.groups = [M3U8Manager parseManifest:cachedData];
             [self.tableView reloadData];
             NSLog(@"Using cached data");
+            
+            if (self.deepLinkShowName)
+            {
+                [self performSegueWithIdentifier:kFavoritesNASegue sender:nil];
+            }
+            
             return;
         }
     }
@@ -152,6 +165,11 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
                 
                 strongSelf.groups = [M3U8Manager parseManifest:data];
                 [strongSelf.tableView reloadData];
+                
+                if (strongSelf.deepLinkShowName)
+                {
+                    [strongSelf performSegueWithIdentifier:kFavoritesNASegue sender:nil];
+                }
             }
         }
         

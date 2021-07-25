@@ -9,6 +9,7 @@
 
 @interface GroupsViewController : BaseTableViewController
 
+@property (nonatomic, copy) NSString *deepLinkShowName;
 
 @end
 

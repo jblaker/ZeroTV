@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GroupsViewController.h"
 
 @interface AppDelegate ()
 
@@ -37,7 +38,9 @@
     
     if (showName)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FavoritesDeepLinkNotification" object:nil userInfo:@{@"name":showName}];
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        GroupsViewController *groupsVC = (GroupsViewController *)navController.viewControllers.firstObject;
+        groupsVC.deepLinkShowName = showName;
         return YES;
     }
     
