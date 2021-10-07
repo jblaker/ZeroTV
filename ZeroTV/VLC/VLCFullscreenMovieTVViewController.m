@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     GamepadEdgeRight
 };
 
-@interface VLCFullscreenMovieTVViewController ()<SubtitlesViewControllerDelegate, UIGestureRecognizerDelegate, UIGestureRecognizerDelegate>
+@interface VLCFullscreenMovieTVViewController ()<SubtitlesViewControllerDelegate, UIGestureRecognizerDelegate, UIGestureRecognizerDelegate, VLCPlaybackServiceDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *movieView;
 @property (nonatomic, weak) IBOutlet UIView *topContainerView;
@@ -34,6 +34,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 @property (nonatomic, strong) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *playPauseButtonRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *singleClickRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *leftArrowRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *rightArrowRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *menuTapRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *upSwipeGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *downSwipeGestureRecognizer;
@@ -45,6 +47,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 @property (nonatomic, strong) NSTimer *bottomContainerTimer;
 @property (nonatomic, strong) GCMicroGamepad *gamepad;
 @property (nonatomic, assign) GamepadEdge activeGamepadEdge;
+@property (nonatomic, assign) BOOL usingSiriGen2Remote;
+@property (nonatomic, strong) NSArray *gestureRecognizers;
 
 @end
 
@@ -55,6 +59,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    VLCPlaybackService.sharedInstance.delegate = self;
     
     self.movieView.backgroundColor = [UIColor blackColor];
     
@@ -86,8 +92,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
     }
 
-    [self setUpGestures];
-    
     if (![self setUpGameController])
     {
         NSLog(@"Failed to set up game controller");
@@ -191,6 +195,13 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         if (controller.microGamepad)
         {
             self.gamepad = controller.microGamepad;
+            if (@available(tvOS 14.3, *))
+            {
+                if ([self.gamepad isKindOfClass:GCDirectionalGamepad.class])
+                {
+                    self.usingSiriGen2Remote = YES;
+                }
+            }
             break;
         }
     }
@@ -215,6 +226,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
             strongSelf.activeGamepadEdge = GamepadEdgeCenter;
         }
     };
+    
+    [self setUpGestures];
 
     return self.gamepad != nil;
 }
@@ -281,38 +294,95 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
 - (void)setUpGestures
 {
-    self.playPauseButtonRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playPauseHandler:)];
-    self.playPauseButtonRecognizer.numberOfTapsRequired = 1;
-    self.playPauseButtonRecognizer.allowedPressTypes = @[ @(UIPressTypePlayPause) ];
-    [self.view addGestureRecognizer:self.playPauseButtonRecognizer];
+    for (UIGestureRecognizer *gestureRecognizer in self.gestureRecognizers)
+    {
+        [self.view removeGestureRecognizer:gestureRecognizer];
+    }
     
-    self.singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapHandler:)];
-    self.singleTapRecognizer.numberOfTapsRequired = 1;
-    self.singleTapRecognizer.allowedPressTypes = @[ ];
-    self.singleTapRecognizer.allowedTouchTypes = @[ @(UITouchTypeIndirect) ];
-    [self.view addGestureRecognizer:self.singleTapRecognizer];
+    NSMutableArray *_gestureRecognizers = @[].mutableCopy;
     
-    self.upSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognized:)];
-    self.upSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-    self.upSwipeGestureRecognizer.delegate = self;
-    [self.view addGestureRecognizer:self.upSwipeGestureRecognizer];
+    {
+        self.playPauseButtonRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playPauseHandler:)];
+        self.playPauseButtonRecognizer.numberOfTapsRequired = 1;
+        self.playPauseButtonRecognizer.allowedPressTypes = @[ @(UIPressTypePlayPause) ];
+        [self.view addGestureRecognizer:self.playPauseButtonRecognizer];
+        [_gestureRecognizers addObject:self.playPauseButtonRecognizer];
+    }
     
-    self.downSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognized:)];
-    self.downSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.view addGestureRecognizer:self.downSwipeGestureRecognizer];
+    {
+        self.singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapHandler:)];
+        self.singleTapRecognizer.numberOfTapsRequired = 1;
+        self.singleTapRecognizer.allowedPressTypes = @[ ];
+        self.singleTapRecognizer.allowedTouchTypes = @[ @(UITouchTypeIndirect) ];
+        [self.view addGestureRecognizer:self.singleTapRecognizer];
+        [_gestureRecognizers addObject:self.singleTapRecognizer];
+    }
     
-    self.singleClickRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleClickHandler:)];
-    self.singleClickRecognizer.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:self.singleClickRecognizer];
+    {
+        self.upSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognized:)];
+        self.upSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
+        self.upSwipeGestureRecognizer.delegate = self;
+        [self.view addGestureRecognizer:self.upSwipeGestureRecognizer];
+        [_gestureRecognizers addObject:self.upSwipeGestureRecognizer];
+    }
     
-    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    self.panGestureRecognizer.delegate = self;
-    [self.view addGestureRecognizer:self.panGestureRecognizer];
+    {
+        self.downSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognized:)];
+        self.downSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+        [self.view addGestureRecognizer:self.downSwipeGestureRecognizer];
+        [_gestureRecognizers addObject:self.downSwipeGestureRecognizer];
+    }
     
-    self.menuTapRecognizer  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleMenuTapGesture:)];
-    self.menuTapRecognizer.allowedPressTypes = @[@(UIPressTypeMenu)];
-    self.menuTapRecognizer.delegate = self;
-    [self.view addGestureRecognizer:self.menuTapRecognizer];
+    if (!self.usingSiriGen2Remote)
+    {
+        self.singleClickRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleClickHandlerForV1:)];
+        self.singleClickRecognizer.numberOfTapsRequired = 1;
+        [self.view addGestureRecognizer:self.singleClickRecognizer];
+        [_gestureRecognizers addObject:self.singleClickRecognizer];
+    }
+    
+    if (self.usingSiriGen2Remote)
+    {
+        self.singleClickRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleClickHandlerForV2:)];
+        self.singleClickRecognizer.numberOfTapsRequired = 1;
+        [self.view addGestureRecognizer:self.singleClickRecognizer];
+        [_gestureRecognizers addObject:self.singleClickRecognizer];
+    }
+    
+    if (self.usingSiriGen2Remote)
+    {
+        self.leftArrowRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(arrowClickHandler:)];
+        self.leftArrowRecognizer.numberOfTapsRequired = 1;
+        self.leftArrowRecognizer.allowedPressTypes = @[@(UIPressTypeLeftArrow)];
+        [self.view addGestureRecognizer:self.leftArrowRecognizer];
+        [_gestureRecognizers addObject:self.leftArrowRecognizer];
+    }
+    
+    if (self.usingSiriGen2Remote)
+    {
+        self.rightArrowRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(arrowClickHandler:)];
+        self.rightArrowRecognizer.numberOfTapsRequired = 1;
+        self.rightArrowRecognizer.allowedPressTypes = @[@(UIPressTypeRightArrow)];
+        [self.view addGestureRecognizer:self.rightArrowRecognizer];
+        [_gestureRecognizers addObject:self.rightArrowRecognizer];
+    }
+    
+    {
+        self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+        self.panGestureRecognizer.delegate = self;
+        [self.view addGestureRecognizer:self.panGestureRecognizer];
+        [_gestureRecognizers addObject:self.panGestureRecognizer];
+    }
+    
+    {
+        self.menuTapRecognizer  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleMenuTapGesture:)];
+        self.menuTapRecognizer.allowedPressTypes = @[@(UIPressTypeMenu)];
+        self.menuTapRecognizer.delegate = self;
+        [self.view addGestureRecognizer:self.menuTapRecognizer];
+        [_gestureRecognizers addObject:self.menuTapRecognizer];
+    }
+    
+    self.gestureRecognizers = _gestureRecognizers;
 }
 
 - (void)playPauseHandler:(UITapGestureRecognizer *)tapGestureRecognizer
@@ -358,7 +428,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     }
 }
 
-- (void)singleClickHandler:(UITapGestureRecognizer *)singleClicker
+- (void)singleClickHandlerForV1:(UITapGestureRecognizer *)singleClicker
 {
     if (singleClicker.state == UIGestureRecognizerStateRecognized)
     {
@@ -390,6 +460,51 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
             }
             
         }
+    }
+}
+
+- (void)singleClickHandlerForV2:(UITapGestureRecognizer *)singleClicker
+{
+    if (singleClicker.state == UIGestureRecognizerStateRecognized)
+    {
+        VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+
+        if (self.progressView.scrubbing)
+        {
+            // Confirm scrubbing
+            [self stopScrubbing];
+            [vpc.mediaPlayer setPosition:self.progressView.scrubbingFraction];
+            [vpc play];
+        }
+        else
+        {
+            [self playPauseHandler:nil];
+        }
+    }
+}
+
+- (void)arrowClickHandler:(UITapGestureRecognizer *)singleClicker
+{
+    if (singleClicker.state == UIGestureRecognizerStateRecognized)
+    {
+        if (self.progressView.scrubbing)
+        {
+            return;
+        }
+        
+        VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+
+        if (singleClicker == self.leftArrowRecognizer)
+        {
+            [vpc jumpBackward:10];
+        }
+        
+        if (singleClicker == self.rightArrowRecognizer)
+        {
+            [vpc jumpForward:10];
+        }
+        
+        [self showThenHideBottomContainer];
     }
 }
 
@@ -513,35 +628,36 @@ currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
              forPlaybackService:(VLCPlaybackService *)playbackService
 {
 //    NSString *state;
-//    switch (currentState)
-//    {
-//        case VLCMediaPlayerStateStopped:
-//            state = @"VLCMediaPlayerStateStopped";
-//            break;
-//        case VLCMediaPlayerStateOpening:
-//            state = @"VLCMediaPlayerStateOpening";
-//            break;
-//        case VLCMediaPlayerStateBuffering:
-//            state = @"VLCMediaPlayerStateBuffering";
-//            break;
-//        case VLCMediaPlayerStateEnded:
-//            state = @"VLCMediaPlayerStateEnded";
-//            break;
-//        case VLCMediaPlayerStateError:
-//            state = @"VLCMediaPlayerStateError";
-//            break;
-//        case VLCMediaPlayerStatePlaying:
-//            state = @"VLCMediaPlayerStatePlaying";
-//            break;
-//        case VLCMediaPlayerStatePaused:
-//            state = @"VLCMediaPlayerStatePaused";
-//            break;
-//        case VLCMediaPlayerStateESAdded:
-//        {
-//            state = @"VLCMediaPlayerStateESAdded";
-//            break;
-//        }
-//    }
+    switch (currentState)
+    {
+        case VLCMediaPlayerStateStopped:
+            //state = @"VLCMediaPlayerStateStopped";
+            break;
+        case VLCMediaPlayerStateOpening:
+            //state = @"VLCMediaPlayerStateOpening";
+            break;
+        case VLCMediaPlayerStateBuffering:
+            //state = @"VLCMediaPlayerStateBuffering";
+            break;
+        case VLCMediaPlayerStateEnded:
+            [self.navigationController popViewControllerAnimated:YES];
+            //state = @"VLCMediaPlayerStateEnded";
+            break;
+        case VLCMediaPlayerStateError:
+            //state = @"VLCMediaPlayerStateError";
+            break;
+        case VLCMediaPlayerStatePlaying:
+            //state = @"VLCMediaPlayerStatePlaying";
+            break;
+        case VLCMediaPlayerStatePaused:
+            //state = @"VLCMediaPlayerStatePaused";
+            break;
+        case VLCMediaPlayerStateESAdded:
+        {
+            //state = @"VLCMediaPlayerStateESAdded";
+            break;
+        }
+    }
         
     //NSLog(@"State changed: %@ | Playing: %@ | Tracks: %@ | Chapters: %@", state, isPlaying ? @"YES" : @"NO", currentMediaHasTrackToChooseFrom ? @"YES" : @"NO", currentMediaHasChapters ? @"YES" : @"NO");
 }
