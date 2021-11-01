@@ -13,17 +13,19 @@
 #import "SearchResultsController.h"
 #import "UIViewController+Additions.h"
 #import "EpisodeManager.h"
+#import "CacheManager.h"
 
 #import "VLCPlaybackService.h"
 #import "VLCFullscreenMovieTVViewController.h"
 
 @import TVVLCKit;
+@import AVKit;
 
 static NSString * const kTableCellId = @"TableViewCell";
 static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
 NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 
-@interface StreamsViewController ()<UITableViewDelegate, UITableViewDataSource, SubtitlesViewControllerDelegate, SearchResultsControllerDelegate>
+@interface StreamsViewController ()<UITableViewDelegate, UITableViewDataSource, SubtitlesViewControllerDelegate, SearchResultsControllerDelegate, VLCMediaDelegate, AVAssetResourceLoaderDelegate>
 
 @property (nonatomic, weak) IBOutlet UIButton *searchButton;
 
@@ -32,7 +34,9 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 @property (nonatomic, strong) StreamInfo *selectedStream;
 @property (nonatomic, strong) UITapGestureRecognizer *menuButtonRecognizer;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
-@property (nonatomic, strong) NSArray *dupeFreeStreamsArray;
+@property (nonatomic, strong) VLCMedia *mediaItem;
+@property (nonatomic, strong) AVPlayerViewController *avpvc;
+@property (nonatomic, strong) NSData *customManifestData;
 
 @end
 
@@ -85,42 +89,13 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     {
         _selectedGroup = selectedGroup;
     }
-    
-    [self filterDuplicates];
+
 }
 
-- (void)filterDuplicates
+- (StreamInfo *)streamInfoForTitle:(NSString *)title inArray:(NSArray *)array
 {
-    [self showSpinner:YES];
-    
-    NSDate *startDate = [NSDate date];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-
-        NSMutableArray *_dupeFree = @[].mutableCopy;
-
-        NSMutableArray *addedTitles = @[].mutableCopy;
-
-        for (StreamInfo *streamInfo in self.selectedGroup.streams)
-        {
-            if ([addedTitles indexOfObject:streamInfo.name] == NSNotFound)
-            {
-                [_dupeFree addObject:streamInfo];
-                [addedTitles addObject:streamInfo.name];
-            }
-        }
-
-        self.dupeFreeStreamsArray = _dupeFree;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            [self showSpinner:NO];
-        });
-        
-        NSTimeInterval timeTaken = [[NSDate date] timeIntervalSinceDate:startDate];
-        
-        NSLog(@"Filtered out %lu duplicate titles in %0.2f seconds", self.selectedGroup.streams.count - _dupeFree.count, timeTaken);
-    });
+    NSPredicate *namePredicate = [NSPredicate predicateWithFormat:@"name == %@", title];
+    return [array filteredArrayUsingPredicate:namePredicate].firstObject;
 }
 
 - (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments
@@ -148,6 +123,50 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     }
 }
 
+- (void)mediaDidFinishParsing:(VLCMedia *)aMedia
+{
+    NSInteger lengthInMiliseconds = aMedia.length.intValue;
+    if (lengthInMiliseconds > 0)
+    {
+        NSInteger lengthInSeconds = lengthInMiliseconds/1000;
+        
+        NSString *manifestContent = @"#EXTM3U\n";
+        manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-PLAYLIST-TYPE:VOD\n"];
+        manifestContent = [manifestContent stringByAppendingFormat:@"#EXT-X-TARGETDURATION:%li.0\n", lengthInSeconds];
+        manifestContent = [manifestContent stringByAppendingFormat:@"#EXTINF:%li.0\n", lengthInSeconds];
+        manifestContent = [manifestContent stringByAppendingFormat:@"%@\n", self.selectedStream.streamURL];
+        manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-ENDLIST"];
+        
+        self.customManifestData = [manifestContent dataUsingEncoding:NSUTF8StringEncoding];
+        
+        AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL URLWithString:@"zerotv://loadCustomManifest"]];
+        [asset.resourceLoader setDelegate:self queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+        
+        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
+        playerItem.preferredForwardBufferDuration = lengthInSeconds;
+        
+        AVPlayer *player = [AVPlayer playerWithPlayerItem:playerItem];
+
+        self.avpvc = [AVPlayerViewController new];
+        self.avpvc.player = player;
+        
+        [player play];
+        
+        [self.navigationController pushViewController:self.avpvc animated:YES];
+    }
+}
+
+- (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest
+{
+    NSURLResponse *updatedResponse = [[NSURLResponse alloc] initWithURL:[NSURL URLWithString:self.selectedStream.streamURL] MIMEType:@"application/x-mpegURL" expectedContentLength:self.customManifestData.length textEncodingName:nil];
+    
+    loadingRequest.response = updatedResponse;
+    [loadingRequest.dataRequest respondWithData:self.customManifestData];
+    [loadingRequest finishLoading];
+    
+    return YES;
+}
+
 - (void)setUpPlayer:(StreamInfo *)selectedStream
 {
     NSURL *url = [NSURL URLWithString:selectedStream.streamURL];
@@ -158,30 +177,34 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
         return;
     }
     
-    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
-    VLCMedia *media = [VLCMedia mediaWithURL:url];
-    VLCMediaList *medialist = [[VLCMediaList alloc] init];
-    [medialist addMedia:media];
+    self.mediaItem = [VLCMedia mediaWithURL:url];
+    self.mediaItem.delegate = self;
+    [self.mediaItem parseWithOptions:VLCMediaParseNetwork];
     
-    __weak typeof(self) weakSelf = self;
-    [vpc playMediaList:medialist hasSubs:selectedStream.didDownloadSubFile completion:^(BOOL success, float playbackPosition) {
-        
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        if (success)
-        {
-            NSLog(@"Video playback successful, %f complete", playbackPosition);
-            [EpisodeManager episodeDidComplete:strongSelf.selectedStream withPlaybackPosition:playbackPosition];
-            [strongSelf.tableView reloadData];
-        }
-        else
-        {
-            NSLog(@"Video did not play successfully");
-        }
-
-    }];
-    
-    [self performSegueWithIdentifier:kStreamPlaybackSegueId sender:nil];
+//    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+//    VLCMedia *media = [VLCMedia mediaWithURL:url];
+//    VLCMediaList *medialist = [[VLCMediaList alloc] init];
+//    [medialist addMedia:media];
+//
+//    __weak typeof(self) weakSelf = self;
+//    [vpc playMediaList:medialist hasSubs:selectedStream.didDownloadSubFile completion:^(BOOL success, float playbackPosition) {
+//
+//        __strong typeof(weakSelf) strongSelf = weakSelf;
+//
+//        if (success)
+//        {
+//            NSLog(@"Video playback successful, %f complete", playbackPosition);
+//            [EpisodeManager episodeDidComplete:strongSelf.selectedStream withPlaybackPosition:playbackPosition];
+//            [strongSelf.tableView reloadData];
+//        }
+//        else
+//        {
+//            NSLog(@"Video did not play successfully");
+//        }
+//
+//    }];
+//
+//    [self performSegueWithIdentifier:kStreamPlaybackSegueId sender:nil];
 }
 
 - (void)checkForCaptions
@@ -291,8 +314,7 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     {
         CGPoint location = [gesture locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
-        //StreamInfo *stream = self.selectedGroup.streams[indexPath.row];
-        StreamInfo *stream = self.dupeFreeStreamsArray[indexPath.row];
+        StreamInfo *stream = self.selectedGroup.streams[indexPath.row];
         [self showMarkAsOptions:stream];
     }
 }
@@ -324,8 +346,7 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dupeFreeStreamsArray.count;
-    //return self.selectedGroup.streams.count;
+    return self.selectedGroup.streams.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -334,8 +355,7 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     
-    //StreamInfo *streamInfo = self.selectedGroup.streams[indexPath.row];
-    StreamInfo *streamInfo = self.dupeFreeStreamsArray[indexPath.row];
+    StreamInfo *streamInfo = self.selectedGroup.streams[indexPath.row];
     
     cell.textLabel.text = streamInfo.name;
     
@@ -359,8 +379,7 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    //self.selectedStream = self.selectedGroup.streams[indexPath.row];
-    self.selectedStream = self.dupeFreeStreamsArray[indexPath.row];
+    self.selectedStream = self.selectedGroup.streams[indexPath.row];
     
     if (self.selectedStream.isVOD)
     {
