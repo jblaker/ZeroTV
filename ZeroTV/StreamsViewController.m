@@ -36,7 +36,10 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
 @property (nonatomic, strong) VLCMedia *mediaItem;
 @property (nonatomic, strong) AVPlayerViewController *avpvc;
-@property (nonatomic, strong) NSData *customManifestData;
+@property (nonatomic, strong) NSData *masterManifestData;
+@property (nonatomic, strong) NSData *renditionManifestData;
+@property (nonatomic, strong) NSData *vttManifestData;
+@property (nonatomic, copy) NSString *subtitleURL;
 
 @end
 
@@ -129,46 +132,122 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     if (lengthInMiliseconds > 0)
     {
         NSInteger lengthInSeconds = lengthInMiliseconds/1000;
-        
-        NSString *manifestContent = @"#EXTM3U\n";
-        manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-PLAYLIST-TYPE:VOD\n"];
-        manifestContent = [manifestContent stringByAppendingFormat:@"#EXT-X-TARGETDURATION:%li.0\n", lengthInSeconds];
-        manifestContent = [manifestContent stringByAppendingFormat:@"#EXTINF:%li.0\n", lengthInSeconds];
-        manifestContent = [manifestContent stringByAppendingFormat:@"%@\n", self.selectedStream.streamURL];
-        manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-ENDLIST"];
-        
-        self.customManifestData = [manifestContent dataUsingEncoding:NSUTF8StringEncoding];
-        
-        AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL URLWithString:@"zerotv://loadCustomManifest"]];
-        [asset.resourceLoader setDelegate:self queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
-        
-        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
-        playerItem.preferredForwardBufferDuration = lengthInSeconds;
-        
-        AVPlayer *player = [AVPlayer playerWithPlayerItem:playerItem];
-
-        self.avpvc = [AVPlayerViewController new];
-        self.avpvc.player = player;
-        
-        [player play];
-        
-        [self.navigationController pushViewController:self.avpvc animated:YES];
+        [self buildCustomManifestWithDuration:lengthInSeconds];
+        [self showSpinner:NO];
     }
+}
+
+- (void)buildCustomManifestWithDuration:(NSInteger)duration
+{
+    // Build Master Manifest
+    NSString *manifestContent = @"#EXTM3U\n";
+    if (self.selectedStream.didDownloadSubFile)
+    {
+        manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-MEDIA:TYPE=SUBTITLES,NAME=\"English\",LANGUAGE=\"en\",DEFAULT=YES,AUTOSELECT=YES,FORCED=NO,URI=\"zerotv://vtt.m3u8\",GROUP-ID=\"subs\"\n"];
+        manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-STREAM-INF:BANDWIDTH=1,SUBTITLES=\"subs\"\n"];
+    }
+    else
+    {
+        manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-STREAM-INF:BANDWIDTH=1\n"];
+    }
+    manifestContent = [manifestContent stringByAppendingString:@"zerotv://rendition.m3u8\n"];
+    
+    self.masterManifestData = [manifestContent dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Build Rendition Manifest
+    manifestContent = @"#EXTM3U\n";
+    
+    if (self.selectedStream.isVOD)
+    {
+        manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-PLAYLIST-TYPE:VOD\n"];
+    }
+    else
+    {
+        //manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-PLAYLIST-TYPE:EVENT\n"];
+    }
+    manifestContent = [manifestContent stringByAppendingFormat:@"#EXT-X-TARGETDURATION:%li\n", duration];
+    manifestContent = [manifestContent stringByAppendingFormat:@"#EXTINF:%li,\n", duration];
+    manifestContent = [manifestContent stringByAppendingFormat:@"%@\n", self.selectedStream.streamURL];
+    
+    if (self.selectedStream.isVOD)
+    {
+        manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-ENDLIST\n"];
+    }
+    
+    self.renditionManifestData = [manifestContent dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Build VTT Manifest
+    manifestContent = @"#EXTM3U\n";
+    manifestContent = [manifestContent stringByAppendingFormat:@"#EXT-X-TARGETDURATION:%li\n", duration];
+    manifestContent = [manifestContent stringByAppendingFormat:@"#EXTINF:%li,\n", duration];
+    manifestContent = [manifestContent stringByAppendingFormat:@"%@\n", self.subtitleURL];
+    manifestContent = [manifestContent stringByAppendingString:@"#EXT-X-ENDLIST\n"];
+    
+    self.vttManifestData = [manifestContent dataUsingEncoding:NSUTF8StringEncoding];
+
+    AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL URLWithString:@"zerotv://master.m3u8"]];
+    [asset.resourceLoader setDelegate:self queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+    
+    AVMutableMetadataItem *metadata = [AVMutableMetadataItem new];
+    metadata.identifier = AVMetadataCommonIdentifierTitle;
+    metadata.value = self.selectedStream.name;
+    
+    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
+    playerItem.externalMetadata = @[metadata];
+    playerItem.preferredForwardBufferDuration = duration / 2;
+    
+    AVPlayer *player = [AVPlayer playerWithPlayerItem:playerItem];
+    player.automaticallyWaitsToMinimizeStalling = NO;
+
+    self.avpvc = [AVPlayerViewController new];
+    self.avpvc.player = player;
+    
+    [self.navigationController pushViewController:self.avpvc animated:NO];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.avpvc.player play];
+    });
 }
 
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest
 {
-    NSURLResponse *updatedResponse = [[NSURLResponse alloc] initWithURL:[NSURL URLWithString:self.selectedStream.streamURL] MIMEType:@"application/x-mpegURL" expectedContentLength:self.customManifestData.length textEncodingName:nil];
+    NSURL *url = loadingRequest.request.URL;
     
-    loadingRequest.response = updatedResponse;
-    [loadingRequest.dataRequest respondWithData:self.customManifestData];
-    [loadingRequest finishLoading];
+    if ([url.absoluteString isEqualToString:@"zerotv://master.m3u8"])
+    {
+        [loadingRequest.dataRequest respondWithData:self.masterManifestData];
+        [loadingRequest finishLoading];
+        
+        return YES;
+    }
     
-    return YES;
+    if ([url.absoluteString isEqualToString:@"zerotv://rendition.m3u8"])
+    {
+        [loadingRequest.dataRequest respondWithData:self.renditionManifestData];
+        [loadingRequest finishLoading];
+        
+        return YES;
+    }
+    
+    if ([url.absoluteString isEqualToString:@"zerotv://vtt.m3u8"])
+    {
+        [loadingRequest.dataRequest respondWithData:self.vttManifestData];
+        [loadingRequest finishLoading];
+        
+        return YES;
+    }
+    
+    return NO;
 }
 
 - (void)setUpPlayer:(StreamInfo *)selectedStream
 {
+    if (!selectedStream.isVOD)
+    {
+        [self buildCustomManifestWithDuration:0];
+        return;
+    }
+    
     NSURL *url = [NSURL URLWithString:selectedStream.streamURL];
 
     if (!url)
@@ -176,6 +255,8 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
         NSLog(@"Couldn't create URL!");
         return;
     }
+    
+    [self showSpinner:YES];
     
     self.mediaItem = [VLCMedia mediaWithURL:url];
     self.mediaItem.delegate = self;
@@ -393,11 +474,20 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 
 #pragma mark - SubtitlesViewControllerDelegate
 
-- (void)didConfigureSubtitles:(BOOL)didConfigure
+//- (void)didConfigureSubtitles:(BOOL)didConfigure
+//{
+//    self.selectedStream.didDownloadSubFile = didConfigure;
+//
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        [self setUpPlayer:self.selectedStream];
+//    }];
+//}
+
+- (void)didFetchURLForSubtitle:(NSString *)subtitleURL
 {
-    self.selectedStream.didDownloadSubFile = didConfigure;
+    self.subtitleURL = subtitleURL;
     
-    [self dismissViewControllerAnimated:YES completion:^{
+    [self dismissViewControllerAnimated:NO completion:^{
         [self setUpPlayer:self.selectedStream];
     }];
 }
@@ -406,8 +496,8 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 {
     self.selectedStream.didDownloadSubFile = NO;
 
-    [self showErrorAlert:error completionHandler:^{
-        [self dismissViewControllerAnimated:YES completion:^{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self showErrorAlert:error completionHandler:^{
             [self setUpPlayer:self.selectedStream];
         }];
     }];

@@ -122,10 +122,11 @@ static NSString * const kTableCellId = @"SubtitleTableCell";
         {
             NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Config" ofType:@"plist"];
             NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-            NSDictionary *fauxResponse = @{
-                @"link":dict[@"UploadedSubtitleFileURL"]
-            };
-            [self fetchSubtitleData:fauxResponse];
+            [self.delegate didFetchURLForSubtitle:dict[@"UploadedSubtitleFileURL"]];
+//            NSDictionary *fauxResponse = @{
+//                @"link":dict[@"UploadedSubtitleFileURL"]
+//            };
+//            [self fetchSubtitleData:fauxResponse];
         }
     }
     
@@ -167,35 +168,39 @@ static NSString * const kTableCellId = @"SubtitleTableCell";
 
 - (void)fetchSubtitleData:(NSDictionary *)response
 {
-    __weak typeof(self) weakSelf = self;
+    NSString *subtitleURL = response[@"link"];
     
-    NSURL *downloadURL = [NSURL URLWithString:response[@"link"]];
+    [self.delegate didFetchURLForSubtitle:subtitleURL];
+    
+//    __weak typeof(self) weakSelf = self;
+    
+//    NSURL *downloadURL = [NSURL URLWithString:response[@"link"]];
 
-    [DownloadUploadManager fetchSubtitleFileData:downloadURL completionHandler:^(NSData * _Nullable data, NSError * _Nullable error) {
-        
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        [strongSelf showSpinner:NO];
-        
-        if (error)
-        {
-            [strongSelf.delegate didEncounterError:error];
-        }
-        else
-        {
-            NSError *error = [CacheManager cacheData:data filename:kCachedSubFilename];
-            
-            if (error)
-            {
-                [strongSelf.delegate didEncounterError:error];
-            }
-            else
-            {
-                [strongSelf.delegate didConfigureSubtitles:YES];
-            }
-        }
-        
-    }];
+//    [DownloadUploadManager fetchSubtitleFileData:downloadURL completionHandler:^(NSData * _Nullable data, NSError * _Nullable error) {
+//
+//        __strong typeof(weakSelf) strongSelf = weakSelf;
+//
+//        [strongSelf showSpinner:NO];
+//
+//        if (error)
+//        {
+//            [strongSelf.delegate didEncounterError:error];
+//        }
+//        else
+//        {
+//            NSError *error = [CacheManager cacheData:data filename:kCachedSubFilename];
+//
+//            if (error)
+//            {
+//                [strongSelf.delegate didEncounterError:error];
+//            }
+//            else
+//            {
+//                [strongSelf.delegate didConfigureSubtitles:YES];
+//            }
+//        }
+//
+//    }];
 }
 
 @end

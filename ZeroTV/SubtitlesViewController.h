@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SubtitlesViewControllerDelegate <NSObject>
 
+- (void)didFetchURLForSubtitle:(NSString *)subtitleURL;
 - (void)didConfigureSubtitles:(BOOL)didConfigure;
 - (void)didEncounterError:(NSError *)error;
 - (void)selectedElementarySubtitleAtIndex:(NSInteger)index;
