@@ -182,6 +182,11 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     NSArray *nameParts = [self.selectedStream.name componentsSeparatedByString:@" : "];
     NSString *episodeName = nameParts.lastObject;
     
+    if (self.selectedStream.searchTerm && self.selectedStream.favoriteGroupName)
+    {
+        episodeName = [episodeName stringByReplacingOccurrencesOfString:self.selectedStream.favoriteGroupName withString:self.selectedStream.searchTerm];
+    }
+    
     __weak typeof(self) weakSelf = self;
     
     [OpenSubtitlesAdapter subtitleSearch:episodeName completionHandler:^(NSDictionary * _Nullable response, NSError * _Nullable error) {

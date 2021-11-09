@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL didDownloadSubFile;
 @property (nonatomic, assign) BOOL isVOD;
 @property (nonatomic, strong) NSArray *subtitleOptions;
+@property (nonatomic, copy) NSString *searchTerm;
+@property (nonatomic, copy) NSString *favoriteGroupName;
 
 @end
 

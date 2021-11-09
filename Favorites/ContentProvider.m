@@ -24,6 +24,10 @@
     
     for (NSDictionary *favoriteShow in favorites)
     {
+        if (![favoriteShow[@"active"] boolValue])
+        {
+            continue;
+        }
         NSString *name = favoriteShow[@"name"];
         NSString *imageURL = favoriteShow[@"imageURL"];
         TVTopShelfSectionedItem *item = [[TVTopShelfSectionedItem alloc] initWithIdentifier:name];

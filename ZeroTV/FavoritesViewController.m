@@ -32,7 +32,18 @@ static NSString * const kTableCellId = @"TableViewCell";
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Config" ofType:@"plist"];
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
-    self.favorites = dict[@"FavoriteShows"];
+    NSArray *favoriteShows = dict[@"FavoriteShows"];
+    NSMutableArray *activeFavoriteShows = @[].mutableCopy;
+    
+    for (NSDictionary *show in favoriteShows)
+    {
+        if ([show[@"active"] boolValue])
+        {
+            [activeFavoriteShows addObject:show];
+        }
+    }
+    
+    self.favorites = activeFavoriteShows;
     
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:kTableCellId];
 }
@@ -73,6 +84,7 @@ static NSString * const kTableCellId = @"TableViewCell";
 {
     NSDictionary *showDict = self.favorites[indexPath.row];
     NSString *favName = showDict[@"name"];
+    NSString *favSearchTerm = showDict[@"searchTerm"];
     StreamingGroup *favoriteGroup = [[StreamingGroup alloc] initWithName:favName];
     favoriteGroup.isFavorite = YES;
         
@@ -82,6 +94,8 @@ static NSString * const kTableCellId = @"TableViewCell";
     {
         if ([streamInfo.name containsString:favName] && [addedTitles indexOfObject:streamInfo.name] == NSNotFound)
         {
+            streamInfo.favoriteGroupName = favName;
+            streamInfo.searchTerm = favSearchTerm;
             [favoriteGroup.streams addObject:streamInfo];
             [addedTitles addObject:streamInfo.name];
         }
