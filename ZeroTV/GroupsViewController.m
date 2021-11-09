@@ -64,7 +64,7 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
     NSTimeInterval lastRefreshInterval = cacheDate.timeIntervalSince1970;
     NSTimeInterval intervalDiff = currentInterval - lastRefreshInterval;
     // Refresh the manifest if it hasn't been refreshed for over 24 hours
-    if (intervalDiff > (60 * 24))
+    if (intervalDiff > (60 * 60 * 24))
     {
         [self fetchManifest:NO];
     }
