@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="18122" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TaA-2f-xmF">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="19455" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TaA-2f-xmF">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -64,8 +64,8 @@
                         <outlet property="cachedDateLabel" destination="69V-fn-c1K" id="Cwk-bO-7CL"/>
                         <outlet property="refreshButton" destination="c7f-RT-LYW" id="XLO-gc-Q2h"/>
                         <outlet property="tableView" destination="Gdu-12-wIK" id="D86-H6-8In"/>
-                        <segue destination="Qs4-K0-fa5" kind="show" identifier="ShowStreams" id="GqQ-Do-qOU"/>
-                        <segue destination="kVA-cF-Yjn" kind="show" identifier="ShowFavorites" id="WnN-Ku-xQA"/>
+                        <segue destination="Qs4-K0-fa5" kind="show" identifier="ShowStreams" animates="NO" id="GqQ-Do-qOU"/>
+                        <segue destination="kVA-cF-Yjn" kind="show" identifier="ShowFavorites" animates="NO" id="WnN-Ku-xQA"/>
                         <segue destination="kVA-cF-Yjn" kind="show" identifier="ShowFavoritesNA" animates="NO" id="ajP-de-yN1"/>
                     </connections>
                 </viewController>
@@ -104,7 +104,7 @@
                     <navigationItem key="navigationItem" id="Dar-u0-gcU"/>
                     <connections>
                         <outlet property="tableView" destination="kez-8H-LQS" id="3Av-EV-kdl"/>
-                        <segue destination="Qs4-K0-fa5" kind="show" identifier="ShowStreams" id="oZF-2H-7PK"/>
+                        <segue destination="Qs4-K0-fa5" kind="show" identifier="ShowStreams" animates="NO" id="oZF-2H-7PK"/>
                         <segue destination="Qs4-K0-fa5" kind="show" identifier="ShowStreamsNA" animates="NO" id="9hh-XQ-RhL"/>
                     </connections>
                 </viewController>
@@ -157,8 +157,8 @@
                     <connections>
                         <outlet property="searchButton" destination="nbh-mE-tge" id="gRD-OE-inN"/>
                         <outlet property="tableView" destination="diE-zF-s0Q" id="QMW-Pp-JWg"/>
-                        <segue destination="ZRs-dg-RYA" kind="presentation" identifier="SubtitleSelection" id="RgE-wg-KVk"/>
-                        <segue destination="svt-SE-Q6i" kind="presentation" identifier="StreamPlayback" id="rqD-MN-y4w"/>
+                        <segue destination="ZRs-dg-RYA" kind="presentation" identifier="SubtitleSelection" animates="NO" id="RgE-wg-KVk"/>
+                        <segue destination="svt-SE-Q6i" kind="presentation" identifier="StreamPlayback" animates="NO" id="rqD-MN-y4w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ArQ-7i-hN2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -398,7 +398,7 @@
                         <outlet property="subtitleOffsetLabel" destination="sdy-Ct-qqE" id="T7K-0i-fWz"/>
                         <outlet property="topContainerTopConstraint" destination="Fci-tM-vHq" id="arl-Gk-n2l"/>
                         <outlet property="topContainerView" destination="ybH-zD-Jm7" id="lb7-bU-vvO"/>
-                        <segue destination="ZRs-dg-RYA" kind="presentation" identifier="SubtitleSelection" id="Wwn-oU-zpb"/>
+                        <segue destination="ZRs-dg-RYA" kind="presentation" identifier="SubtitleSelection" animates="NO" id="Wwn-oU-zpb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ppw-9W-3aI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -407,9 +407,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Wwn-oU-zpb"/>
-        <segue reference="9hh-XQ-RhL"/>
-        <segue reference="ajP-de-yN1"/>
+        <segue reference="RgE-wg-KVk"/>
+        <segue reference="oZF-2H-7PK"/>
+        <segue reference="WnN-Ku-xQA"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemRedColor">

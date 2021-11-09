@@ -374,8 +374,8 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 {
     self.selectedStream.didDownloadSubFile = NO;
 
-    [self showErrorAlert:error completionHandler:^{
-        [self dismissViewControllerAnimated:YES completion:^{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self showErrorAlert:error completionHandler:^{
             [self setUpPlayer:self.selectedStream];
         }];
     }];
