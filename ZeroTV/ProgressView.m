@@ -232,58 +232,54 @@ static CGFloat const kMarkerLineWidth = 2.0;
 - (void)setScrubbingFraction:(CGFloat)scrubbingFraction
 {
     _scrubbingFraction = MAX(0.0, MIN(scrubbingFraction, 1.0));
-    
-    if (self.scrubbing)
-    {
-        // Position scrub container
-        CGFloat scrubContainerMidway = CGRectGetWidth(self.scrubContainer.frame) / 2;
-        CGRect scrubLineFrame = self.scrubLine.frame;
-        CGRect scrubContainerFrame = self.scrubContainer.frame;
-        
-        // We want to move the line until it hits the center of the container
-        // then we move the whole container until we reach the far right
-        scrubLineFrame.origin.x = (CGRectGetWidth(self.frame) - CGRectGetWidth(self.scrubLine.frame)) * _scrubbingFraction;
-        
-        if (scrubLineFrame.origin.x >= (scrubContainerMidway + kMarkerLineWidth))
-        {
-            scrubContainerFrame.origin.x = (CGRectGetWidth(self.frame) - CGRectGetWidth(scrubContainerFrame)) * _scrubbingFraction;
 
-            if (CGRectGetMinX(scrubContainerFrame) + CGRectGetWidth(scrubContainerFrame) == CGRectGetMaxX(self.progressBar.frame))
-            {
-                // Phase 3
-                // Move the scrub line once we get all the way right
-                if (scrubLineFrame.origin.x >= CGRectGetWidth(scrubContainerFrame))
-                {
-                    scrubLineFrame.origin.x = CGRectGetWidth(scrubContainerFrame);
-                }
-                [UIView animateWithDuration:0.25 animations:^{
-                    self.scrubLine.frame = scrubLineFrame;
-                }];
-            }
-            else
-            {
-                // Phase 2
-                // Move the scrub container
-                scrubLineFrame.origin.x = scrubContainerMidway - kMarkerLineWidth;
-                self.scrubLine.frame = scrubLineFrame;
-                
-                [UIView animateWithDuration:0.25 animations:^{
-                    self.scrubContainer.frame = scrubContainerFrame;
-                }];
-            }
-        }
-        else
+    // Position scrub container
+    CGFloat scrubContainerMidway = CGRectGetWidth(self.scrubContainer.frame) / 2;
+    CGRect scrubLineFrame = self.scrubLine.frame;
+    CGRect scrubContainerFrame = self.scrubContainer.frame;
+    
+    // We want to move the line until it hits the center of the container
+    // then we move the whole container until we reach the far right
+    scrubLineFrame.origin.x = (CGRectGetWidth(self.frame) - CGRectGetWidth(self.scrubLine.frame)) * _scrubbingFraction;
+    
+    if (scrubLineFrame.origin.x >= (scrubContainerMidway + kMarkerLineWidth))
+    {
+        scrubContainerFrame.origin.x = (CGRectGetWidth(self.frame) - CGRectGetWidth(scrubContainerFrame)) * _scrubbingFraction;
+
+        if (CGRectGetMinX(scrubContainerFrame) + CGRectGetWidth(scrubContainerFrame) == CGRectGetMaxX(self.progressBar.frame))
         {
-            // Phase 1
-            // Move the scrub line
-            scrubContainerFrame.origin.x = 0;
-            self.scrubContainer.frame = scrubContainerFrame;
-            
+            // Phase 3
+            // Move the scrub line once we get all the way right
+            if (scrubLineFrame.origin.x >= CGRectGetWidth(scrubContainerFrame))
+            {
+                scrubLineFrame.origin.x = CGRectGetWidth(scrubContainerFrame);
+            }
             [UIView animateWithDuration:0.25 animations:^{
                 self.scrubLine.frame = scrubLineFrame;
             }];
         }
+        else
+        {
+            // Phase 2
+            // Move the scrub container
+            scrubLineFrame.origin.x = scrubContainerMidway - kMarkerLineWidth;
+            self.scrubLine.frame = scrubLineFrame;
+            
+            [UIView animateWithDuration:0.25 animations:^{
+                self.scrubContainer.frame = scrubContainerFrame;
+            }];
+        }
+    }
+    else
+    {
+        // Phase 1
+        // Move the scrub line
+        scrubContainerFrame.origin.x = 0;
+        self.scrubContainer.frame = scrubContainerFrame;
         
+        [UIView animateWithDuration:0.25 animations:^{
+            self.scrubLine.frame = scrubLineFrame;
+        }];
     }
 }
 

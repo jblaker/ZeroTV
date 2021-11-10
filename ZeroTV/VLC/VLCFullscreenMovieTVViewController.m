@@ -47,7 +47,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 @property (nonatomic, strong) NSTimer *bottomContainerTimer;
 @property (nonatomic, strong) GCMicroGamepad *gamepad;
 @property (nonatomic, assign) GamepadEdge activeGamepadEdge;
-@property (nonatomic, assign) BOOL usingSiriGen2Remote;
 @property (nonatomic, strong) NSArray *gestureRecognizers;
 
 @end
@@ -195,13 +194,12 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         if (controller.microGamepad)
         {
             self.gamepad = controller.microGamepad;
-            if (@available(tvOS 14.3, *))
-            {
-                if ([self.gamepad isKindOfClass:GCDirectionalGamepad.class])
-                {
-                    self.usingSiriGen2Remote = YES;
-                }
-            }
+//            if (@available(tvOS 14.3, *))
+//            {
+//                if ([self.gamepad isKindOfClass:GCDirectionalGamepad.class])
+//                {
+//                }
+//            }
             break;
         }
     }
@@ -333,7 +331,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         [_gestureRecognizers addObject:self.downSwipeGestureRecognizer];
     }
     
-    if (!self.usingSiriGen2Remote)
     {
         self.singleClickRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleClickHandlerForV1:)];
         self.singleClickRecognizer.numberOfTapsRequired = 1;
@@ -341,7 +338,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         [_gestureRecognizers addObject:self.singleClickRecognizer];
     }
     
-    if (self.usingSiriGen2Remote)
     {
         self.singleClickRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleClickHandlerForV2:)];
         self.singleClickRecognizer.numberOfTapsRequired = 1;
@@ -349,7 +345,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         [_gestureRecognizers addObject:self.singleClickRecognizer];
     }
     
-    if (self.usingSiriGen2Remote)
     {
         self.leftArrowRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(arrowClickHandler:)];
         self.leftArrowRecognizer.numberOfTapsRequired = 1;
@@ -358,7 +353,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         [_gestureRecognizers addObject:self.leftArrowRecognizer];
     }
     
-    if (self.usingSiriGen2Remote)
     {
         self.rightArrowRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(arrowClickHandler:)];
         self.rightArrowRecognizer.numberOfTapsRequired = 1;
