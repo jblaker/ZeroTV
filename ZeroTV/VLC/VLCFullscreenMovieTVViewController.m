@@ -48,6 +48,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 @property (nonatomic, strong) GCMicroGamepad *gamepad;
 @property (nonatomic, assign) GamepadEdge activeGamepadEdge;
 @property (nonatomic, strong) NSArray *gestureRecognizers;
+@property (nonatomic, strong) UIActivityIndicatorView *spinner;
+@property (nonatomic, assign) BOOL didShowSpinnerForInitialBuffering;
 
 @end
 
@@ -58,6 +60,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     
     VLCPlaybackService.sharedInstance.delegate = self;
     
@@ -90,10 +94,14 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         }];
 
     }
-
+    
     if (![self setUpGameController])
     {
-        NSLog(@"Failed to set up game controller");
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(controllerDidConnectNotificationReceived:) name:GCControllerDidConnectNotification object:nil];
+        
+        [GCController startWirelessControllerDiscoveryWithCompletionHandler:^{
+            [self setUpGameController];
+        }];
     }
 }
 
@@ -164,6 +172,13 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     }
 }
 
+#pragma mark - Notifications
+
+- (void)controllerDidConnectNotificationReceived:(NSNotification *)notification
+{
+    [self setUpGameController];
+}
+
 #pragma mark - Helper Methods
 
 - (void)handleEpisodePartiallyWatched:(NSNumber *)progress
@@ -194,12 +209,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         if (controller.microGamepad)
         {
             self.gamepad = controller.microGamepad;
-//            if (@available(tvOS 14.3, *))
-//            {
-//                if ([self.gamepad isKindOfClass:GCDirectionalGamepad.class])
-//                {
-//                }
-//            }
             break;
         }
     }
@@ -226,8 +235,17 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     };
     
     [self setUpGestures];
-
-    return self.gamepad != nil;
+    
+    if (self.gamepad)
+    {
+        NSLog(@"Successfully set up game controller");
+        return YES;
+    }
+    else
+    {
+        NSLog(@"Failed to set up game controller");
+        return NO;
+    }
 }
 
 - (void)showHideProgressView:(BOOL)show
@@ -249,6 +267,27 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     self.bottomContainerTimer = [NSTimer scheduledTimerWithTimeInterval:5 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [self showHideProgressView:NO];
     }];
+}
+
+- (void)showSpinner:(BOOL)show
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (show)
+        {
+            [self.spinner startAnimating];
+            
+            self.spinner.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.view addSubview:self.spinner];
+            [NSLayoutConstraint activateConstraints:@[
+                [self.spinner.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+                [self.spinner.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+            ]];
+        }
+        else
+        {
+            [self.spinner removeFromSuperview];
+        }
+    });
 }
 
 #pragma mark - IBActions
@@ -612,6 +651,11 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     [self.progressView updateRemainingTime:remainingTime];
     [self.progressView updatePlayedTime:playedTime];
     
+    if (self.spinner.isAnimating)
+    {
+        [self showSpinner:NO];
+    }
+    
     //NSLog(@"Played Time: %@ | Remaining Time: %@", playedTime, remainingTime);
 }
 
@@ -624,24 +668,24 @@ currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
     switch (currentState)
     {
         case VLCMediaPlayerStateStopped:
-            break;
         case VLCMediaPlayerStateOpening:
-            break;
-        case VLCMediaPlayerStateBuffering:
-            break;
-        case VLCMediaPlayerStateEnded:
-            [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
-            break;
-        case VLCMediaPlayerStateError:
-            break;
+        case VLCMediaPlayerStatePaused:
+        case VLCMediaPlayerStateESAdded:
         case VLCMediaPlayerStatePlaying:
             break;
-        case VLCMediaPlayerStatePaused:
-            break;
-        case VLCMediaPlayerStateESAdded:
+        case VLCMediaPlayerStateBuffering:
         {
+            if (!self.didShowSpinnerForInitialBuffering)
+            {
+                [self showSpinner:YES];
+                self.didShowSpinnerForInitialBuffering = YES;
+            }
             break;
         }
+        case VLCMediaPlayerStateEnded:
+        case VLCMediaPlayerStateError:
+            [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+            break;
     }
 }
 

@@ -158,7 +158,9 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
         }
         else
         {
-            NSLog(@"Video did not play successfully");
+            [self dismissViewControllerAnimated:NO completion:^{
+                NSLog(@"Video did not play successfully");
+            }];
         }
 
     }];
