@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showSpinner:(BOOL)show;
 
+- (void)buildBackgroundView;
+
 @end
 
 NS_ASSUME_NONNULL_END

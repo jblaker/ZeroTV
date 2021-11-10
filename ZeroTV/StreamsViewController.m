@@ -32,7 +32,6 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 @property (nonatomic, strong) StreamInfo *selectedStream;
 @property (nonatomic, strong) UITapGestureRecognizer *menuButtonRecognizer;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
-//@property (nonatomic, strong) NSArray *dupeFreeStreamsArray;
 
 @end
 
@@ -56,6 +55,27 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:kTableCellId];
     
     [self setUpLongPressGesture];
+}
+
+- (void)buildBackgroundView
+{
+    if (self.backgroundImage)
+    {
+        UIImageView *backgroundView = [[UIImageView alloc] initWithImage:self.backgroundImage];
+        backgroundView.contentMode = UIViewContentModeScaleAspectFill;
+        backgroundView.frame = self.view.frame;
+        [self.view addSubview:backgroundView];
+        [self.view sendSubviewToBack:backgroundView];
+        
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        UIVisualEffectView *effectsView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        effectsView.frame = self.view.frame;
+        [self.view insertSubview:effectsView aboveSubview:backgroundView];
+    }
+    else
+    {
+        [super buildBackgroundView];
+    }
 }
 
 - (void)setSelectedGroup:(StreamingGroup *)selectedGroup
@@ -85,24 +105,7 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     {
         _selectedGroup = selectedGroup;
     }
-    
-//
-//    NSMutableArray *_dupeFree = @[].mutableCopy;
-//
-//    NSMutableArray *addedTitles = @[].mutableCopy;
-//
-//    for (StreamInfo *streamInfo in _selectedGroup.streams)
-//    {
-//        if ([addedTitles indexOfObject:streamInfo.name] == NSNotFound)
-//        {
-//            [_dupeFree addObject:streamInfo];
-//            [addedTitles addObject:streamInfo.name];
-//        }
-//    }
-//
-//    self.dupeFreeStreamsArray = _dupeFree;
-//
-//    NSLog(@"Filtered out %lu duplicate titles", _selectedGroup.streams.count - _dupeFree.count);
+
 }
 
 - (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments
@@ -217,7 +220,6 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     
     if (subtitleOptions.count == 0)
     {
-        //[self setUpPlayer:self.selectedStream];
         [self performSegueWithIdentifier:kSubtitleOptionsSegueId sender:nil];
     }
     else
@@ -238,7 +240,6 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 - (void)setUpLongPressGesture
 {
     self.longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressHandler:)];
-    //self.longPressRecognizer.minimumPressDuration = 1;
     [self.view addGestureRecognizer:self.longPressRecognizer];
 }
 
@@ -281,7 +282,6 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
         CGPoint location = [gesture locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
         StreamInfo *stream = self.selectedGroup.streams[indexPath.row];
-        //StreamInfo *stream = self.dupeFreeStreamsArray[indexPath.row];
         [self showMarkAsOptions:stream];
     }
 }
@@ -313,7 +313,6 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return self.dupeFreeStreamsArray.count;
     return self.selectedGroup.streams.count;
 }
 
@@ -324,7 +323,6 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     
     StreamInfo *streamInfo = self.selectedGroup.streams[indexPath.row];
-    //StreamInfo *streamInfo = self.dupeFreeStreamsArray[indexPath.row];
     
     cell.textLabel.text = streamInfo.name;
     
@@ -349,7 +347,6 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     self.selectedStream = self.selectedGroup.streams[indexPath.row];
-    //self.selectedStream = self.dupeFreeStreamsArray[indexPath.row];
     
     if (self.selectedStream.isVOD)
     {

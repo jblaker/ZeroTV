@@ -33,6 +33,11 @@
 {
     [super viewDidLoad];
 
+    [self buildBackgroundView];
+}
+
+- (void)buildBackgroundView
+{
     UIImage *image = [UIImage imageNamed:@"Background"];
     UIImageView *backgroundView = [[UIImageView alloc] initWithImage:image];
     [self.view addSubview:backgroundView];

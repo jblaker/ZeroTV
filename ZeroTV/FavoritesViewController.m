@@ -18,6 +18,7 @@ static NSString * const kTableCellId = @"TableViewCell";
 
 @property (nonatomic, strong) NSArray *favorites;
 @property (nonatomic, strong) StreamingGroup *selectedGroup;
+@property (nonatomic, strong) NSMutableDictionary *posterImageDictionary;
 
 @end
 
@@ -29,6 +30,8 @@ static NSString * const kTableCellId = @"TableViewCell";
     
     self.title = @"Favorites";
     
+    self.posterImageDictionary = @{}.mutableCopy;
+    
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Config" ofType:@"plist"];
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
@@ -39,6 +42,7 @@ static NSString * const kTableCellId = @"TableViewCell";
     {
         if ([show[@"active"] boolValue])
         {
+            [self loadPosterImageForShow:show];
             [activeFavoriteShows addObject:show];
         }
     }
@@ -75,6 +79,7 @@ static NSString * const kTableCellId = @"TableViewCell";
     {
         StreamsViewController *vc = segue.destinationViewController;
         vc.selectedGroup = self.selectedGroup;
+        vc.backgroundImage = self.posterImageDictionary[self.selectedGroup.name];
     }
 }
 
@@ -117,6 +122,35 @@ static NSString * const kTableCellId = @"TableViewCell";
     }
 }
 
+- (void)loadPosterImageForShow:(NSDictionary *)show
+{
+    NSURL *posterURL = [NSURL URLWithString:show[@"posterURL"]];
+    NSString *showName = show[@"name"];
+    
+    if (!posterURL)
+    {
+        return;
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        
+        NSData *imageData = [[NSData alloc] initWithContentsOfURL:posterURL];
+        UIImage *image = [UIImage imageWithData:imageData];
+        
+        if (!image)
+        {
+            return;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.posterImageDictionary[showName] = image;
+            [self.tableView reloadData];
+        });
+        
+    });
+    
+}
+
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -125,6 +159,9 @@ static NSString * const kTableCellId = @"TableViewCell";
     
     NSDictionary *showDict = self.favorites[indexPath.row];
     cell.textLabel.text = showDict[@"name"];
+
+    UIImage *posterImage = self.posterImageDictionary[showDict[@"name"]];
+    cell.imageView.image = posterImage;
     
     return cell;
 }

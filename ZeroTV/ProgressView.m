@@ -113,8 +113,8 @@ static CGFloat const kMarkerLineWidth = 2.0;
     [self.playedTimeLabelContainer addSubview:self.playedTimeLabel];
     
     CGRect playedTimeLabelContainerFrame = self.playedTimeLabel.frame;
-    playedTimeLabelContainerFrame.size.width += kPlayedTimeLabelVerticalMargin;
-    playedTimeLabelContainerFrame.size.height += kPlayedTimeLabelHorizontalMargin;
+    //playedTimeLabelContainerFrame.size.width += kPlayedTimeLabelVerticalMargin;
+    //playedTimeLabelContainerFrame.size.height += kPlayedTimeLabelHorizontalMargin;
     playedTimeLabelContainerFrame.origin = CGPointMake(0, CGRectGetMaxY(self.progressBar.frame) + 5);
     
     self.playedTimeLabelContainer.frame = playedTimeLabelContainerFrame;

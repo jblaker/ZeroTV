@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface StreamsViewController : BaseTableViewController
 
 @property (nonatomic, strong) StreamingGroup *selectedGroup;
+@property (nonatomic, strong) UIImage *backgroundImage;
 
 @end
 
