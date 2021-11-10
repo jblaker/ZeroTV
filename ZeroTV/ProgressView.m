@@ -10,7 +10,7 @@
 static CGFloat const kPlayedTimeLabelVerticalMargin = 16.0;
 static CGFloat const kPlayedTimeLabelHorizontalMargin = 10.0;
 static CGFloat const kScrubLineHeight = 40.0;
-static CGFloat const kProgressBarHeight = 10.0;
+static CGFloat const kProgressBarHeight = 15.0;
 static CGFloat const kMarkerLineWidth = 2.0;
 
 @interface ProgressView ()
@@ -35,7 +35,7 @@ static CGFloat const kMarkerLineWidth = 2.0;
 
 + (UIFont *)labelFont
 {
-    return [UIFont systemFontOfSize:24];
+    return [UIFont boldSystemFontOfSize:24];
 }
 
 + (UILabel *)timeLabel
@@ -44,7 +44,7 @@ static CGFloat const kMarkerLineWidth = 2.0;
     label.text = @"00:00";
     label.font = [ProgressView labelFont];
     label.shadowColor = UIColor.blackColor;
-    label.shadowOffset = CGSizeMake(1, 1);
+    label.shadowOffset = CGSizeMake(2, 2);
     [label sizeToFit];
     return label;
 }
@@ -87,7 +87,7 @@ static CGFloat const kMarkerLineWidth = 2.0;
     self.progressBar.backgroundColor =  [UIColor colorWithRed:90.0/255.0 green:90.0/255.0 blue:90.0/255.0 alpha:0.75];
     
     self.progressBar.clipsToBounds = YES;
-    self.progressBar.layer.cornerRadius = 5;
+    self.progressBar.layer.cornerRadius = kProgressBarHeight / 2;
     
     [self addSubview:self.progressBar];
 }
@@ -103,13 +103,12 @@ static CGFloat const kMarkerLineWidth = 2.0;
 {
     self.playedTimeLabelContainer = [UIView new];
     self.playedTimeLabelContainer.layer.cornerRadius = 7;
-    self.playedTimeLabelContainer.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.75];
+    //self.playedTimeLabelContainer.backgroundColor = [UIColor.whiteColor colorWithAlphaComponent:0.75];
     
     [self addSubview:self.playedTimeLabelContainer];
     
     self.playedTimeLabel = [ProgressView timeLabel];
-    self.playedTimeLabel.shadowOffset = CGSizeZero;
-    self.playedTimeLabel.textColor = [ProgressView zeroPinkColor];
+    //self.playedTimeLabel.textColor = [ProgressView zeroPinkColor];
     
     [self.playedTimeLabelContainer addSubview:self.playedTimeLabel];
     
