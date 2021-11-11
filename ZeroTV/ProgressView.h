@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat playbackFraction;
 @property (nonatomic, assign) CGFloat scrubbingFraction;
 @property (nonatomic, assign) BOOL scrubbing;
+@property (nonatomic, assign, getter=isLiveStream) BOOL liveStream;
 
 - (void)updatePlayedTime:(NSString *)playedTime;
 - (void)updateRemainingTime:(NSString *)remainingTime;

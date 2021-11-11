@@ -8,7 +8,7 @@
 #import "ProgressView.h"
 
 static CGFloat const kPlayedTimeLabelVerticalMargin = 16.0;
-static CGFloat const kPlayedTimeLabelHorizontalMargin = 10.0;
+//static CGFloat const kPlayedTimeLabelHorizontalMargin = 10.0;
 static CGFloat const kScrubLineHeight = 40.0;
 static CGFloat const kProgressBarHeight = 15.0;
 static CGFloat const kMarkerLineWidth = 2.0;
@@ -178,6 +178,17 @@ static CGFloat const kMarkerLineWidth = 2.0;
 
 #pragma mark - Setters
 
+- (void)setLiveStream:(BOOL)liveStream
+{
+    _liveStream = liveStream;
+
+    if (liveStream)
+    {
+        self.remainingTimeLabel.hidden = YES;
+        self.progressIndicatorView.frame = self.progressBar.frame;
+    }
+}
+
 - (void)setScrubbing:(BOOL)scrubbing
 {
     _scrubbing = scrubbing;
@@ -224,7 +235,10 @@ static CGFloat const kMarkerLineWidth = 2.0;
     }
     else
     {
-        self.remainingTimeLabel.hidden = NO;
+        if (!self.isLiveStream)
+        {
+            self.remainingTimeLabel.hidden = NO;
+        }
     }
 }
 

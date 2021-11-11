@@ -26,8 +26,6 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 @property (nonatomic, assign) BOOL sessionWillRestart;
 @property (nonatomic, assign) BOOL mediaWasJustStarted;
 @property (nonatomic, assign) BOOL isPlaying;
-@property (nonatomic, assign) BOOL currentMediaHasTrackToChooseFrom;
-@property (nonatomic, assign) BOOL currentMediaHasChapters;
 @property (nonatomic, assign) BOOL needsMetadataUpdate;
 @property (nonatomic, strong) NSLock *playbackSessionManagementLock;
 @property (nonatomic, strong) UIView *actualVideoOutputView;
@@ -310,12 +308,10 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
             break;
     }
 
-    if ([self.delegate respondsToSelector:@selector(mediaPlayerStateChanged:isPlaying:currentMediaHasTrackToChooseFrom:currentMediaHasChapters:forPlaybackService:)])
+    if ([self.delegate respondsToSelector:@selector(mediaPlayerStateChanged:isPlaying:forPlaybackService:)])
     {
         [self.delegate mediaPlayerStateChanged:currentState
                                      isPlaying:self.mediaPlayer.isPlaying
-              currentMediaHasTrackToChooseFrom:self.currentMediaHasTrackToChooseFrom
-                       currentMediaHasChapters:self.currentMediaHasChapters
                          forPlaybackService:self];
     }
 
@@ -331,23 +327,6 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 - (VLCTime *)remainingTime
 {
     return [self.mediaPlayer remainingTime];
-}
-
-- (void)recoverPlaybackState
-{
-    if ([self.delegate respondsToSelector:@selector(mediaPlayerStateChanged:isPlaying:currentMediaHasTrackToChooseFrom:currentMediaHasChapters:forPlaybackService:)])
-    {
-        [self.delegate mediaPlayerStateChanged:_mediaPlayer.state
-                                     isPlaying:self.isPlaying
-              currentMediaHasTrackToChooseFrom:self.currentMediaHasTrackToChooseFrom
-                       currentMediaHasChapters:self.currentMediaHasChapters
-                         forPlaybackService:self];
-    }
-    
-    if ([self.delegate respondsToSelector:@selector(prepareForMediaPlayback:)])
-    {
-        [self.delegate prepareForMediaPlayback:self];
-    }
 }
 
 - (float)playbackPosition

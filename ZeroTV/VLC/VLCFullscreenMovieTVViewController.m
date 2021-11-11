@@ -49,7 +49,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 @property (nonatomic, assign) GamepadEdge activeGamepadEdge;
 @property (nonatomic, strong) NSArray *gestureRecognizers;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
-@property (nonatomic, assign) BOOL didShowSpinnerForInitialBuffering;
 
 @end
 
@@ -92,6 +91,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
             }
             
         }];
+        
+        self.progressView.liveStream = YES;
 
     }
     
@@ -123,7 +124,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     {
         VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
         vpc.delegate = self;
-        [vpc recoverPlaybackState];
         
         if (self.selectedStream.isVOD)
         {
@@ -661,8 +661,6 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
 - (void)mediaPlayerStateChanged:(VLCMediaPlayerState)currentState
                       isPlaying:(BOOL)isPlaying
-currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
-        currentMediaHasChapters:(BOOL)currentMediaHasChapters
              forPlaybackService:(VLCPlaybackService *)playbackService
 {
     switch (currentState)
@@ -675,16 +673,14 @@ currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
             break;
         case VLCMediaPlayerStateBuffering:
         {
-            if (!self.didShowSpinnerForInitialBuffering)
-            {
-                [self showSpinner:YES];
-                self.didShowSpinnerForInitialBuffering = YES;
-            }
+            [self showSpinner:YES];
             break;
         }
         case VLCMediaPlayerStateEnded:
-        case VLCMediaPlayerStateError:
             [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+            break;
+        case VLCMediaPlayerStateError:
+            [self showToastMessage:@"Encountered an error..."];
             break;
     }
 }

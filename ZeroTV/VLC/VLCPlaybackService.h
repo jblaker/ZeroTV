@@ -19,8 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)playbackPositionUpdated:(VLCPlaybackService *)playbackService;
 - (void)mediaPlayerStateChanged:(VLCMediaPlayerState)currentState
                       isPlaying:(BOOL)isPlaying
-currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
-        currentMediaHasChapters:(BOOL)currentMediaHasChapters
              forPlaybackService:(VLCPlaybackService *)playbackService;
 - (void)prepareForMediaPlayback:(VLCPlaybackService *)playbackService;
 
@@ -30,7 +28,6 @@ currentMediaHasTrackToChooseFrom:(BOOL)currentMediaHasTrackToChooseFrom
 
 + (instancetype)sharedInstance;
 
-- (void)recoverPlaybackState;
 - (void)startPlayback;
 - (void)stopPlayback;
 - (void)playPause;
