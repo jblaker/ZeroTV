@@ -72,7 +72,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     self.subtitleOffsetLabel.text = nil;
     
     self.videoTitleLabel.alpha = 0.0;
-    self.videoTitleLabel.text = self.selectedStream.name;
+    self.videoTitleLabel.text = [self.selectedStream.name componentsSeparatedByString:@" : "].lastObject;
     self.videoTitleLabel.shadowColor = UIColor.blackColor;
     self.videoTitleLabel.shadowOffset = CGSizeMake(2, 2);
     

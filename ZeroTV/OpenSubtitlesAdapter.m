@@ -7,7 +7,7 @@
 
 #import "OpenSubtitlesAdapter.h"
 
-NSString * const kOpenSubsTVEndpoint = @"https://www.opensubtitles.com/api/v1/subtitles";
+NSString * const kOpenSubsTVEndpoint = @"https://api.opensubtitles.com/api/v1/subtitles";
 NSString * const kAPIKeyKey = @"Api-Key";
 
 @implementation OpenSubtitlesAdapter

@@ -84,7 +84,11 @@ static CGFloat const kMarkerLineWidth = 2.0;
 {
     self.progressBar = [UIView new];
     self.progressBar.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), kProgressBarHeight);
-    self.progressBar.backgroundColor =  [UIColor colorWithRed:90.0/255.0 green:90.0/255.0 blue:90.0/255.0 alpha:0.75];
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *effectsView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    effectsView.frame = self.progressBar.frame;
+    [self.progressBar addSubview:effectsView];
     
     self.progressBar.clipsToBounds = YES;
     self.progressBar.layer.cornerRadius = kProgressBarHeight / 2;
@@ -185,7 +189,6 @@ static CGFloat const kMarkerLineWidth = 2.0;
     if (liveStream)
     {
         self.remainingTimeLabel.hidden = YES;
-        self.progressIndicatorView.frame = self.progressBar.frame;
     }
 }
 
