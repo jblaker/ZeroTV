@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 @property (nonatomic, weak) IBOutlet UILabel *subtitleOffsetLabel;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *topContainerTopConstraint;
 @property (nonatomic, weak) IBOutlet UIButton *selectSubtitlesButton;
+@property (nonatomic, weak) IBOutlet UILabel *videoTitleLabel;
 
 @property (nonatomic, strong) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *playPauseButtonRecognizer;
@@ -59,7 +60,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     
     VLCPlaybackService.sharedInstance.delegate = self;
@@ -69,6 +70,11 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     self.topContainerView.layer.cornerRadius = 50;
         
     self.subtitleOffsetLabel.text = nil;
+    
+    self.videoTitleLabel.alpha = 0.0;
+    self.videoTitleLabel.text = self.selectedStream.name;
+    self.videoTitleLabel.shadowColor = UIColor.blackColor;
+    self.videoTitleLabel.shadowOffset = CGSizeMake(2, 2);
     
     self.progressView.alpha = 0.0;
     
@@ -251,6 +257,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 - (void)showHideProgressView:(BOOL)show
 {
     [UIView animateWithDuration:0.25 animations:^{
+        self.videoTitleLabel.alpha = show ? 1.0 : 0.0;
         self.progressView.alpha = show ? 1.0 : 0.0;
     }];
 }

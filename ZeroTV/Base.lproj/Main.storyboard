@@ -262,6 +262,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvK-zn-OQL">
+                                <rect key="frame" x="85" y="891" width="1750" height="58"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBa-yp-Vay" userLabel="Bottom" customClass="ProgressView">
                                 <rect key="frame" x="85" y="969" width="1750" height="51"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -378,6 +384,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fFQ-mc-Zzz"/>
                         <constraints>
+                            <constraint firstItem="bvK-zn-OQL" firstAttribute="leading" secondItem="gBa-yp-Vay" secondAttribute="leading" id="CZo-J7-ucB"/>
                             <constraint firstItem="ybH-zD-Jm7" firstAttribute="top" secondItem="fFQ-mc-Zzz" secondAttribute="top" id="Fci-tM-vHq"/>
                             <constraint firstItem="ybH-zD-Jm7" firstAttribute="leading" secondItem="j3d-qB-DeK" secondAttribute="leading" constant="85" id="H2Q-pp-pB5"/>
                             <constraint firstItem="fFQ-mc-Zzz" firstAttribute="bottom" secondItem="gBa-yp-Vay" secondAttribute="bottom" id="L0I-lj-IJd"/>
@@ -387,7 +394,9 @@
                             <constraint firstItem="gBa-yp-Vay" firstAttribute="leading" secondItem="j3d-qB-DeK" secondAttribute="leading" constant="85" id="Zp9-bW-Gym"/>
                             <constraint firstAttribute="bottom" secondItem="UC8-nm-q8q" secondAttribute="bottom" id="blk-pf-S9i"/>
                             <constraint firstItem="UC8-nm-q8q" firstAttribute="top" secondItem="j3d-qB-DeK" secondAttribute="top" id="cCZ-pJ-nDe"/>
+                            <constraint firstItem="gBa-yp-Vay" firstAttribute="top" secondItem="bvK-zn-OQL" secondAttribute="bottom" constant="20" id="dKl-Bs-y4Y"/>
                             <constraint firstAttribute="trailing" secondItem="gBa-yp-Vay" secondAttribute="trailing" constant="85" id="mxX-MU-hhe"/>
+                            <constraint firstItem="bvK-zn-OQL" firstAttribute="trailing" secondItem="gBa-yp-Vay" secondAttribute="trailing" id="wYA-UG-6MT"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="y2z-77-Efr"/>
@@ -398,6 +407,7 @@
                         <outlet property="subtitleOffsetLabel" destination="sdy-Ct-qqE" id="T7K-0i-fWz"/>
                         <outlet property="topContainerTopConstraint" destination="Fci-tM-vHq" id="arl-Gk-n2l"/>
                         <outlet property="topContainerView" destination="ybH-zD-Jm7" id="lb7-bU-vvO"/>
+                        <outlet property="videoTitleLabel" destination="bvK-zn-OQL" id="NzL-8s-lKa"/>
                         <segue destination="ZRs-dg-RYA" kind="presentation" identifier="SubtitleSelection" animates="NO" id="Wwn-oU-zpb"/>
                     </connections>
                 </viewController>
@@ -407,7 +417,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="RgE-wg-KVk"/>
+        <segue reference="Wwn-oU-zpb"/>
         <segue reference="oZF-2H-7PK"/>
         <segue reference="WnN-Ku-xQA"/>
     </inferredMetricsTieBreakers>
