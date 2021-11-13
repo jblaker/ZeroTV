@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *subtitleOptions;
 @property (nonatomic, copy) NSString *searchTerm;
 @property (nonatomic, copy) NSString *favoriteGroupName;
+@property (nonatomic, copy) NSString *programName;
 
 @end
 

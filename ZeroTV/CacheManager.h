@@ -9,6 +9,7 @@
 
 extern NSString * _Nonnull const kCachedSubFilename;
 extern NSString * _Nonnull const kCachedManifestFilename;
+extern NSString * _Nonnull const kCachedEPAFilename;
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,6 +34,9 @@
 		E969162E25914AF6005D5217 /* StreamingGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E969162D25914AF6005D5217 /* StreamingGroup.m */; };
 		E969163225914B2A005D5217 /* StreamInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E969163125914B2A005D5217 /* StreamInfo.m */; };
 		E969163625914E36005D5217 /* StreamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E969163525914E36005D5217 /* StreamsViewController.m */; };
+		E9EE3182273F7B3F002E4DCF /* EPGManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E9EE3181273F7B3F002E4DCF /* EPGManager.m */; };
+		E9EE3185273F7C31002E4DCF /* EPGChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9EE3184273F7C31002E4DCF /* EPGChannel.m */; };
+		E9EE3188273F7CB5002E4DCF /* EPGProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = E9EE3187273F7CB5002E4DCF /* EPGProgram.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +113,12 @@
 		E969163125914B2A005D5217 /* StreamInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StreamInfo.m; sourceTree = "<group>"; };
 		E969163425914E36005D5217 /* StreamsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamsViewController.h; sourceTree = "<group>"; };
 		E969163525914E36005D5217 /* StreamsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StreamsViewController.m; sourceTree = "<group>"; };
+		E9EE3180273F7B3F002E4DCF /* EPGManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPGManager.h; sourceTree = "<group>"; };
+		E9EE3181273F7B3F002E4DCF /* EPGManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EPGManager.m; sourceTree = "<group>"; };
+		E9EE3183273F7C31002E4DCF /* EPGChannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPGChannel.h; sourceTree = "<group>"; };
+		E9EE3184273F7C31002E4DCF /* EPGChannel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EPGChannel.m; sourceTree = "<group>"; };
+		E9EE3186273F7CB5002E4DCF /* EPGProgram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPGProgram.h; sourceTree = "<group>"; };
+		E9EE3187273F7CB5002E4DCF /* EPGProgram.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EPGProgram.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +225,7 @@
 				E903E86725979D0200F754A2 /* EpisodeManager.m */,
 				E91D1248261FD452009F3DA1 /* ProgressView.h */,
 				E91D1247261FD452009F3DA1 /* ProgressView.m */,
+				E9EE317F273F7B25002E4DCF /* EPG */,
 				E931817A259173840003D686 /* VLC */,
 				E969161125914098005D5217 /* Main.storyboard */,
 				E96916142591409A005D5217 /* Assets.xcassets */,
@@ -225,6 +235,19 @@
 				E969161A2591409A005D5217 /* main.m */,
 			);
 			path = ZeroTV;
+			sourceTree = "<group>";
+		};
+		E9EE317F273F7B25002E4DCF /* EPG */ = {
+			isa = PBXGroup;
+			children = (
+				E9EE3180273F7B3F002E4DCF /* EPGManager.h */,
+				E9EE3181273F7B3F002E4DCF /* EPGManager.m */,
+				E9EE3183273F7C31002E4DCF /* EPGChannel.h */,
+				E9EE3184273F7C31002E4DCF /* EPGChannel.m */,
+				E9EE3186273F7CB5002E4DCF /* EPGProgram.h */,
+				E9EE3187273F7CB5002E4DCF /* EPGProgram.m */,
+			);
+			path = EPG;
 			sourceTree = "<group>";
 		};
 		EDC6EF9F65FAAFC752B9DAC2 /* Pods */ = {
@@ -355,6 +378,7 @@
 				E903E83F25940AD100F754A2 /* OpenSubtitlesAdapter.m in Sources */,
 				E903E84B2594643C00F754A2 /* SearchResultsController.m in Sources */,
 				E903E8432594149E00F754A2 /* DownloadUploadManager.m in Sources */,
+				E9EE3188273F7CB5002E4DCF /* EPGProgram.m in Sources */,
 				E903E84725941C5A00F754A2 /* M3U8Manager.m in Sources */,
 				E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */,
 				E91D1249261FD452009F3DA1 /* ProgressView.m in Sources */,
@@ -362,6 +386,8 @@
 				E969162E25914AF6005D5217 /* StreamingGroup.m in Sources */,
 				E969163625914E36005D5217 /* StreamsViewController.m in Sources */,
 				E9318231259181440003D686 /* VLCPlaybackService.m in Sources */,
+				E9EE3185273F7C31002E4DCF /* EPGChannel.m in Sources */,
+				E9EE3182273F7B3F002E4DCF /* EPGManager.m in Sources */,
 				E969160D25914098005D5217 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

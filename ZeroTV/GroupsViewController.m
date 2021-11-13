@@ -13,6 +13,7 @@
 #import "CacheManager.h"
 #import "FavoritesViewController.h"
 #import "UIViewController+Additions.h"
+#import "EPGManager.h"
 
 static NSString * const kTableCellId = @"TableViewCell";
 static NSString * const kStreamsSegue = @"ShowStreams";
@@ -26,6 +27,7 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
 
 @property (nonatomic, strong) NSDictionary *groups;
 @property (nonatomic, strong) StreamingGroup *selectedGroup;
+@property (nonatomic, assign) BOOL refreshButtonPressed;
 
 @end
 
@@ -39,18 +41,13 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
     
     self.cachedDateLabel.text = nil;
     
-    BOOL useLocalFile = NO;
-    
-    if (useLocalFile)
-    {
-        [self useLocalFile];
-    }
-    else
-    {
-        [self fetchManifest:YES];
-    }
-    
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:kTableCellId];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(epaManagerReadyNotificationReceived:) name:kZeroTVEPAMangerReadyNotification object:nil];
+    
+    [self showSpinner:YES];
+    
+    [EPGManager fetchEPGData:YES];
 }
 
 - (void)setDeepLinkShowName:(NSString *)deepLinkShowName
@@ -203,11 +200,26 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
     }
 }
 
+#pragma mark - Notifications
+
+- (void)epaManagerReadyNotificationReceived:(NSNotification *)notification
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self showSpinner:NO];
+        
+        //[self useLocalFile];
+        [self fetchManifest:self.refreshButtonPressed];
+        
+        self.refreshButtonPressed = NO;
+    });
+}
+
 #pragma mark - IBActions
 
 - (IBAction)refreshButtonPressed:(id)sender
 {
-    [self fetchManifest:NO];
+    self.refreshButtonPressed = YES;
+    [EPGManager fetchEPGData:NO];
 }
 
 #pragma mark - UITableViewDataSource

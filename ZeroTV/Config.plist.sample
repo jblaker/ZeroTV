@@ -8,6 +8,8 @@
 	<string></string>
 	<key>ManifestURL</key>
 	<string></string>
+	<key>EPAURL</key>
+	<string></string>
 	<key>FavoriteShows</key>
 	<array>
 		<dict>

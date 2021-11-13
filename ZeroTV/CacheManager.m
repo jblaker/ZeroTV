@@ -9,6 +9,7 @@
 
 NSString * const kCachedSubFilename = @"cached.webvtt";
 NSString * const kCachedManifestFilename = @"manifest.m3u8";
+NSString * const kCachedEPAFilename = @"EPA.xml";
 
 @implementation CacheManager
 

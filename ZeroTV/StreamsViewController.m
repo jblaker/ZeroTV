@@ -13,6 +13,8 @@
 #import "SearchResultsController.h"
 #import "UIViewController+Additions.h"
 #import "EpisodeManager.h"
+#import "EPGManager.h"
+#import "EPGProgram.h"
 
 #import "VLCPlaybackService.h"
 #import "VLCFullscreenMovieTVViewController.h"
@@ -133,6 +135,36 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     }
 }
 
+- (void)findProgramForCurrentTime:(NSArray<EPGProgram *> *)programs
+{
+    EPGProgram *currentProgram;
+
+    for (EPGProgram *program in programs)
+    {
+        NSTimeInterval currentTime = [NSDate date].timeIntervalSince1970;
+        
+        if (currentTime >= program.startTimestamp && currentTime <= program.stopTimestamp)
+        {
+            currentProgram = program;
+            break;
+        }
+    }
+    
+    // Determine furthest date out
+//    EPGProgram *lastProgram = programs.lastObject;
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:lastProgram.startTimestamp];
+//    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+//    dateFormatter.dateStyle = NSDateFormatterLongStyle;
+//    dateFormatter.timeStyle = NSDateFormatterLongStyle;
+//    NSLog(@"__DEBUG %@", [dateFormatter stringFromDate:date]);
+    
+    if (currentProgram)
+    {
+        // TODO: Set up a timer or something using the stopTimestamp to update the program name
+        self.selectedStream.programName = currentProgram.programName;
+    }
+}
+
 - (void)setUpPlayer:(StreamInfo *)selectedStream
 {
     NSURL *url = [NSURL URLWithString:selectedStream.streamURL];
@@ -143,6 +175,12 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
         return;
     }
     
+    if (!selectedStream.isVOD)
+    {
+        NSArray *programs = [EPGManager programsForChannelName:selectedStream.name];
+        [self findProgramForCurrentTime:programs];
+    }
+
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     VLCMedia *media = [VLCMedia mediaWithURL:url];
     VLCMediaList *medialist = [[VLCMediaList alloc] init];
