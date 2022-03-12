@@ -13,6 +13,7 @@
 #import "SearchResultsController.h"
 #import "UIViewController+Additions.h"
 #import "EpisodeManager.h"
+#import "BookmarkManager.h"
 
 #import "VLCPlaybackService.h"
 #import "VLCFullscreenMovieTVViewController.h"
@@ -21,7 +22,7 @@
 
 static NSString * const kTableCellId = @"TableViewCell";
 static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
-NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
+static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 
 @interface StreamsViewController ()<UITableViewDelegate, UITableViewDataSource, SubtitlesViewControllerDelegate, SearchResultsControllerDelegate>
 
@@ -161,7 +162,7 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
         }
         else
         {
-            [self dismissViewControllerAnimated:NO completion:^{
+            [strongSelf dismissViewControllerAnimated:NO completion:^{
                 NSLog(@"Video did not play successfully");
             }];
         }
@@ -252,16 +253,39 @@ NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Options" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Mark as watched" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [EpisodeManager markAsWatched:selectedStream];
-        [self.tableView reloadData];
-    }]];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Mark as un-watched" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [EpisodeManager markAsUnwatched:selectedStream];
-        [self.tableView reloadData];
-    }]];
-    
+    if ([self.selectedGroup.name isEqualToString:@"Movie VOD"])
+    {
+        if ([BookmarkManager streamIsBookmarked:selectedStream])
+        {
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Remove Bookmark" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [BookmarkManager removeBookmarForStream:selectedStream];
+            }]];
+        }
+        else
+        {
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Add Bookmark" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [BookmarkManager addBookmarkForStream:selectedStream];
+            }]];
+        }
+    }
+    else
+    {
+        if ([EpisodeManager episodeWasWatched:selectedStream])
+        {
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Mark as un-watched" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [EpisodeManager markAsUnwatched:selectedStream];
+                [self.tableView reloadData];
+            }]];
+        }
+        else
+        {
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Mark as watched" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [EpisodeManager markAsWatched:selectedStream];
+                [self.tableView reloadData];
+            }]];
+        }
+    }
+
     [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     
     [self presentViewController:alertController animated:YES completion:nil];
