@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface StreamingGroup : NSObject
 
 - (instancetype)initWithName:(NSString *)name NS_DESIGNATED_INITIALIZER;
+- (void)filterDuplicates:(void (^)(void))completion;
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSMutableArray<StreamInfo *> *streams;

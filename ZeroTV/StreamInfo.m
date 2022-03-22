@@ -32,13 +32,19 @@
 {
     NSString *name = [coder decodeObjectForKey:@"name"];
     NSString *streamURL = [coder decodeObjectForKey:@"streamURL"];
-    return [self initWithName:name streamURL:streamURL];
+    NSNumber *isVOD = [coder decodeObjectForKey:@"isVOD"] ?: @(YES);
+    
+    StreamInfo *streamInfo = [self initWithName:name streamURL:streamURL];
+    streamInfo.isVOD = isVOD.boolValue;
+    
+    return streamInfo;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeObject:self.streamURL forKey:@"streamURL"];
+    [coder encodeObject:@(self.isVOD) forKey:@"isVOD"];
 }
 
 - (BOOL)isEqual:(id)object

@@ -271,7 +271,11 @@ static NSString * const kBookmarksSegue = @"ShowBookmarks";
     else
     {
         self.selectedGroup = self.groups.allValues[indexPath.row];
-        [self performSegueWithIdentifier:kStreamsSegue sender:nil];
+        [self showSpinner:YES];
+        [self.selectedGroup filterDuplicates:^{
+            [self showSpinner:NO];
+            [self performSegueWithIdentifier:kStreamsSegue sender:nil];
+        }];
     }
 }
 
