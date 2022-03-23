@@ -7,10 +7,12 @@
 
 #import "SearchResultsController.h"
 #import "StreamInfo.h"
+#import "BookmarkManager.h"
 
 @interface SearchResultsController ()
 
 @property (nonatomic, strong) NSMutableArray *filteredStreams;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressRecognizer;
 
 @end
 
@@ -20,6 +22,7 @@
 {
     [super viewDidLoad];
     
+    [self setUpLongPressGesture];
     [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:@"TableCell"];
 }
 
@@ -28,6 +31,50 @@
     _streams = streams;
     self.filteredStreams = streams.mutableCopy;
     [self.tableView reloadData];
+}
+
+- (void)setUpLongPressGesture
+{
+    self.longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressHandler:)];
+    [self.view addGestureRecognizer:self.longPressRecognizer];
+}
+
+- (void)longPressHandler:(UILongPressGestureRecognizer *)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
+        CGPoint location = [gesture locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+        StreamInfo *stream = self.filteredStreams[indexPath.row];
+        [self showMarkAsOptions:stream];
+    }
+}
+
+- (void)showMarkAsOptions:(StreamInfo *)selectedStream
+{
+    if (!selectedStream)
+    {
+        return;
+    }
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Options" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    if ([BookmarkManager streamIsBookmarked:selectedStream])
+    {
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Remove Bookmark" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [BookmarkManager removeBookmarForStream:selectedStream];
+        }]];
+    }
+    else
+    {
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Add Bookmark" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [BookmarkManager addBookmarkForStream:selectedStream];
+        }]];
+    }
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - Table view data source

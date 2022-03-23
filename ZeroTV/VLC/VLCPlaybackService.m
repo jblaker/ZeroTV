@@ -81,20 +81,20 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 {
     if (self.playerIsSetup)
     {
-        NSLog(@"%s: player is already setup, bailing out", __PRETTY_FUNCTION__);
+        //NSLog(@"%s: player is already setup, bailing out", __PRETTY_FUNCTION__);
         return;
     }
 
     BOOL ret = [self.playbackSessionManagementLock tryLock];
     if (!ret)
     {
-        NSLog(@"%s: locking failed", __PRETTY_FUNCTION__);
+        //NSLog(@"%s: locking failed", __PRETTY_FUNCTION__);
         return;
     }
 
     if (!self.mediaList)
     {
-        NSLog(@"%s: no URL and no media list set, stopping playback", __PRETTY_FUNCTION__);
+        //NSLog(@"%s: no URL and no media list set, stopping playback", __PRETTY_FUNCTION__);
         [self.playbackSessionManagementLock unlock];
         [self stopPlayback];
         return;
@@ -137,7 +137,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
     BOOL ret = [self.playbackSessionManagementLock tryLock];
     if (!ret)
     {
-        NSLog(@"%s: locking failed", __PRETTY_FUNCTION__);
+        //NSLog(@"%s: locking failed", __PRETTY_FUNCTION__);
         return;
     }
 
@@ -185,7 +185,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
     }
     if (subtitleURL)
     {
-        NSLog(@"Using sub at %@", subtitleURL.absoluteString);
+        //NSLog(@"Using sub at %@", subtitleURL.absoluteString);
         [self.mediaPlayer addPlaybackSlave:subtitleURL type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
     }
 }
@@ -204,7 +204,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
     self.isInFillToScreen = NO; // reset _isInFillToScreen after playback is finished
     if (!ret)
     {
-        NSLog(@"%s: locking failed", __PRETTY_FUNCTION__);
+        //NSLog(@"%s: locking failed", __PRETTY_FUNCTION__);
         return;
     }
 
@@ -215,7 +215,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
             [self.mediaPlayer removeObserver:self forKeyPath:@"remainingTime"];
         }
         @catch (NSException *exception) {
-            NSLog(@"we weren't an observer yet");
+            //NSLog(@"we weren't an observer yet");
         }
 
         if (self.mediaPlayer.media)
@@ -286,7 +286,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
         }
         case VLCMediaPlayerStateError:
         {
-            NSLog(@"Playback failed");
+            //NSLog(@"Playback failed");
             dispatch_async(dispatch_get_main_queue(),^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:kVLCPlaybackServicePlaybackDidFail object:self];
             });

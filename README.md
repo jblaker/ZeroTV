@@ -15,6 +15,7 @@ ZeroTV is an IPTV application for tvOS. It relies on [TVVLCKit](https://code.vid
 * Scrubbing (for non-linear content)
 * Search
 * Manifest will be cached and is easily updated within app
+* Bookmarking specific videos
 
 ## Setup
 
@@ -22,10 +23,6 @@ ZeroTV is an IPTV application for tvOS. It relies on [TVVLCKit](https://code.vid
 * Add your IPTV manifest URL to `ManifestURL` in `Config.plist`
 * Add your OpenSubtitles.org API Key to `OpenSubtitlesAPIKey` in `Config.plist`
 * Configure the `FavoriteShows` array in `Config.plist` with the titles of your favorite shows.
-
-## Possible Future Features
-
-* Bookmarking specific episodes
 
 ## License
 

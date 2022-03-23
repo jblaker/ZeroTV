@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="19455" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TaA-2f-xmF">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="19529" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TaA-2f-xmF">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -67,6 +67,7 @@
                         <segue destination="Qs4-K0-fa5" kind="show" identifier="ShowStreams" animates="NO" id="GqQ-Do-qOU"/>
                         <segue destination="kVA-cF-Yjn" kind="show" identifier="ShowFavorites" animates="NO" id="WnN-Ku-xQA"/>
                         <segue destination="kVA-cF-Yjn" kind="show" identifier="ShowFavoritesNA" animates="NO" id="ajP-de-yN1"/>
+                        <segue destination="f3o-kh-8wb" kind="show" identifier="ShowBookmarks" id="nDR-TH-VtJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -111,6 +112,45 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQh-az-hUg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2160" y="1392"/>
+        </scene>
+        <!--Bookmarks View Controller-->
+        <scene sceneID="REJ-GV-Ya4">
+            <objects>
+                <viewController id="f3o-kh-8wb" customClass="BookmarksViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bDG-Y5-9jd"/>
+                        <viewControllerLayoutGuide type="bottom" id="HeF-c0-4T2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="m6b-pi-SBs">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="66" sectionFooterHeight="66" translatesAutoresizingMaskIntoConstraints="NO" id="gE5-OF-zs5">
+                                <rect key="frame" x="80" y="205" width="1760" height="815"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="f3o-kh-8wb" id="7Qz-D7-Mrc"/>
+                                    <outlet property="delegate" destination="f3o-kh-8wb" id="0di-c1-Hy6"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="1Vp-eN-aqa"/>
+                        <constraints>
+                            <constraint firstItem="gE5-OF-zs5" firstAttribute="trailing" secondItem="1Vp-eN-aqa" secondAttribute="trailing" id="1IY-Ix-Xcn"/>
+                            <constraint firstItem="1Vp-eN-aqa" firstAttribute="bottom" secondItem="gE5-OF-zs5" secondAttribute="bottom" id="JW7-ui-ayM"/>
+                            <constraint firstItem="gE5-OF-zs5" firstAttribute="leading" secondItem="1Vp-eN-aqa" secondAttribute="leading" id="OjC-Oe-mDV"/>
+                            <constraint firstItem="gE5-OF-zs5" firstAttribute="top" secondItem="1Vp-eN-aqa" secondAttribute="top" id="zh1-c9-r4g"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="sa3-cC-4mb"/>
+                    <connections>
+                        <outlet property="tableView" destination="gE5-OF-zs5" id="kAt-Ri-phT"/>
+                        <segue destination="svt-SE-Q6i" kind="presentation" identifier="StreamPlayback" id="X5V-9v-4dH"/>
+                        <segue destination="ZRs-dg-RYA" kind="presentation" identifier="SubtitleSelection" id="SDR-eL-Viv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b3b-Ra-vHr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2160" y="2783"/>
         </scene>
         <!--Streams View Controller-->
         <scene sceneID="F6U-JX-yQ5">
@@ -417,8 +457,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Wwn-oU-zpb"/>
-        <segue reference="oZF-2H-7PK"/>
+        <segue reference="rqD-MN-y4w"/>
+        <segue reference="SDR-eL-Viv"/>
+        <segue reference="GqQ-Do-qOU"/>
         <segue reference="WnN-Ku-xQA"/>
     </inferredMetricsTieBreakers>
     <resources>

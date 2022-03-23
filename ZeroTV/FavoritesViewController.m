@@ -12,7 +12,6 @@
 
 static NSString * const kStreamsSegue = @"ShowStreams";
 static NSString * const kStreamsNASegue = @"ShowStreamsNA";
-static NSString * const kTableCellId = @"TableViewCell";
 
 @interface FavoritesViewController ()
 

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithName:(NSString *)name streamURL:(NSString *)streamURL NS_DESIGNATED_INITIALIZER;
 
+@property (nonatomic, assign) NSInteger index;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *streamURL;
 @property (nonatomic, assign) BOOL didDownloadSubFile;
@@ -20,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *subtitleOptions;
 @property (nonatomic, copy) NSString *searchTerm;
 @property (nonatomic, copy) NSString *favoriteGroupName;
+@property (nonatomic, strong) NSMutableArray *alternateStreamURLs;
 
 @end
 

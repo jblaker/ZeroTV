@@ -14,10 +14,10 @@
 #import "FavoritesViewController.h"
 #import "UIViewController+Additions.h"
 
-static NSString * const kTableCellId = @"TableViewCell";
 static NSString * const kStreamsSegue = @"ShowStreams";
 static NSString * const kFavoritesSegue = @"ShowFavorites";
 static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
+static NSString * const kBookmarksSegue = @"ShowBookmarks";
 
 @interface GroupsViewController ()
 
@@ -221,7 +221,7 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
 {
     if (section == 0)
     {
-        return 1;
+        return 2;
     }
     return self.groups.allKeys.count;
 }
@@ -232,7 +232,14 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
     
     if (indexPath.section == 0)
     {
-        cell.textLabel.text = @"Favorite Shows";
+        if (indexPath.row == 0)
+        {
+            cell.textLabel.text = @"Favorite Shows";
+        }
+        if (indexPath.row == 1)
+        {
+            cell.textLabel.text = @"Bookmarks";
+        }
     }
     else
     {
@@ -251,12 +258,23 @@ static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";
 
     if (indexPath.section == 0)
     {
-        [self performSegueWithIdentifier:kFavoritesSegue sender:nil];
+        if (indexPath.row == 0)
+        {
+            [self performSegueWithIdentifier:kFavoritesSegue sender:nil];
+        }
+        if (indexPath.row == 1)
+        {
+            [self performSegueWithIdentifier:kBookmarksSegue sender:nil];
+        }
     }
     else
     {
         self.selectedGroup = self.groups.allValues[indexPath.row];
-        [self performSegueWithIdentifier:kStreamsSegue sender:nil];
+        [self showSpinner:YES];
+        [self.selectedGroup filterDuplicates:^{
+            [self showSpinner:NO];
+            [self performSegueWithIdentifier:kStreamsSegue sender:nil];
+        }];
     }
 }
 

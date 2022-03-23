@@ -52,6 +52,7 @@ static NSString * const kLineInfoPrefix = @"#EXTINF:";
 
     StreamingGroup *currentGroup;
     NSString *streamName;
+    NSInteger counter = 0;
     
     for (NSString *line in lines)
     {
@@ -101,11 +102,13 @@ static NSString * const kLineInfoPrefix = @"#EXTINF:";
             if (streamName)
             {
                 StreamInfo *streamInfo = [[StreamInfo alloc] initWithName:streamName streamURL:line];
+                streamInfo.index = counter;
                 if ([currentGroup.name isEqualToString:@"TV VOD"] || [currentGroup.name isEqualToString:@"Movie VOD"])
                 {
                     streamInfo.isVOD = YES;
                 }
                 [currentGroup.streams addObject:streamInfo];
+                counter += 1;
             }
         }
     }
