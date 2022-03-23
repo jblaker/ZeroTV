@@ -8,6 +8,8 @@
 #import "StreamingGroup.h"
 #import "StreamInfo.h"
 
+#define LOG_TIME 1
+
 @interface StreamingGroup ()
 
 @property (nonatomic, assign) BOOL hasFilteredStreams;
@@ -46,7 +48,9 @@
     self.filteredStreams = @[].mutableCopy;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        //NSTimeInterval startTime = [NSDate date].timeIntervalSince1970;
+#if LOG_TIME
+        NSTimeInterval startTime = [NSDate date].timeIntervalSince1970;
+#endif
         
         self.streams = [self.streams sortedArrayUsingComparator:^NSComparisonResult(StreamInfo *  _Nonnull obj1, StreamInfo *  _Nonnull obj2) {
             return [obj1.name compare:obj2.name];
@@ -68,11 +72,16 @@
             }
         }
         
-        //NSTimeInterval endTime = [NSDate date].timeIntervalSince1970;
+        self.filteredStreams = [self.filteredStreams sortedArrayUsingComparator:^NSComparisonResult(StreamInfo *  _Nonnull obj1, StreamInfo *  _Nonnull obj2) {
+            return [@(obj1.index) compare:@(obj2.index)];
+        }].mutableCopy;
         
-        //NSTimeInterval timeDifference = endTime - startTime;
-        //NSInteger countDifference = self.streams.count - self.filteredStreams.count;
-        //NSLog(@"Filtered %li duplicates in %f seconds", (long)countDifference, timeDifference);
+#if LOG_TIME
+        NSTimeInterval endTime = [NSDate date].timeIntervalSince1970;
+        NSTimeInterval timeDifference = endTime - startTime;
+        NSInteger countDifference = self.streams.count - self.filteredStreams.count;
+        NSLog(@"Filtered %li duplicates in %f seconds", (long)countDifference, timeDifference);
+#endif
         
         self.streams = self.filteredStreams.mutableCopy;
         self.filteredStreams = nil;
@@ -107,11 +116,11 @@
     
     if (comparison == NSOrderedAscending)
     {
-        //NSLog(@"%@ comes before search item %@", midStream.name, streamInfo.name);
+        //NSLog(@"%@ comes before search item %@", midStream.name.lowercaseString, streamInfo.name.lowercaseString);
         return [self streamInfoBinarySearchWithLowerBounds:lowerBounds upperBounds:upperBounds-1 streamInfo:streamInfo];
     }
     
-    //NSLog(@"%@ comes after search item %@", midStream.name, streamInfo.name);
+    //NSLog(@"%@ comes after search item %@", midStream.name.lowercaseString, streamInfo.name.lowercaseString);
     return [self streamInfoBinarySearchWithLowerBounds:mid+1 upperBounds:upperBounds streamInfo:streamInfo];
     
 }
