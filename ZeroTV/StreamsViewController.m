@@ -122,7 +122,7 @@
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Options" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    if ([self.selectedGroup.name isEqualToString:@"Movie VOD"])
+    if ([self.selectedGroup.name isEqualToString:@"Movie VOD"] || [self.selectedGroup.name isEqualToString:@"TV VOD"])
     {
         if ([BookmarkManager streamIsBookmarked:selectedStream])
         {
@@ -137,7 +137,8 @@
             }]];
         }
     }
-    else
+    
+    if ([self.selectedGroup.name isEqualToString:@"TV VOD"] || self.selectedGroup.isFavorite)
     {
         if ([EpisodeManager episodeWasWatched:selectedStream])
         {
@@ -155,9 +156,12 @@
         }
     }
 
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    if (alertController.actions.count > 0)
+    {
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     
-    [self presentViewController:alertController animated:YES completion:nil];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - IBAction
