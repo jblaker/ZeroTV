@@ -8,7 +8,7 @@
 #import "StreamingGroup.h"
 #import "StreamInfo.h"
 
-#define LOG_TIME 1
+#define LOG_TIME 0
 
 @interface StreamingGroup ()
 

@@ -34,9 +34,11 @@
     NSString *name = [coder decodeObjectForKey:@"name"];
     NSString *streamURL = [coder decodeObjectForKey:@"streamURL"];
     NSNumber *isVOD = [coder decodeObjectForKey:@"isVOD"] ?: @(YES);
+    NSMutableArray *alternateStreamURLs = [coder decodeObjectForKey:@"alternateStreamURLs"];
     
     StreamInfo *streamInfo = [self initWithName:name streamURL:streamURL];
     streamInfo.isVOD = isVOD.boolValue;
+    streamInfo.alternateStreamURLs = alternateStreamURLs;
     
     return streamInfo;
 }
@@ -46,6 +48,7 @@
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeObject:self.streamURL forKey:@"streamURL"];
     [coder encodeObject:@(self.isVOD) forKey:@"isVOD"];
+    [coder encodeObject:self.alternateStreamURLs forKey:@"alternateStreamURLs"];
 }
 
 - (BOOL)isEqual:(id)object

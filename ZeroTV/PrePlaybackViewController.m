@@ -69,34 +69,72 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 
 - (void)setUpPlayer:(StreamInfo *)selectedStream
 {
-    NSURL *url = [NSURL URLWithString:selectedStream.streamURL];
-
-    if (!url)
+    if (selectedStream.alternateStreamURLs.count > 0)
     {
-        NSLog(@"Couldn't create URL!");
-        return;
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Options" message:@"This video has multiple sources available." preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        NSURL *url = [NSURL URLWithString:selectedStream.streamURL];
+        if (url)
+        {
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Option 1" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                //NSLog(@"Selected option %@", url.absoluteString);
+                [self setUpPlayerWithURL:url];
+            }]];
+        }
+        
+        NSInteger counter = 2;
+        for (NSString *urlStr in selectedStream.alternateStreamURLs)
+        {
+            NSURL *url = [NSURL URLWithString:urlStr];
+            if (url)
+            {
+                NSString *optionName = [NSString stringWithFormat:@"Option %li", counter];
+                [alertController addAction:[UIAlertAction actionWithTitle:optionName style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    //NSLog(@"Selected option %@", url.absoluteString);
+                    [self setUpPlayerWithURL:url];
+                }]];
+            }
+            counter += 1;
+        }
+        
+        [self presentViewController:alertController animated:YES completion:nil];
     }
-    
+    else
+    {
+        NSURL *url = [NSURL URLWithString:selectedStream.streamURL];
+
+        if (!url)
+        {
+            //NSLog(@"Couldn't create URL!");
+            return;
+        }
+        
+        [self setUpPlayerWithURL:url];
+    }
+}
+
+- (void)setUpPlayerWithURL:(NSURL *)url
+{
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     VLCMedia *media = [VLCMedia mediaWithURL:url];
     VLCMediaList *medialist = [[VLCMediaList alloc] init];
     [medialist addMedia:media];
     
     __weak typeof(self) weakSelf = self;
-    [vpc playMediaList:medialist hasSubs:selectedStream.didDownloadSubFile completion:^(BOOL success, float playbackPosition) {
+    [vpc playMediaList:medialist hasSubs:self.selectedStream.didDownloadSubFile completion:^(BOOL success, float playbackPosition) {
         
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
         if (success)
         {
-            NSLog(@"Video playback successful, %f complete", playbackPosition);
+            //NSLog(@"Video playback successful, %f complete", playbackPosition);
             [EpisodeManager episodeDidComplete:strongSelf.selectedStream withPlaybackPosition:playbackPosition];
             [strongSelf.tableView reloadData];
         }
         else
         {
             [strongSelf dismissViewControllerAnimated:NO completion:^{
-                NSLog(@"Video did not play successfully");
+                //NSLog(@"Video did not play successfully");
             }];
         }
 

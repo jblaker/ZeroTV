@@ -62,6 +62,11 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (StreamInfo *)streamAtIndexPath:(NSIndexPath *)indexPath
+{
+    return self.bookmarks[indexPath.row];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

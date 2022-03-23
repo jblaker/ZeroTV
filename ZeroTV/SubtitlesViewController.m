@@ -16,6 +16,8 @@
 
 @import TVVLCKit;
 
+static NSString * const kSubtitleTableCellId = @"SubtitleTableCell";
+
 @interface SubtitlesViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @end
@@ -58,7 +60,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTableCellId];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSubtitleTableCellId];
     
     if (indexPath.section == 0)
     {

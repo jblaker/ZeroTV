@@ -38,7 +38,7 @@ NSString * const kBookmarksDataCache = @"bookmarks";
     
     BOOL success = [CacheManager cacheArray:updatedBookmarks filename:kBookmarksDataCache];
     
-    NSLog(@"Did update bookmarks : %@", success ? @"YES" : @"NO");
+    //NSLog(@"Did update bookmarks : %@", success ? @"YES" : @"NO");
 }
 
 + (void)removeBookmarForStream:(StreamInfo *)stream
@@ -58,7 +58,7 @@ NSString * const kBookmarksDataCache = @"bookmarks";
     
     BOOL success = [CacheManager cacheArray:updatedBookmarks filename:kBookmarksDataCache];
     
-    NSLog(@"Did update bookmarks : %@", success ? @"YES" : @"NO");
+    //NSLog(@"Did update bookmarks : %@", success ? @"YES" : @"NO");
 }
 
 + (BOOL)streamIsBookmarked:(StreamInfo *)stream

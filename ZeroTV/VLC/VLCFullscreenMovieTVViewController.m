@@ -244,12 +244,12 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     
     if (self.gamepad)
     {
-        NSLog(@"Successfully set up game controller");
+        //NSLog(@"Successfully set up game controller");
         return YES;
     }
     else
     {
-        NSLog(@"Failed to set up game controller");
+        //NSLog(@"Failed to set up game controller");
         return NO;
     }
 }
@@ -745,7 +745,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         
         if (index >= 0 && index < playbackService.mediaPlayer.videoSubTitlesIndexes.count)
         {
-            NSLog(@"Selected elementary subtitle at index %li", (long)index);
+            //NSLog(@"Selected elementary subtitle at index %li", (long)index);
             playbackService.mediaPlayer.currentVideoSubTitleIndex = [playbackService.mediaPlayer.videoSubTitlesIndexes[index] intValue];
         }
         

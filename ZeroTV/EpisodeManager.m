@@ -69,7 +69,7 @@ NSString * const kProgressDataCache = @"progressData";
     
     BOOL success = [CacheManager cacheArray:newProgresses filename:kProgressDataCache];
     
-    NSLog(@"Did update episode progress : %@", success ? @"YES" : @"NO");
+    //NSLog(@"Did update episode progress : %@", success ? @"YES" : @"NO");
 }
 
 + (void)markAsWatched:(StreamInfo *)episode
@@ -88,7 +88,7 @@ NSString * const kProgressDataCache = @"progressData";
     
     BOOL success = [CacheManager cacheArray:watchedEps filename:kWatchedDataCache];
     
-    NSLog(@"Did update watched eps : %@", success ? @"YES" : @"NO");
+    //NSLog(@"Did update watched eps : %@", success ? @"YES" : @"NO");
 }
 
 + (void)markAsUnwatched:(StreamInfo *)episode
