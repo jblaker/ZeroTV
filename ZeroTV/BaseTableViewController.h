@@ -9,6 +9,8 @@
 
 @class StreamInfo;
 
+extern NSString * const _Nonnull kTableCellId;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BaseTableViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>

@@ -12,6 +12,8 @@
 
 @import TVVLCKit;
 
+NSString * const kTableCellId = @"TableViewCell";
+
 @interface BaseTableViewController ()
 
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;

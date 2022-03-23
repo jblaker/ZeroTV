@@ -5,11 +5,11 @@
 //  Created by Jeremy Blaker on 3/12/22.
 //
 
-#import "BaseTableViewController.h"
+#import "PrePlaybackViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BookmarksViewController : BaseTableViewController
+@interface BookmarksViewController : PrePlaybackViewController
 
 @end
 

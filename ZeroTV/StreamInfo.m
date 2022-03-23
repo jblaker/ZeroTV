@@ -24,6 +24,7 @@
     {
         _name = name;
         _streamURL = streamURL;
+        _alternateStreamURLs = @[].mutableCopy;
     }
     return self;
 }

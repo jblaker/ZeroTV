@@ -15,11 +15,14 @@
 		E903E85C25951FC500F754A2 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E85B25951FC500F754A2 /* FavoritesViewController.m */; };
 		E903E8642597988800F754A2 /* UIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E8632597988800F754A2 /* UIViewController+Additions.m */; };
 		E903E86825979D0200F754A2 /* EpisodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E86725979D0200F754A2 /* EpisodeManager.m */; };
+		E911F8F327DD0BD2005111A5 /* BookmarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E911F8F227DD0BD2005111A5 /* BookmarksViewController.m */; };
+		E911F8F627DD0C71005111A5 /* BookmarkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E911F8F527DD0C71005111A5 /* BookmarkManager.m */; };
 		E91D1249261FD452009F3DA1 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = E91D1247261FD452009F3DA1 /* ProgressView.m */; };
 		E9318231259181440003D686 /* VLCPlaybackService.m in Sources */ = {isa = PBXBuildFile; fileRef = E9318230259181440003D686 /* VLCPlaybackService.m */; };
 		E93182352591815F0003D686 /* VLCFullscreenMovieTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E93182342591815F0003D686 /* VLCFullscreenMovieTVViewController.m */; };
 		E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823B2591AA650003D686 /* SubtitlesViewController.m */; };
 		E93182402591AC630003D686 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823F2591AC630003D686 /* BaseTableViewController.m */; };
+		E93991AD27EB6C7B00D5F3A8 /* PrePlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E93991AC27EB6C7B00D5F3A8 /* PrePlaybackViewController.m */; };
 		E93BEA4626AD0BA700C381AF /* TVServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93BE9F026ACFA3B00C381AF /* TVServices.framework */; };
 		E93BEA4A26AD0BA700C381AF /* ContentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E93BEA4926AD0BA700C381AF /* ContentProvider.m */; };
 		E93BEA4E26AD0BA700C381AF /* Favorites.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E93BEA4526AD0BA700C381AF /* Favorites.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -77,6 +80,10 @@
 		E903E8632597988800F754A2 /* UIViewController+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additions.m"; sourceTree = "<group>"; };
 		E903E86625979D0200F754A2 /* EpisodeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EpisodeManager.h; sourceTree = "<group>"; };
 		E903E86725979D0200F754A2 /* EpisodeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EpisodeManager.m; sourceTree = "<group>"; };
+		E911F8F127DD0BD2005111A5 /* BookmarksViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookmarksViewController.h; sourceTree = "<group>"; };
+		E911F8F227DD0BD2005111A5 /* BookmarksViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookmarksViewController.m; sourceTree = "<group>"; };
+		E911F8F427DD0C71005111A5 /* BookmarkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookmarkManager.h; sourceTree = "<group>"; };
+		E911F8F527DD0C71005111A5 /* BookmarkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookmarkManager.m; sourceTree = "<group>"; };
 		E91D1247261FD452009F3DA1 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
 		E91D1248261FD452009F3DA1 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
 		E931822F259181440003D686 /* VLCPlaybackService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCPlaybackService.h; sourceTree = "<group>"; };
@@ -88,6 +95,8 @@
 		E931823B2591AA650003D686 /* SubtitlesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubtitlesViewController.m; sourceTree = "<group>"; };
 		E931823E2591AC630003D686 /* BaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
 		E931823F2591AC630003D686 /* BaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
+		E93991AB27EB6C7B00D5F3A8 /* PrePlaybackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrePlaybackViewController.h; sourceTree = "<group>"; };
+		E93991AC27EB6C7B00D5F3A8 /* PrePlaybackViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrePlaybackViewController.m; sourceTree = "<group>"; };
 		E93BE9F026ACFA3B00C381AF /* TVServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVServices.framework; path = System/Library/Frameworks/TVServices.framework; sourceTree = SDKROOT; };
 		E93BEA4526AD0BA700C381AF /* Favorites.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Favorites.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93BEA4826AD0BA700C381AF /* ContentProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContentProvider.h; sourceTree = "<group>"; };
@@ -194,8 +203,12 @@
 				E969160F25914098005D5217 /* GroupsViewController.m */,
 				E903E85A25951FC500F754A2 /* FavoritesViewController.h */,
 				E903E85B25951FC500F754A2 /* FavoritesViewController.m */,
+				E911F8F127DD0BD2005111A5 /* BookmarksViewController.h */,
+				E911F8F227DD0BD2005111A5 /* BookmarksViewController.m */,
 				E969163425914E36005D5217 /* StreamsViewController.h */,
 				E969163525914E36005D5217 /* StreamsViewController.m */,
+				E93991AB27EB6C7B00D5F3A8 /* PrePlaybackViewController.h */,
+				E93991AC27EB6C7B00D5F3A8 /* PrePlaybackViewController.m */,
 				E931823A2591AA650003D686 /* SubtitlesViewController.h */,
 				E931823B2591AA650003D686 /* SubtitlesViewController.m */,
 				E969162C25914AF6005D5217 /* StreamingGroup.h */,
@@ -214,6 +227,8 @@
 				E903E8572594FDFD00F754A2 /* CacheManager.m */,
 				E903E86625979D0200F754A2 /* EpisodeManager.h */,
 				E903E86725979D0200F754A2 /* EpisodeManager.m */,
+				E911F8F427DD0C71005111A5 /* BookmarkManager.h */,
+				E911F8F527DD0C71005111A5 /* BookmarkManager.m */,
 				E91D1248261FD452009F3DA1 /* ProgressView.h */,
 				E91D1247261FD452009F3DA1 /* ProgressView.m */,
 				E931817A259173840003D686 /* VLC */,
@@ -353,14 +368,17 @@
 				E93182402591AC630003D686 /* BaseTableViewController.m in Sources */,
 				E903E85C25951FC500F754A2 /* FavoritesViewController.m in Sources */,
 				E903E83F25940AD100F754A2 /* OpenSubtitlesAdapter.m in Sources */,
+				E911F8F627DD0C71005111A5 /* BookmarkManager.m in Sources */,
 				E903E84B2594643C00F754A2 /* SearchResultsController.m in Sources */,
 				E903E8432594149E00F754A2 /* DownloadUploadManager.m in Sources */,
 				E903E84725941C5A00F754A2 /* M3U8Manager.m in Sources */,
+				E911F8F327DD0BD2005111A5 /* BookmarksViewController.m in Sources */,
 				E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */,
 				E91D1249261FD452009F3DA1 /* ProgressView.m in Sources */,
 				E903E8642597988800F754A2 /* UIViewController+Additions.m in Sources */,
 				E969162E25914AF6005D5217 /* StreamingGroup.m in Sources */,
 				E969163625914E36005D5217 /* StreamsViewController.m in Sources */,
+				E93991AD27EB6C7B00D5F3A8 /* PrePlaybackViewController.m in Sources */,
 				E9318231259181440003D686 /* VLCPlaybackService.m in Sources */,
 				E969160D25914098005D5217 /* AppDelegate.m in Sources */,
 			);
@@ -401,14 +419,14 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
 				INFOPLIST_FILE = Favorites/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTV.Favorites;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTV.Favorites1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -421,14 +439,14 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
 				INFOPLIST_FILE = Favorites/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTV.Favorites;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTV.Favorites1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -556,7 +574,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
 				INFOPLIST_FILE = ZeroTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -579,7 +597,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
 				INFOPLIST_FILE = ZeroTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

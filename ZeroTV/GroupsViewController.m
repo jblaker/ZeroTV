@@ -14,7 +14,6 @@
 #import "FavoritesViewController.h"
 #import "UIViewController+Additions.h"
 
-static NSString * const kTableCellId = @"TableViewCell";
 static NSString * const kStreamsSegue = @"ShowStreams";
 static NSString * const kFavoritesSegue = @"ShowFavorites";
 static NSString * const kFavoritesNASegue = @"ShowFavoritesNA";

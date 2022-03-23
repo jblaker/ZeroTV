@@ -16,8 +16,6 @@
 
 @import TVVLCKit;
 
-static NSString * const kTableCellId = @"SubtitleTableCell";
-
 @interface SubtitlesViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @end

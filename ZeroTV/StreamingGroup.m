@@ -66,9 +66,14 @@
             
             NSInteger matchingIndex = [self streamInfoBinarySearchWithLowerBounds:0 upperBounds:self.filteredStreams.count-1 streamInfo:stream];
 
-            if (matchingIndex == -1)
+            if (matchingIndex == NSNotFound)
             {
                 [self.filteredStreams addObject:stream];
+            }
+            else
+            {
+                StreamInfo *matchingStream = self.filteredStreams[matchingIndex];
+                [matchingStream.alternateStreamURLs addObject:stream.streamURL];
             }
         }
         
@@ -100,7 +105,7 @@
 {
     if (lowerBounds > upperBounds)
     {
-        return -1;
+        return NSNotFound;
     }
     
     NSInteger mid = lowerBounds + (upperBounds - lowerBounds) / 2;

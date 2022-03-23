@@ -5,13 +5,13 @@
 //  Created by Jeremy Blaker on 12/21/20.
 //
 
-#import "BaseTableViewController.h"
+#import "PrePlaybackViewController.h"
 
 @class StreamingGroup;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface StreamsViewController : BaseTableViewController
+@interface StreamsViewController : PrePlaybackViewController
 
 @property (nonatomic, strong) StreamingGroup *selectedGroup;
 @property (nonatomic, strong) UIImage *backgroundImage;
