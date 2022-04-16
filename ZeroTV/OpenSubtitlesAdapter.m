@@ -92,7 +92,7 @@ NSString * const kAPIKeyKey = @"Api-Key";
         @"sub_format" : @"webvtt"
     };
 
-    NSURL *url = [NSURL URLWithString:@"https://www.opensubtitles.com/api/v1/download"];
+    NSURL *url = [NSURL URLWithString:@"https://api.opensubtitles.com/api/v1/download"];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
@@ -143,6 +143,11 @@ NSString * const kAPIKeyKey = @"Api-Key";
         NSDictionary *attributes = result[@"attributes"];
         NSString *type = result[@"type"];
         NSString *lang = attributes[@"language"];
+        
+        if ([type isEqual:NSNull.null] || [lang isEqual:NSNull.null])
+        {
+            continue;
+        }
         
         if ([type isEqualToString:@"subtitle"] && [lang isEqualToString:@"en"])
         {

@@ -107,10 +107,13 @@
 
 - (void)setUpMenuTapGesture
 {
-    self.menuButtonRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuButtonHandler:)];
-    self.menuButtonRecognizer.numberOfTapsRequired = 1;
-    self.menuButtonRecognizer.allowedPressTypes = @[ @(UIPressTypeMenu) ];
-    [self.searchController.view addGestureRecognizer:self.menuButtonRecognizer];
+    if (!self.menuButtonRecognizer)
+    {
+        self.menuButtonRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuButtonHandler:)];
+        self.menuButtonRecognizer.numberOfTapsRequired = 1;
+        self.menuButtonRecognizer.allowedPressTypes = @[ @(UIPressTypeMenu) ];
+        [self.searchController.view addGestureRecognizer:self.menuButtonRecognizer];
+    }
 }
 
 - (void)showMarkAsOptions:(StreamInfo *)selectedStream
@@ -181,9 +184,12 @@
         self.searchResultsController.delegate = self;
     }
     
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsController];
-    self.searchController.searchResultsUpdater = self.searchResultsController;
-    self.searchController.obscuresBackgroundDuringPresentation = YES;
+    if (!self.searchController)
+    {
+        self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsController];
+        self.searchController.searchResultsUpdater = self.searchResultsController;
+        self.searchController.obscuresBackgroundDuringPresentation = YES;
+    }
 
     [self setUpMenuTapGesture];
     
@@ -226,7 +232,7 @@
 - (void)didSelectStream:(StreamInfo *)streamInfo
 {
     self.selectedStream = streamInfo;
-    
+
     [self dismissViewControllerAnimated:NO completion:^{
         
         if (self.selectedStream.isVOD)
