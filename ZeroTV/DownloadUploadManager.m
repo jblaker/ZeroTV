@@ -12,8 +12,11 @@
 + (void)fetchSubtitleFileData:(NSURL *)url completionHandler:(void (^)(NSData * _Nullable, NSError * _Nullable))completionHandler
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
 
-    NSURLSessionDataTask *task = [NSURLSession.sharedSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if (error)
         {
