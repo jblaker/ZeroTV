@@ -1,0 +1,380 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E92CDAB32A61AC940015E4DC /* ZeroTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDAB22A61AC940015E4DC /* ZeroTVApp.swift */; };
+		E92CDAB52A61AC940015E4DC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDAB42A61AC940015E4DC /* ContentView.swift */; };
+		E92CDAB72A61AC960015E4DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92CDAB62A61AC960015E4DC /* Assets.xcassets */; };
+		E92CDABA2A61AC960015E4DC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92CDAB92A61AC960015E4DC /* Preview Assets.xcassets */; };
+		E92CDAC22A61ACC10015E4DC /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDAC12A61ACC10015E4DC /* ModelData.swift */; };
+		E92CDAC42A61AD700015E4DC /* StreamingGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDAC32A61AD700015E4DC /* StreamingGroup.swift */; };
+		E92CDAC62A61ADA30015E4DC /* StreamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDAC52A61ADA30015E4DC /* StreamInfo.swift */; };
+		E92CDAC82A61AF0A0015E4DC /* iptv.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = E92CDAC72A61AF090015E4DC /* iptv.m3u8 */; };
+		E92CDACC2A61B4C70015E4DC /* StreamingGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDACB2A61B4C70015E4DC /* StreamingGroupList.swift */; };
+		E92CDACE2A61B5C20015E4DC /* StreamInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDACD2A61B5C20015E4DC /* StreamInfoList.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E92CDAAF2A61AC940015E4DC /* ZeroTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E92CDAB22A61AC940015E4DC /* ZeroTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroTVApp.swift; sourceTree = "<group>"; };
+		E92CDAB42A61AC940015E4DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E92CDAB62A61AC960015E4DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E92CDAB92A61AC960015E4DC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E92CDAC12A61ACC10015E4DC /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		E92CDAC32A61AD700015E4DC /* StreamingGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingGroup.swift; sourceTree = "<group>"; };
+		E92CDAC52A61ADA30015E4DC /* StreamInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamInfo.swift; sourceTree = "<group>"; };
+		E92CDAC72A61AF090015E4DC /* iptv.m3u8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iptv.m3u8; sourceTree = "<group>"; };
+		E92CDACB2A61B4C70015E4DC /* StreamingGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingGroupList.swift; sourceTree = "<group>"; };
+		E92CDACD2A61B5C20015E4DC /* StreamInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamInfoList.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E92CDAAC2A61AC940015E4DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E92CDAA62A61AC940015E4DC = {
+			isa = PBXGroup;
+			children = (
+				E92CDAB12A61AC940015E4DC /* ZeroTV */,
+				E92CDAB02A61AC940015E4DC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E92CDAB02A61AC940015E4DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E92CDAAF2A61AC940015E4DC /* ZeroTV.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E92CDAB12A61AC940015E4DC /* ZeroTV */ = {
+			isa = PBXGroup;
+			children = (
+				E92CDAB22A61AC940015E4DC /* ZeroTVApp.swift */,
+				E92CDAC92A61B3F60015E4DC /* Views */,
+				E92CDAB62A61AC960015E4DC /* Assets.xcassets */,
+				E92CDAB82A61AC960015E4DC /* Preview Content */,
+				E92CDACA2A61B48B0015E4DC /* Model */,
+			);
+			path = ZeroTV;
+			sourceTree = "<group>";
+		};
+		E92CDAB82A61AC960015E4DC /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E92CDAB92A61AC960015E4DC /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E92CDAC92A61B3F60015E4DC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E92CDAB42A61AC940015E4DC /* ContentView.swift */,
+				E92CDACB2A61B4C70015E4DC /* StreamingGroupList.swift */,
+				E92CDACD2A61B5C20015E4DC /* StreamInfoList.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E92CDACA2A61B48B0015E4DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E92CDAC12A61ACC10015E4DC /* ModelData.swift */,
+				E92CDAC32A61AD700015E4DC /* StreamingGroup.swift */,
+				E92CDAC52A61ADA30015E4DC /* StreamInfo.swift */,
+				E92CDAC72A61AF090015E4DC /* iptv.m3u8 */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E92CDAAE2A61AC940015E4DC /* ZeroTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E92CDABD2A61AC960015E4DC /* Build configuration list for PBXNativeTarget "ZeroTV" */;
+			buildPhases = (
+				E92CDAAB2A61AC940015E4DC /* Sources */,
+				E92CDAAC2A61AC940015E4DC /* Frameworks */,
+				E92CDAAD2A61AC940015E4DC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZeroTV;
+			productName = ZeroTV;
+			productReference = E92CDAAF2A61AC940015E4DC /* ZeroTV.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E92CDAA72A61AC940015E4DC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					E92CDAAE2A61AC940015E4DC = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = E92CDAAA2A61AC940015E4DC /* Build configuration list for PBXProject "ZeroTV" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E92CDAA62A61AC940015E4DC;
+			productRefGroup = E92CDAB02A61AC940015E4DC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E92CDAAE2A61AC940015E4DC /* ZeroTV */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E92CDAAD2A61AC940015E4DC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E92CDABA2A61AC960015E4DC /* Preview Assets.xcassets in Resources */,
+				E92CDAC82A61AF0A0015E4DC /* iptv.m3u8 in Resources */,
+				E92CDAB72A61AC960015E4DC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E92CDAAB2A61AC940015E4DC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E92CDACC2A61B4C70015E4DC /* StreamingGroupList.swift in Sources */,
+				E92CDAB52A61AC940015E4DC /* ContentView.swift in Sources */,
+				E92CDAB32A61AC940015E4DC /* ZeroTVApp.swift in Sources */,
+				E92CDAC22A61ACC10015E4DC /* ModelData.swift in Sources */,
+				E92CDAC42A61AD700015E4DC /* StreamingGroup.swift in Sources */,
+				E92CDACE2A61B5C20015E4DC /* StreamInfoList.swift in Sources */,
+				E92CDAC62A61ADA30015E4DC /* StreamInfo.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E92CDABB2A61AC960015E4DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 16.4;
+			};
+			name = Debug;
+		};
+		E92CDABC2A61AC960015E4DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = appletvos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TVOS_DEPLOYMENT_TARGET = 16.4;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E92CDABE2A61AC960015E4DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ZeroTV/Preview Content\"";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTVs;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
+			};
+			name = Debug;
+		};
+		E92CDABF2A61AC960015E4DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ZeroTV/Preview Content\"";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTVs;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E92CDAAA2A61AC940015E4DC /* Build configuration list for PBXProject "ZeroTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E92CDABB2A61AC960015E4DC /* Debug */,
+				E92CDABC2A61AC960015E4DC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E92CDABD2A61AC960015E4DC /* Build configuration list for PBXNativeTarget "ZeroTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E92CDABE2A61AC960015E4DC /* Debug */,
+				E92CDABF2A61AC960015E4DC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E92CDAA72A61AC940015E4DC /* Project object */;
+}
