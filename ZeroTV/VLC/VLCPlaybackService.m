@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 @property (nonatomic, strong) VLCMediaPlayer *mediaPlayer;
 @property (nonatomic, copy) void (^playbackCompletion)(BOOL success, float playbackPosition);
 @property (nonatomic, strong) NSDictionary *mediaOptionsDictionary;
-@property (nonatomic, strong) VLCRendererItem *renderer;
+//@property (nonatomic, strong) VLCRendererItem *renderer;
 @property (nonatomic, assign) VLCAspectRatio currentAspectRatio;
 @property (nonatomic, assign) BOOL isInFillToScreen;
 @property (nonatomic, assign) BOOL hasSubs;
@@ -112,7 +112,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
     /* to enable debug logging for the playback library instance, switch the boolean below
      * note that the library instance used for playback may not necessarily match the instance
      * used for media discovery or thumbnailing */
-    self.listPlayer.mediaPlayer.libraryInstance.debugLogging = NO;
+//    self.listPlayer.mediaPlayer.libraryInstance.debugLogging = NO;
 
     self.mediaPlayer = self.listPlayer.mediaPlayer;
     [self.mediaPlayer setDelegate:self];
@@ -146,7 +146,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
     [self.mediaPlayer addObserver:self forKeyPath:@"time" options:0 context:nil];
     [self.mediaPlayer addObserver:self forKeyPath:@"remainingTime" options:0 context:nil];
 
-    [self.mediaPlayer setRendererItem:self.renderer];
+//    [self.mediaPlayer setRendererItem:self.renderer];
 
     [self.listPlayer playItemAtNumber:@(0)];
 

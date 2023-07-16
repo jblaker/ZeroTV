@@ -41,7 +41,7 @@ static NSString * const kStreamsNASegue = @"ShowStreamsNA";
     {
         if ([show[@"active"] boolValue])
         {
-            [self loadPosterImageForShow:show];
+            //[self loadPosterImageForShow:show];
             [activeFavoriteShows addObject:show];
         }
     }

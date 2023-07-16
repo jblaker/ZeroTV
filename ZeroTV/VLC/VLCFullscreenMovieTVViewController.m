@@ -50,6 +50,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 @property (nonatomic, assign) GamepadEdge activeGamepadEdge;
 @property (nonatomic, strong) NSArray *gestureRecognizers;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
+@property (nonatomic, strong) NSTimer *saveProgressTimer;
 
 @end
 
@@ -110,6 +111,11 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
             [self setUpGameController];
         }];
     }
+    
+    self.saveProgressTimer = [NSTimer scheduledTimerWithTimeInterval:10 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+        [EpisodeManager saveProgressForEpisode:self.selectedStream withPlaybackTime:vpc.mediaPlayer.time.intValue];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -121,7 +127,12 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     vpc.videoOutputView = self.movieView;
     
     self.movieView.userInteractionEnabled = NO;
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
     if (self.presentingSubtitleOptions)
     {
         self.presentingSubtitleOptions = NO;
@@ -162,6 +173,16 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         {
             [self.subtitleCheckTimer invalidate];
         }
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    if (self.saveProgressTimer.isValid)
+    {
+        [self.saveProgressTimer invalidate];
     }
 }
 
