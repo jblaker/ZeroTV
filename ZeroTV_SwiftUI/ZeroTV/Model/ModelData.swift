@@ -11,17 +11,31 @@ let kLineInfoPrefix = "#EXTINF:"
 
 final class ModelData: ObservableObject {
     @Published var streamingGroupDict = [String:StreamingGroup]()
+    @Published var favorites = [StreamingGroup]()
     var streamingGroups: [StreamingGroup] {
         streamingGroupDict.map { $0.value }
     }
     
     init() {
         streamingGroupDict = load()
+        favorites = loadFavorites()
     }
 }
 
 func load() -> [String:StreamingGroup] {
-    guard let path = Bundle.main.path(forResource: "iptv", ofType: "m3u8"), let data = NSData(contentsOfFile: path), let manifest = String(data: data as Data, encoding: .utf8) else {
+    guard let path = Bundle.main.url(forResource: "iptv", withExtension: "m3u8") else {
+        return [:]
+    }
+    
+    var data: Data?
+    do {
+        data = try Data(contentsOf: path)
+    } catch {
+        print(error)
+        return [:]
+    }
+
+    guard let data = data, let manifest = String(data: data, encoding: .utf8) else {
         return [:]
     }
     
@@ -72,4 +86,46 @@ func load() -> [String:StreamingGroup] {
     }
 
     return streamingGroups
+}
+
+func loadFavorites() -> [StreamingGroup] {
+    guard let path = Bundle.main.url(forResource: "Config", withExtension: "plist") else {
+        return []
+    }
+    
+    var favoriteShows: [[String:Any]]?
+
+    do {
+        let data = try Data(contentsOf: path)
+        guard let config = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String:Any], let _favoriteShows = config["FavoriteShows"] as? [[String:Any]] else
+        {
+            return []
+        }
+        favoriteShows = _favoriteShows
+    } catch {
+        print(error)
+    }
+    
+    guard let favoriteShows = favoriteShows else {
+        return []
+    }
+    
+    var favoritesGroups = [StreamingGroup]()
+    
+    for show in favoriteShows {
+        guard let name = show["name"] as? String, let isActive = show["active"] as? Bool else {
+            continue
+        }
+        if !isActive {
+            continue
+        }
+        var posterURL: URL?
+        if let posterURLStr = show["posterURL"] as? String {
+            posterURL = URL(string: posterURLStr)
+        }
+        let group = StreamingGroup(id: UUID(), name: name, isFavorite: true, posterURL: posterURL)
+        favoritesGroups.append(group)
+    }
+    
+    return favoritesGroups
 }

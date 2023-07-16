@@ -17,6 +17,7 @@
 		E92CDAC82A61AF0A0015E4DC /* iptv.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = E92CDAC72A61AF090015E4DC /* iptv.m3u8 */; };
 		E92CDACC2A61B4C70015E4DC /* StreamingGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDACB2A61B4C70015E4DC /* StreamingGroupList.swift */; };
 		E92CDACE2A61B5C20015E4DC /* StreamInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDACD2A61B5C20015E4DC /* StreamInfoList.swift */; };
+		E92CDAD12A6468B20015E4DC /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E92CDAD02A6468B10015E4DC /* Config.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		E92CDAC72A61AF090015E4DC /* iptv.m3u8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iptv.m3u8; sourceTree = "<group>"; };
 		E92CDACB2A61B4C70015E4DC /* StreamingGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingGroupList.swift; sourceTree = "<group>"; };
 		E92CDACD2A61B5C20015E4DC /* StreamInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamInfoList.swift; sourceTree = "<group>"; };
+		E92CDAD02A6468B10015E4DC /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Config.plist; path = ../../../ZeroTV/Config.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				E92CDAB62A61AC960015E4DC /* Assets.xcassets */,
 				E92CDAB82A61AC960015E4DC /* Preview Content */,
 				E92CDACA2A61B48B0015E4DC /* Model */,
+				E92CDACF2A6468990015E4DC /* Resources */,
 			);
 			path = ZeroTV;
 			sourceTree = "<group>";
@@ -99,6 +102,14 @@
 				E92CDAC72A61AF090015E4DC /* iptv.m3u8 */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E92CDACF2A6468990015E4DC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E92CDAD02A6468B10015E4DC /* Config.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +170,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E92CDAD12A6468B20015E4DC /* Config.plist in Resources */,
 				E92CDABA2A61AC960015E4DC /* Preview Assets.xcassets in Resources */,
 				E92CDAC82A61AF0A0015E4DC /* iptv.m3u8 in Resources */,
 				E92CDAB72A61AC960015E4DC /* Assets.xcassets in Resources */,

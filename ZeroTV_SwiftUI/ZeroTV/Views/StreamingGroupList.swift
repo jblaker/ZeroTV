@@ -13,6 +13,16 @@ struct StreamingGroupList: View {
     var body: some View {
         NavigationView {
             List {
+                ScrollView {
+                    HStack {
+                        ForEach(modelData.favorites) { favorite in
+                            NavigationLink {
+                            } label: {
+                                Text(favorite.name)
+                            }
+                        }
+                    }
+                }
                 ForEach(modelData.streamingGroups.sorted{ $0.name.localizedCaseInsensitiveCompare($1.name) == ComparisonResult.orderedAscending }) { streamingGroup in
                     NavigationLink {
                         StreamInfoList(streamingGroup: streamingGroup)

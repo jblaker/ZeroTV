@@ -12,4 +12,5 @@ struct StreamingGroup: Identifiable {
     var name: String
     var isFavorite: Bool
     var streams = [StreamInfo]()
+    var posterURL: URL?
 }
