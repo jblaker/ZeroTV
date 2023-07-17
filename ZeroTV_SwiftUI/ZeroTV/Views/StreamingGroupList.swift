@@ -9,6 +9,11 @@ import SwiftUI
 
 struct StreamingGroupList: View {
     @EnvironmentObject var modelData: ModelData
+    var sortedGroups: [StreamingGroup] {
+        return modelData.streamingGroups.sorted {
+            $0.name.localizedCaseInsensitiveCompare($1.name) == ComparisonResult.orderedAscending
+        }
+    }
 
     var body: some View {
         NavigationView {
@@ -17,13 +22,14 @@ struct StreamingGroupList: View {
                     HStack {
                         ForEach(modelData.favorites) { favorite in
                             NavigationLink {
+                                StreamInfoList(streamingGroup: favorite)
                             } label: {
                                 Text(favorite.name)
                             }
                         }
                     }
                 }
-                ForEach(modelData.streamingGroups.sorted{ $0.name.localizedCaseInsensitiveCompare($1.name) == ComparisonResult.orderedAscending }) { streamingGroup in
+                ForEach(sortedGroups) { streamingGroup in
                     NavigationLink {
                         StreamInfoList(streamingGroup: streamingGroup)
                     } label: {

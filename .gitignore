@@ -1,8 +1,8 @@
 Pods
 Podfile.lock
-ZeroTV.xcodeproj/xcuserdata/
-ZeroTV.xcworkspace/
-ZeroTV.xcodeproj/project.xcworkspace/xcuserdata
 ZeroTV/Config.plist
-ZeroTV.xcodeproj/xcshareddata/
-ZeroTV_SwiftUI/ZeroTV.xcodeproj/project.xcworkspace
+**/*.xcodeproj/xcuserdata
+**/*.xcodeproj/xcshareddata/
+**/*.xcodeproj/project.xcworkspace/xcuserdata
+**/*.xcodeproj/xcuserdata
+**/*.xcworkspace

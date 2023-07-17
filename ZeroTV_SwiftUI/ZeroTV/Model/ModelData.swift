@@ -12,6 +12,9 @@ let kLineInfoPrefix = "#EXTINF:"
 final class ModelData: ObservableObject {
     @Published var streamingGroupDict = [String:StreamingGroup]()
     @Published var favorites = [StreamingGroup]()
+    var vodGroup: StreamingGroup? {
+        return streamingGroupDict["TV VOD"]
+    }
     var streamingGroups: [StreamingGroup] {
         streamingGroupDict.map { $0.value }
     }
@@ -41,7 +44,6 @@ func load() -> [String:StreamingGroup] {
     
     let lines = manifest.components(separatedBy: .newlines)
     var streamingGroups = [String:StreamingGroup]()
-//    var currentGroup: StreamingGroup?
     var currentGroupName: String?
     var streamName: String?
     
@@ -59,11 +61,9 @@ func load() -> [String:StreamingGroup] {
                     let groupName = String(line[matchRange])
                     currentGroupName = groupName
                     if let group = streamingGroups[groupName] {
-//                        currentGroup = group
                     } else {
                         let group = StreamingGroup(id: UUID(), name: groupName, isFavorite: false, streams: [])
                         streamingGroups[groupName] = group
-//                        currentGroup = group
                     }
                 }
             } catch  {
@@ -77,7 +77,7 @@ func load() -> [String:StreamingGroup] {
         if let streamName = streamName {
             if line.hasPrefix("https:") || line.hasPrefix("http:") {
                 let streamInfo = StreamInfo(id: UUID(), name: streamName, streamURL: line)
-                if let currentGroupName = currentGroupName {
+                if let currentGroupName = currentGroupName, let _ = streamingGroups[currentGroupName] {
                     streamingGroups[currentGroupName]!.streams.append(streamInfo)
                 }
             }

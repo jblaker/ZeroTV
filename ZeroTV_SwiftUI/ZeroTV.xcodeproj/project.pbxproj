@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E91F5C612A65BEDA00FAF048 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F5C602A65BEDA00FAF048 /* CacheManager.swift */; };
 		E92CDAB32A61AC940015E4DC /* ZeroTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDAB22A61AC940015E4DC /* ZeroTVApp.swift */; };
 		E92CDAB52A61AC940015E4DC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDAB42A61AC940015E4DC /* ContentView.swift */; };
 		E92CDAB72A61AC960015E4DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92CDAB62A61AC960015E4DC /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E91F5C602A65BEDA00FAF048 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		E92CDAAF2A61AC940015E4DC /* ZeroTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E92CDAB22A61AC940015E4DC /* ZeroTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroTVApp.swift; sourceTree = "<group>"; };
 		E92CDAB42A61AC940015E4DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -46,6 +48,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E91F5C5F2A65BECC00FAF048 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E91F5C602A65BEDA00FAF048 /* CacheManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		E92CDAA62A61AC940015E4DC = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +75,7 @@
 		E92CDAB12A61AC940015E4DC /* ZeroTV */ = {
 			isa = PBXGroup;
 			children = (
+				E91F5C5F2A65BECC00FAF048 /* Helpers */,
 				E92CDAB22A61AC940015E4DC /* ZeroTVApp.swift */,
 				E92CDAC92A61B3F60015E4DC /* Views */,
 				E92CDAB62A61AC960015E4DC /* Assets.xcassets */,
@@ -188,6 +199,7 @@
 				E92CDAB52A61AC940015E4DC /* ContentView.swift in Sources */,
 				E92CDAB32A61AC940015E4DC /* ZeroTVApp.swift in Sources */,
 				E92CDAC22A61ACC10015E4DC /* ModelData.swift in Sources */,
+				E91F5C612A65BEDA00FAF048 /* CacheManager.swift in Sources */,
 				E92CDAC42A61AD700015E4DC /* StreamingGroup.swift in Sources */,
 				E92CDACE2A61B5C20015E4DC /* StreamInfoList.swift in Sources */,
 				E92CDAC62A61ADA30015E4DC /* StreamInfo.swift in Sources */,
