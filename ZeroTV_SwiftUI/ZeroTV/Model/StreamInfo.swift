@@ -11,4 +11,5 @@ struct StreamInfo: Identifiable {
     var id: UUID
     var name: String
     var streamURL: String
+    var isBookmarked: Bool = false
 }

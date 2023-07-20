@@ -19,6 +19,12 @@
 		E92CDACC2A61B4C70015E4DC /* StreamingGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDACB2A61B4C70015E4DC /* StreamingGroupList.swift */; };
 		E92CDACE2A61B5C20015E4DC /* StreamInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92CDACD2A61B5C20015E4DC /* StreamInfoList.swift */; };
 		E92CDAD12A6468B20015E4DC /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E92CDAD02A6468B10015E4DC /* Config.plist */; };
+		E932ECAD2A65EF7900CD58A7 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E932ECAC2A65EF7900CD58A7 /* ImageLoader.swift */; };
+		E999CFD32A68695B001CAC1F /* FavoritesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFD22A68695B001CAC1F /* FavoritesList.swift */; };
+		E999CFD52A6869A9001CAC1F /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFD42A6869A9001CAC1F /* Styles.swift */; };
+		E999CFD72A686FF6001CAC1F /* BookmarksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFD62A686FF6001CAC1F /* BookmarksList.swift */; };
+		E999CFD92A68857A001CAC1F /* StreamInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFD82A68857A001CAC1F /* StreamInfoView.swift */; };
+		E999CFDB2A69831B001CAC1F /* BookmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFDA2A69831B001CAC1F /* BookmarkButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +41,12 @@
 		E92CDACB2A61B4C70015E4DC /* StreamingGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingGroupList.swift; sourceTree = "<group>"; };
 		E92CDACD2A61B5C20015E4DC /* StreamInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamInfoList.swift; sourceTree = "<group>"; };
 		E92CDAD02A6468B10015E4DC /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Config.plist; path = ../../../ZeroTV/Config.plist; sourceTree = "<group>"; };
+		E932ECAC2A65EF7900CD58A7 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		E999CFD22A68695B001CAC1F /* FavoritesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesList.swift; sourceTree = "<group>"; };
+		E999CFD42A6869A9001CAC1F /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		E999CFD62A686FF6001CAC1F /* BookmarksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksList.swift; sourceTree = "<group>"; };
+		E999CFD82A68857A001CAC1F /* StreamInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamInfoView.swift; sourceTree = "<group>"; };
+		E999CFDA2A69831B001CAC1F /* BookmarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +63,9 @@
 		E91F5C5F2A65BECC00FAF048 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				E932ECAC2A65EF7900CD58A7 /* ImageLoader.swift */,
 				E91F5C602A65BEDA00FAF048 /* CacheManager.swift */,
+				E999CFD42A6869A9001CAC1F /* Styles.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -99,7 +113,11 @@
 			children = (
 				E92CDAB42A61AC940015E4DC /* ContentView.swift */,
 				E92CDACB2A61B4C70015E4DC /* StreamingGroupList.swift */,
+				E999CFD22A68695B001CAC1F /* FavoritesList.swift */,
+				E999CFD62A686FF6001CAC1F /* BookmarksList.swift */,
 				E92CDACD2A61B5C20015E4DC /* StreamInfoList.swift */,
+				E999CFD82A68857A001CAC1F /* StreamInfoView.swift */,
+				E999CFDA2A69831B001CAC1F /* BookmarkButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -195,14 +213,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E999CFD52A6869A9001CAC1F /* Styles.swift in Sources */,
+				E999CFDB2A69831B001CAC1F /* BookmarkButton.swift in Sources */,
 				E92CDACC2A61B4C70015E4DC /* StreamingGroupList.swift in Sources */,
 				E92CDAB52A61AC940015E4DC /* ContentView.swift in Sources */,
+				E999CFD72A686FF6001CAC1F /* BookmarksList.swift in Sources */,
+				E932ECAD2A65EF7900CD58A7 /* ImageLoader.swift in Sources */,
 				E92CDAB32A61AC940015E4DC /* ZeroTVApp.swift in Sources */,
 				E92CDAC22A61ACC10015E4DC /* ModelData.swift in Sources */,
 				E91F5C612A65BEDA00FAF048 /* CacheManager.swift in Sources */,
 				E92CDAC42A61AD700015E4DC /* StreamingGroup.swift in Sources */,
 				E92CDACE2A61B5C20015E4DC /* StreamInfoList.swift in Sources */,
 				E92CDAC62A61ADA30015E4DC /* StreamInfo.swift in Sources */,
+				E999CFD92A68857A001CAC1F /* StreamInfoView.swift in Sources */,
+				E999CFD32A68695B001CAC1F /* FavoritesList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

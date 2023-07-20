@@ -9,36 +9,48 @@ import SwiftUI
 
 struct StreamingGroupList: View {
     @EnvironmentObject var modelData: ModelData
-    var sortedGroups: [StreamingGroup] {
-        return modelData.streamingGroups.sorted {
-            $0.name.localizedCaseInsensitiveCompare($1.name) == ComparisonResult.orderedAscending
-        }
-    }
 
     var body: some View {
-        NavigationView {
-            List {
-                ScrollView {
-                    HStack {
-                        ForEach(modelData.favorites) { favorite in
-                            NavigationLink {
-                                StreamInfoList(streamingGroup: favorite)
-                            } label: {
-                                Text(favorite.name)
-                            }
+        ZStack {
+            gradient
+            NavigationView {
+                List {
+                    NavigationLink {
+                        FavoritesList()
+                    } label: {
+                        Text("Favorites")
+                    }
+                    NavigationLink {
+                        BookmarksList()
+                    } label: {
+                        Text("Bookmarks")
+                    }
+                    ForEach(modelData.streamingGroups) { streamingGroup in
+                        NavigationLink {
+                            StreamInfoList(streamingGroup: streamingGroup)
+                        } label: {
+                            Text(streamingGroup.name)
                         }
                     }
                 }
-                ForEach(sortedGroups) { streamingGroup in
-                    NavigationLink {
-                        StreamInfoList(streamingGroup: streamingGroup)
-                    } label: {
-                        Text(streamingGroup.name)
+                .navigationTitle("Categories")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Text("Last updated \(Text(modelData.lastUpdatedDate, style: .date))")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                print("refresh!")
+                            }) {
+                                Image(systemName: "arrow.triangle.2.circlepath")
+                            }
                     }
                 }
             }
-            .navigationTitle("Categories")
         }
+        .edgesIgnoringSafeArea(.all)
     }
 }
 

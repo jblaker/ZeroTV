@@ -25,7 +25,7 @@ struct CacheManager {
     }
     
     static func cacheURL(forFilename filename: String) -> URL? {
-        var cacheDirectoryPath = CacheManager.cacheDirectoryPath() as? NSString
+        let cacheDirectoryPath = CacheManager.cacheDirectoryPath() as? NSString
         guard let filePath = cacheDirectoryPath?.appendingPathComponent(filename), let filePathURL = URL(string: filePath) else {
             return nil
         }

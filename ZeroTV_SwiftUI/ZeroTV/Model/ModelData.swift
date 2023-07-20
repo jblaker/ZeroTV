@@ -10,24 +10,27 @@ import Foundation
 let kLineInfoPrefix = "#EXTINF:"
 
 final class ModelData: ObservableObject {
-    @Published var streamingGroupDict = [String:StreamingGroup]()
+    @Published var streamingGroups = [StreamingGroup]()
     @Published var favorites = [StreamingGroup]()
-    var vodGroup: StreamingGroup? {
-        return streamingGroupDict["TV VOD"]
-    }
-    var streamingGroups: [StreamingGroup] {
-        streamingGroupDict.map { $0.value }
-    }
+    @Published var lastUpdatedDate = Date()
+    @Published var bookmarks = [StreamInfo]()
+    @Published var selectedGroup: StreamingGroup?
     
+    var vodGroup: StreamingGroup? {
+        return streamingGroups.filter {
+            $0.name == "TV VOD"
+        }.first
+    }
+
     init() {
-        streamingGroupDict = load()
+        streamingGroups = load()
         favorites = loadFavorites()
     }
 }
 
-func load() -> [String:StreamingGroup] {
+func load() -> [StreamingGroup] {
     guard let path = Bundle.main.url(forResource: "iptv", withExtension: "m3u8") else {
-        return [:]
+        return []
     }
     
     var data: Data?
@@ -35,11 +38,11 @@ func load() -> [String:StreamingGroup] {
         data = try Data(contentsOf: path)
     } catch {
         print(error)
-        return [:]
+        return []
     }
 
     guard let data = data, let manifest = String(data: data, encoding: .utf8) else {
-        return [:]
+        return []
     }
     
     let lines = manifest.components(separatedBy: .newlines)
@@ -60,7 +63,7 @@ func load() -> [String:StreamingGroup] {
                     }
                     let groupName = String(line[matchRange])
                     currentGroupName = groupName
-                    if let group = streamingGroups[groupName] {
+                    if let _ = streamingGroups[groupName] {
                     } else {
                         let group = StreamingGroup(id: UUID(), name: groupName, isFavorite: false, streams: [])
                         streamingGroups[groupName] = group
@@ -85,7 +88,9 @@ func load() -> [String:StreamingGroup] {
 
     }
 
-    return streamingGroups
+    return streamingGroups.map { $0.value }.sorted {
+        $0.name.localizedCaseInsensitiveCompare($1.name) == ComparisonResult.orderedAscending
+    }
 }
 
 func loadFavorites() -> [StreamingGroup] {

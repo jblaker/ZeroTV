@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StreamInfoList: View {
     @EnvironmentObject var modelData: ModelData
+    @State var showAlert = false
 
     var streamingGroup: StreamingGroup
     var streams: [StreamInfo] {
@@ -27,17 +28,28 @@ struct StreamInfoList: View {
     }
 
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(streams) { stream in
-                    NavigationLink {
-                        
-                    } label: {
-                        Text(stream.name)
+        ZStack {
+            gradient
+            NavigationView {
+                List {
+                    ForEach(streams) { stream in
+                        NavigationLink {
+                            StreamInfoView(streamInfo: stream)
+                        } label: {
+                            if (stream.isBookmarked) {
+                                Label(stream.name, systemImage: "bookmark.fill")
+                            } else {
+                                Text(stream.name)
+                            }
+                        }
                     }
                 }
+                .navigationTitle(streamingGroup.name)
             }
-            .navigationTitle(streamingGroup.name)
+        }
+        .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            modelData.selectedGroup = streamingGroup
         }
     }
 }
