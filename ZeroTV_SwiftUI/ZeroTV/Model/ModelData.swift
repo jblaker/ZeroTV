@@ -10,10 +10,10 @@ import Foundation
 let kLineInfoPrefix = "#EXTINF:"
 
 final class ModelData: ObservableObject {
-    @Published var streamingGroups = [StreamingGroup]()
-    @Published var favorites = [StreamingGroup]()
+    @Published var streamingGroups: [StreamingGroup]
+    @Published var favorites: [StreamingGroup]
     @Published var lastUpdatedDate = Date()
-    @Published var bookmarks = [StreamInfo]()
+    @Published var bookmarks: [StreamInfo]
     @Published var selectedGroup: StreamingGroup?
     
     var vodGroup: StreamingGroup? {
@@ -25,6 +25,7 @@ final class ModelData: ObservableObject {
     init() {
         streamingGroups = load()
         favorites = loadFavorites()
+        bookmarks = loadBookmarks()
     }
 }
 
@@ -133,4 +134,13 @@ func loadFavorites() -> [StreamingGroup] {
     }
     
     return favoritesGroups
+}
+
+func loadBookmarks() -> [StreamInfo] {
+    let result = CacheManager.cached(streamsListWithFilename: "bookmarks")
+    guard let bookmarks = result.0 else {
+        return [StreamInfo]()
+    }
+
+    return bookmarks
 }

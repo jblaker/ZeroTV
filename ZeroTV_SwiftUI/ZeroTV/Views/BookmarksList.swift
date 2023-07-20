@@ -15,11 +15,11 @@ struct BookmarksList: View {
             gradient
             NavigationView {
                 List {
-                    ForEach(modelData.bookmarks) { bookmarks in
+                    ForEach(modelData.bookmarks) { bookmark in
                         NavigationLink {
-                            
+                            StreamInfoView(streamInfo: bookmark)
                         } label: {
-                            Text(bookmarks.name)
+                            Text(bookmark.name)
                         }
                     }
                 }

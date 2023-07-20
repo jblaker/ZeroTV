@@ -32,7 +32,7 @@ struct StreamInfoView: View {
                 .navigationTitle(streamInfo.name)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        BookmarkButton(isBookmarked: $modelData.streamingGroups[streamingGroupIndex].streams[streamInfoIndex].isBookmarked)
+                        BookmarkButton(streamInfo: streamInfo)
                     }
                 }
             }

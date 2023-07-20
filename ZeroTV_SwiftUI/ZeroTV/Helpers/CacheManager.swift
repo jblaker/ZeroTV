@@ -32,6 +32,8 @@ struct CacheManager {
         return filePathURL
     }
     
+    // MARK: - Data Caching
+    
     static func cache(data: Data, filename: String) -> Error? {
         guard let filePathURL = CacheManager.cacheURL(forFilename: filename) else {
             return NSError(domain: "CacheManager", code: ErrorCode.Cache.rawValue, userInfo: [NSLocalizedDescriptionKey:"Could not create file path for \(filename)"])
@@ -43,21 +45,6 @@ struct CacheManager {
             return error
         }
         
-        return nil
-    }
-    
-    static func cache(array: [AnyHashable], filename: String) -> Error? {
-        guard let filePathURL = CacheManager.cacheURL(forFilename: filename) else {
-            return NSError(domain: "CacheManager", code: ErrorCode.Cache.rawValue, userInfo: [NSLocalizedDescriptionKey:"Could not create file path for \(filename)"])
-        }
-    
-        do {
-            let array = array as NSArray
-            try array.write(to: filePathURL)
-        } catch {
-            return error
-        }
-
         return nil
     }
     
@@ -74,15 +61,33 @@ struct CacheManager {
         }
     }
     
-    static func cached(arrayWithFilename filename: String) -> ([AnyHashable]?, Error?) {
-        guard let filePathURL = CacheManager.cacheURL(forFilename: filename) else {
-            return (nil, NSError(domain: "CacheManager", code: ErrorCode.Cache.rawValue, userInfo: [NSLocalizedDescriptionKey:"Could not create file path for \(filename)"]))
-        }
-
-        if let result = NSArray(contentsOf: filePathURL) as? [AnyHashable] {
-            return (result, nil)
-        } else {
-            return (nil, NSError(domain: "CacheManager", code: ErrorCode.Read.rawValue))
+    // MARK: - Array Caching
+    
+    static func cache(streamsList: [StreamInfo], filename: String) -> Error? {
+        do {
+            let encoded = try JSONEncoder().encode(streamsList)
+            UserDefaults.standard.set(encoded, forKey: filename)
+            return nil
+        } catch {
+            return error
         }
     }
+    
+    static func cached(streamsListWithFilename filename: String) -> ([StreamInfo]?, Error?) {
+        guard let data = UserDefaults.standard.object(forKey: filename) as? Data else {
+            return (nil, nil)
+        }
+        do {
+            let streamsList = try JSONDecoder().decode([StreamInfo].self, from: data)
+            return (streamsList, nil)
+        } catch {
+            return (nil, error)
+        }
+        
+//        guard let archivedData = UserDefaults.standard.data(forKey: filename), let array = NSKeyedUnarchiver.unarchivedObject(ofClass: StreamInfo.self, from: archivedData) as? [StreamInfo] else {
+//            return nil
+//        }
+//        return array
+    }
+
 }

@@ -20,10 +20,12 @@ struct StreamingGroupList: View {
                     } label: {
                         Text("Favorites")
                     }
-                    NavigationLink {
-                        BookmarksList()
-                    } label: {
-                        Text("Bookmarks")
+                    if modelData.bookmarks.count > 0 {
+                        NavigationLink {
+                            BookmarksList()
+                        } label: {
+                            Text("Bookmarks")
+                        }
                     }
                     ForEach(modelData.streamingGroups) { streamingGroup in
                         NavigationLink {
