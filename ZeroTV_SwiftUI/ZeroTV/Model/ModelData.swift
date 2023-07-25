@@ -14,6 +14,7 @@ final class ModelData: ObservableObject {
     @Published var favorites: [StreamingGroup]
     @Published var lastUpdatedDate = Date()
     @Published var bookmarks: [StreamInfo]
+    @Published var watched: [StreamInfo]
     @Published var selectedGroup: StreamingGroup?
     
     var vodGroup: StreamingGroup? {
@@ -26,6 +27,7 @@ final class ModelData: ObservableObject {
         streamingGroups = loadStreamingGroups()
         favorites = FavoritesManager.loadFavorites()
         bookmarks = BookmarkManager.loadBookmarks()
+        watched = WatchedManager.loadWatched()
     }
 }
 

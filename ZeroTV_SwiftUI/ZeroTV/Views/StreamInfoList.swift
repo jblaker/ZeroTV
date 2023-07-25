@@ -24,8 +24,10 @@ struct StreamInfoList: View {
                         } label: {
                             if (stream.isBookmarked(modelData: modelData)) {
                                 Label(stream.name, systemImage: "bookmark.fill")
+                                    .foregroundColor(stream.isWatched(modelData: modelData) ? .secondary : .primary)
                             } else {
                                 Text(stream.name)
+                                    .foregroundColor(stream.isWatched(modelData: modelData) ? .secondary : .primary)
                             }
                         }
                     }

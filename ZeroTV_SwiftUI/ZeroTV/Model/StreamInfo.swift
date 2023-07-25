@@ -9,7 +9,7 @@ import Foundation
 
 struct StreamInfo: Identifiable, Codable, Hashable {
     static func == (lhs: StreamInfo, rhs: StreamInfo) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.name == rhs.name
     }
 
     var id: UUID
@@ -18,6 +18,16 @@ struct StreamInfo: Identifiable, Codable, Hashable {
     
     func isBookmarked(modelData: ModelData) -> Bool {
         let match = modelData.bookmarks.filter {
+            $0 == self
+        }.first
+        guard let _ = match else {
+            return false
+        }
+        return true
+    }
+    
+    func isWatched(modelData: ModelData) -> Bool {
+        let match = modelData.watched.filter {
             $0 == self
         }.first
         guard let _ = match else {

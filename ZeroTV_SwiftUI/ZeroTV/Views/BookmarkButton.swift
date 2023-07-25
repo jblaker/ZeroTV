@@ -20,15 +20,13 @@ struct BookmarkButton: View {
         } ?? -1
     }
     var body: some View {
-        Button(action: {
+        Button(isBookmarked ? "Remove Bookmark" : "Add Bookmark") {
             if (isBookmarked) {
                 modelData.bookmarks.remove(at: streamInfoIndex)
             } else {
                 modelData.bookmarks.append(streamInfo)
             }
             BookmarkManager.cacheBookmarks(modelData.bookmarks)
-        }) {
-            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
         }
     }
 }

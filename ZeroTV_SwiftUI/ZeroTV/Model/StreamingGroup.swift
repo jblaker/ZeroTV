@@ -16,4 +16,9 @@ struct StreamingGroup: Identifiable, Codable, Hashable {
     var name: String
     var isFavorite: Bool
     var streams = [StreamInfo]()
+    var filteredStreams = [StreamInfo]()
+    
+    func filterDuplicates() {
+        
+    }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StreamInfoView: View {
     @EnvironmentObject var modelData: ModelData
+    @State var showingOptions = false
     
     var streamInfo: StreamInfo
     var streamingGroupIndex: Int {
@@ -31,10 +32,22 @@ struct StreamInfoView: View {
                 }
                 .navigationTitle(streamInfo.name)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        BookmarkButton(streamInfo: streamInfo)
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        BookmarkButton(streamInfo: streamInfo)
+//                    }
+                    Button {
+                        showingOptions.toggle()
+                    } label: {
+                        Image(systemName: "slider.horizontal.3")
                     }
+
                 }
+            }
+            .alert("Options", isPresented: $showingOptions) {
+//                Button(streamInfo.isBookmarked(modelData: modelData) ? "Remove Bookmark" : "Add Bookmark", role: ButtonRole.destructive) { }
+                BookmarkButton(streamInfo: streamInfo)
+                WatchedButton(streamInfo: streamInfo)
+                Button("Cancel", role: .cancel) { }
             }
         }
         .edgesIgnoringSafeArea(.all)
