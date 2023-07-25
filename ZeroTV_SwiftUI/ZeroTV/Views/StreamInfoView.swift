@@ -32,19 +32,16 @@ struct StreamInfoView: View {
                 }
                 .navigationTitle(streamInfo.name)
                 .toolbar {
-//                    ToolbarItem(placement: .navigationBarTrailing) {
-//                        BookmarkButton(streamInfo: streamInfo)
-//                    }
                     Button {
                         showingOptions.toggle()
                     } label: {
-                        Image(systemName: "slider.horizontal.3")
+                        Label("Stream Options", systemImage: "slider.horizontal.3")
+                            .labelStyle(.iconOnly)
                     }
 
                 }
             }
             .alert("Options", isPresented: $showingOptions) {
-//                Button(streamInfo.isBookmarked(modelData: modelData) ? "Remove Bookmark" : "Add Bookmark", role: ButtonRole.destructive) { }
                 BookmarkButton(streamInfo: streamInfo)
                 WatchedButton(streamInfo: streamInfo)
                 Button("Cancel", role: .cancel) { }

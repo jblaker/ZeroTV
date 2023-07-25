@@ -32,16 +32,19 @@ final class ModelData: ObservableObject {
 }
 
 func loadStreamingGroups() -> [StreamingGroup] {
-    // Do we have a cached manifest?
-    let result = CacheManager.cachedData(filename: "iptv")
-    if let error = result.1 {
-        print(error)
+
+    if !Platform.isSimulator {
+        // Do we have a cached manifest?
+        let result = CacheManager.cachedData(filename: "iptv")
+        if let error = result.1 {
+            print(error)
+        }
+        if let data = result.0 {
+            let groups = ManifestManager.parseManifestData(data)
+            return groups
+        }
     }
-    if let data = result.0 {
-        let groups = ManifestManager.parseManifestData(data)
-        return groups
-    }
-    
+
     guard let path = Bundle.main.url(forResource: "iptv", withExtension: "m3u8") else {
         return []
     }
@@ -49,8 +52,10 @@ func loadStreamingGroups() -> [StreamingGroup] {
     do {
         let data = try Data(contentsOf: path)
         let groups = ManifestManager.parseManifestData(data)
-        if let error = CacheManager.cache(data: data, filename: "iptv") {
-            print(error)
+        if !Platform.isSimulator {
+            if let error = CacheManager.cache(data: data, filename: "iptv") {
+                print(error)
+            }
         }
         return groups
     } catch {

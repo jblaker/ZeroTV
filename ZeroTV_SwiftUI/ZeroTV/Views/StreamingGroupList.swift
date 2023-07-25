@@ -46,7 +46,8 @@ struct StreamingGroupList: View {
                             Button(action: {
                                 print("refresh!")
                             }) {
-                                Image(systemName: "arrow.triangle.2.circlepath")
+                                Label("Refresh", systemImage: "arrow.triangle.2.circlepath")
+                                    .labelStyle(.iconOnly)
                             }
                     }
                 }
