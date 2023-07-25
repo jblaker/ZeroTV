@@ -13,6 +13,7 @@ struct StreamInfo: Identifiable, Codable, Hashable {
     }
 
     var id: UUID
+    var index: Int
     var name: String
     var streamURL: String
     

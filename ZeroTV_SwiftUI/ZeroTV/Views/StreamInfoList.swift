@@ -9,16 +9,15 @@ import SwiftUI
 
 struct StreamInfoList: View {
     @EnvironmentObject var modelData: ModelData
-    @State var showAlert = false
 
-    var streamingGroup: StreamingGroup
+    @State var streamingGroup: StreamingGroup
 
     var body: some View {
         ZStack {
             gradient
             NavigationView {
                 List {
-                    ForEach(streamingGroup.streams) { stream in
+                    ForEach(streamingGroup.filteredStreams) { stream in
                         NavigationLink {
                             StreamInfoView(streamInfo: stream)
                         } label: {
@@ -37,6 +36,7 @@ struct StreamInfoList: View {
         }
         .edgesIgnoringSafeArea(.all)
         .onAppear {
+            streamingGroup = streamingGroup.filterDuplicates(modelData: modelData)
             modelData.selectedGroup = streamingGroup
         }
     }

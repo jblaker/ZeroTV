@@ -22,6 +22,7 @@ struct ManifestManager {
         var streamingGroups = [String:StreamingGroup]()
         var currentGroupName: String?
         var streamName: String?
+        var index = 0
         
         for line in lines {
             if line.hasPrefix(kLineInfoPrefix) {
@@ -52,9 +53,10 @@ struct ManifestManager {
             
             if let streamName = streamName {
                 if line.hasPrefix("https:") || line.hasPrefix("http:") {
-                    let streamInfo = StreamInfo(id: UUID(), name: streamName, streamURL: line)
+                    let streamInfo = StreamInfo(id: UUID(), index: index, name: streamName, streamURL: line)
                     if let currentGroupName = currentGroupName, let _ = streamingGroups[currentGroupName] {
                         streamingGroups[currentGroupName]!.streams.append(streamInfo)
+                        index += 1
                     }
                 }
             }
