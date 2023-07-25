@@ -19,51 +19,63 @@ struct StreamingGroup: Identifiable, Codable, Hashable {
     var streams = [StreamInfo]()
     var filteredStreams = [StreamInfo]()
 
-    func filterDuplicates(modelData: ModelData) -> StreamingGroup {
-        if filteredStreams.count > 0 {
-            return self
+    func filterDuplicates(modelData: ModelData, completion: @escaping (StreamingGroup) -> Void) {
+        let groupIndex = modelData.streamingGroups.firstIndex {
+            $0 == self
         }
 
-        guard let groupIndex = modelData.streamingGroups.firstIndex(of: self) else {
-            return self
+        guard let groupIndex = groupIndex else {
+            print("Couldn't determine index for group")
+            completion(self)
+            return
         }
-    
+        
+        if modelData.streamingGroups[groupIndex].filteredStreams.count > 0 {
+            completion(modelData.streamingGroups[groupIndex])
+            return
+        }
+
         var sortedStreams = streams.sorted {
             $0.name.localizedCaseInsensitiveCompare($1.name) == ComparisonResult.orderedAscending
         }
         
         var _filteredStreams = [StreamInfo]()
         
-        for stream in sortedStreams {
-    
-            if _filteredStreams.count == 0 {
-                _filteredStreams.append(stream)
-                continue
+        DispatchQueue.global(qos: .background).sync {
+            for stream in sortedStreams {
+                
+                if _filteredStreams.count == 0 {
+                    _filteredStreams.append(stream)
+                    continue
+                }
+                
+                let matchingIndex = streamInfoBinarySearch(lowerBounds: 0, upperBounds: _filteredStreams.count-1, streamInfo: stream, filteredStreams: _filteredStreams, groupIndex: groupIndex)
+                
+                if matchingIndex == NSNotFound {
+                    _filteredStreams.append(stream)
+                } else {
+                    // Add stream URL to StreamInfo's alternate streams array
+                }
             }
             
-            let matchingIndex = streamInfoBinarySearch(lowerBounds: 0, upperBounds: _filteredStreams.count-1, streamInfo: stream, filteredStreams: _filteredStreams, groupIndex: groupIndex)
+            sortedStreams = _filteredStreams.sorted {
+                $0.index < $1.index
+            }
             
-            if matchingIndex == NSNotFound {
-                _filteredStreams.append(stream)
-            } else {
-                // Add stream URL to StreamInfo's alternate streams array
+            DispatchQueue.main.async {
+                let updatedGroup = StreamingGroup(id: self.id, name: self.name, isFavorite: self.isFavorite, streams: self.streams, filteredStreams: sortedStreams)
+                modelData.streamingGroups[groupIndex] = updatedGroup
+                
+                let allCount = updatedGroup.streams.count
+                let filteredCount = updatedGroup.filteredStreams.count
+                print("Filtered out \(allCount - filteredCount) duplicate streams in \(self.name).")
+                
+                Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { timer in
+                    completion(updatedGroup)
+                }
+                
             }
         }
-        
-        sortedStreams = _filteredStreams.sorted {
-            $0.index < $1.index
-        }
-
-//        modelData.streamingGroups[groupIndex].filteredStreams = sortedStreams
-        
-        let updatedGroup = StreamingGroup(id: self.id, name: self.name, isFavorite: self.isFavorite, streams: self.streams, filteredStreams: sortedStreams)
-        modelData.streamingGroups[groupIndex] = updatedGroup
-
-        let allCount = updatedGroup.streams.count
-        let filteredCount = updatedGroup.filteredStreams.count
-        print("Filtered out \(allCount - filteredCount) duplicate streams.")
-        
-        return updatedGroup
     }
     
     func streamInfoBinarySearch(lowerBounds: Int, upperBounds: Int, streamInfo: StreamInfo, filteredStreams: [StreamInfo], groupIndex: Int) -> Int {

@@ -10,13 +10,13 @@ import Foundation
 let kLineInfoPrefix = "#EXTINF:"
 
 final class ModelData: ObservableObject {
-    @Published var streamingGroups: [StreamingGroup]
+    @Published var streamingGroups = [StreamingGroup]()
     @Published var favorites: [StreamingGroup]
     @Published var lastUpdatedDate = Date()
     @Published var bookmarks: [StreamInfo]
     @Published var watched: [StreamInfo]
     @Published var selectedGroup: StreamingGroup?
-    
+
     var vodGroup: StreamingGroup? {
         return streamingGroups.filter {
             $0.name == "TV VOD"

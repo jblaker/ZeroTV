@@ -17,7 +17,7 @@ struct StreamInfoList: View {
             gradient
             NavigationView {
                 List {
-                    ForEach(streamingGroup.filteredStreams) { stream in
+                    ForEach(modelData.selectedGroup?.filteredStreams ?? [StreamInfo]()) { stream in
                         NavigationLink {
                             StreamInfoView(streamInfo: stream)
                         } label: {
@@ -36,8 +36,10 @@ struct StreamInfoList: View {
         }
         .edgesIgnoringSafeArea(.all)
         .onAppear {
-            streamingGroup = streamingGroup.filterDuplicates(modelData: modelData)
-            modelData.selectedGroup = streamingGroup
+            streamingGroup.filterDuplicates(modelData: modelData) { streamingGroup in
+                self.streamingGroup = streamingGroup
+                modelData.selectedGroup = streamingGroup
+            }
         }
     }
 }

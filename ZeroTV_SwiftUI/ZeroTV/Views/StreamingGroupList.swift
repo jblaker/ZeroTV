@@ -13,42 +13,46 @@ struct StreamingGroupList: View {
     var body: some View {
         ZStack {
             gradient
-            NavigationView {
-                List {
-                    NavigationLink {
-                        FavoritesList()
-                    } label: {
-                        Text("Favorites")
-                    }
-                    if modelData.bookmarks.count > 0 {
+            if (modelData.streamingGroups.count == 0) {
+                ProgressView()
+            } else {
+                NavigationView {
+                    List {
                         NavigationLink {
-                            BookmarksList()
+                            FavoritesList()
                         } label: {
-                            Text("Bookmarks")
+                            Text("Favorites")
+                        }
+                        if modelData.bookmarks.count > 0 {
+                            NavigationLink {
+                                BookmarksList()
+                            } label: {
+                                Text("Bookmarks")
+                            }
+                        }
+                        ForEach(modelData.streamingGroups) { streamingGroup in
+                            NavigationLink {
+                                StreamInfoList(streamingGroup: streamingGroup)
+                            } label: {
+                                Text(streamingGroup.name)
+                            }
                         }
                     }
-                    ForEach(modelData.streamingGroups) { streamingGroup in
-                        NavigationLink {
-                            StreamInfoList(streamingGroup: streamingGroup)
-                        } label: {
-                            Text(streamingGroup.name)
+                    .navigationTitle("Categories")
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Text("Last updated \(Text(modelData.lastUpdatedDate, style: .date))")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
-                    }
-                }
-                .navigationTitle("Categories")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Text("Last updated \(Text(modelData.lastUpdatedDate, style: .date))")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                        ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
                                 print("refresh!")
                             }) {
                                 Label("Refresh", systemImage: "arrow.triangle.2.circlepath")
                                     .labelStyle(.iconOnly)
                             }
+                        }
                     }
                 }
             }
