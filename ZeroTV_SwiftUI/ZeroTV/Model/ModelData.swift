@@ -23,124 +23,37 @@ final class ModelData: ObservableObject {
     }
 
     init() {
-        streamingGroups = load()
-        favorites = loadFavorites()
-        bookmarks = loadBookmarks()
+        streamingGroups = loadStreamingGroups()
+        favorites = FavoritesManager.loadFavorites()
+        bookmarks = BookmarkManager.loadBookmarks()
     }
 }
 
-func load() -> [StreamingGroup] {
+func loadStreamingGroups() -> [StreamingGroup] {
+    // Do we have a cached manifest?
+    let result = CacheManager.cachedData(filename: "iptv")
+    if let error = result.1 {
+        print(error)
+    }
+    if let data = result.0 {
+        let groups = ManifestManager.parseManifestData(data)
+        return groups
+    }
+    
     guard let path = Bundle.main.url(forResource: "iptv", withExtension: "m3u8") else {
         return []
     }
-    
-    var data: Data?
-    do {
-        data = try Data(contentsOf: path)
-    } catch {
-        print(error)
-        return []
-    }
-
-    guard let data = data, let manifest = String(data: data, encoding: .utf8) else {
-        return []
-    }
-    
-    let lines = manifest.components(separatedBy: .newlines)
-    var streamingGroups = [String:StreamingGroup]()
-    var currentGroupName: String?
-    var streamName: String?
-    
-    for line in lines {
-        if line.hasPrefix(kLineInfoPrefix) {
-            do {
-                let regex = try NSRegularExpression(pattern: "group-title=\"(.*?)\"")
-                let range = NSRange(location: 0, length: line.utf16.count)
-                let matches = regex.matches(in: line, range: range)
-                
-                if let match = matches.first {
-                    guard let matchRange = Range(match.range(at: 1), in: line) else {
-                        continue
-                    }
-                    let groupName = String(line[matchRange])
-                    currentGroupName = groupName
-                    if let _ = streamingGroups[groupName] {
-                    } else {
-                        let group = StreamingGroup(id: UUID(), name: groupName, isFavorite: false, streams: [])
-                        streamingGroups[groupName] = group
-                    }
-                }
-            } catch  {
-                print("Regex Error: \(error)")
-            }
-            
-            let lineParts = line.components(separatedBy: ",")
-            streamName = lineParts.last
-        }
-        
-        if let streamName = streamName {
-            if line.hasPrefix("https:") || line.hasPrefix("http:") {
-                let streamInfo = StreamInfo(id: UUID(), name: streamName, streamURL: line)
-                if let currentGroupName = currentGroupName, let _ = streamingGroups[currentGroupName] {
-                    streamingGroups[currentGroupName]!.streams.append(streamInfo)
-                }
-            }
-        }
-
-    }
-
-    return streamingGroups.map { $0.value }.sorted {
-        $0.name.localizedCaseInsensitiveCompare($1.name) == ComparisonResult.orderedAscending
-    }
-}
-
-func loadFavorites() -> [StreamingGroup] {
-    guard let path = Bundle.main.url(forResource: "Config", withExtension: "plist") else {
-        return []
-    }
-    
-    var favoriteShows: [[String:Any]]?
 
     do {
         let data = try Data(contentsOf: path)
-        guard let config = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String:Any], let _favoriteShows = config["FavoriteShows"] as? [[String:Any]] else
-        {
-            return []
+        let groups = ManifestManager.parseManifestData(data)
+        if let error = CacheManager.cache(data: data, filename: "iptv") {
+            print(error)
         }
-        favoriteShows = _favoriteShows
+        return groups
     } catch {
         print(error)
-    }
-    
-    guard let favoriteShows = favoriteShows else {
         return []
     }
-    
-    var favoritesGroups = [StreamingGroup]()
-    
-    for show in favoriteShows {
-        guard let name = show["name"] as? String, let isActive = show["active"] as? Bool else {
-            continue
-        }
-        if !isActive {
-            continue
-        }
-        var posterURL: URL?
-        if let posterURLStr = show["posterURL"] as? String {
-            posterURL = URL(string: posterURLStr)
-        }
-        let group = StreamingGroup(id: UUID(), name: name, isFavorite: true, posterURL: posterURL)
-        favoritesGroups.append(group)
-    }
-    
-    return favoritesGroups
 }
 
-func loadBookmarks() -> [StreamInfo] {
-    let result = CacheManager.cached(streamsListWithFilename: "bookmarks")
-    guard let bookmarks = result.0 else {
-        return [StreamInfo]()
-    }
-
-    return bookmarks
-}

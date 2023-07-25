@@ -25,6 +25,9 @@
 		E999CFD72A686FF6001CAC1F /* BookmarksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFD62A686FF6001CAC1F /* BookmarksList.swift */; };
 		E999CFD92A68857A001CAC1F /* StreamInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFD82A68857A001CAC1F /* StreamInfoView.swift */; };
 		E999CFDB2A69831B001CAC1F /* BookmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFDA2A69831B001CAC1F /* BookmarkButton.swift */; };
+		E999CFDF2A69BDD8001CAC1F /* BookmarkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFDE2A69BDD8001CAC1F /* BookmarkManager.swift */; };
+		E999CFE12A69BF09001CAC1F /* ManifestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFE02A69BF09001CAC1F /* ManifestManager.swift */; };
+		E999CFE32A69BFCE001CAC1F /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999CFE22A69BFCE001CAC1F /* FavoritesManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +50,9 @@
 		E999CFD62A686FF6001CAC1F /* BookmarksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksList.swift; sourceTree = "<group>"; };
 		E999CFD82A68857A001CAC1F /* StreamInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamInfoView.swift; sourceTree = "<group>"; };
 		E999CFDA2A69831B001CAC1F /* BookmarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButton.swift; sourceTree = "<group>"; };
+		E999CFDE2A69BDD8001CAC1F /* BookmarkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkManager.swift; sourceTree = "<group>"; };
+		E999CFE02A69BF09001CAC1F /* ManifestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestManager.swift; sourceTree = "<group>"; };
+		E999CFE22A69BFCE001CAC1F /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,9 @@
 				E932ECAC2A65EF7900CD58A7 /* ImageLoader.swift */,
 				E91F5C602A65BEDA00FAF048 /* CacheManager.swift */,
 				E999CFD42A6869A9001CAC1F /* Styles.swift */,
+				E999CFDE2A69BDD8001CAC1F /* BookmarkManager.swift */,
+				E999CFE02A69BF09001CAC1F /* ManifestManager.swift */,
+				E999CFE22A69BFCE001CAC1F /* FavoritesManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -215,6 +224,8 @@
 			files = (
 				E999CFD52A6869A9001CAC1F /* Styles.swift in Sources */,
 				E999CFDB2A69831B001CAC1F /* BookmarkButton.swift in Sources */,
+				E999CFE12A69BF09001CAC1F /* ManifestManager.swift in Sources */,
+				E999CFDF2A69BDD8001CAC1F /* BookmarkManager.swift in Sources */,
 				E92CDACC2A61B4C70015E4DC /* StreamingGroupList.swift in Sources */,
 				E92CDAB52A61AC940015E4DC /* ContentView.swift in Sources */,
 				E999CFD72A686FF6001CAC1F /* BookmarksList.swift in Sources */,
@@ -222,6 +233,7 @@
 				E92CDAB32A61AC940015E4DC /* ZeroTVApp.swift in Sources */,
 				E92CDAC22A61ACC10015E4DC /* ModelData.swift in Sources */,
 				E91F5C612A65BEDA00FAF048 /* CacheManager.swift in Sources */,
+				E999CFE32A69BFCE001CAC1F /* FavoritesManager.swift in Sources */,
 				E92CDAC42A61AD700015E4DC /* StreamingGroup.swift in Sources */,
 				E92CDACE2A61B5C20015E4DC /* StreamInfoList.swift in Sources */,
 				E92CDAC62A61ADA30015E4DC /* StreamInfo.swift in Sources */,

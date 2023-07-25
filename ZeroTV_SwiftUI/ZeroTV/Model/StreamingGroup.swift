@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import SwiftUI
 
-struct StreamingGroup: Identifiable {
+struct StreamingGroup: Identifiable, Codable, Hashable {
     static func == (lhs: StreamingGroup, rhs: StreamingGroup) -> Bool {
         return lhs.id == rhs.id
     }
@@ -17,6 +16,4 @@ struct StreamingGroup: Identifiable {
     var name: String
     var isFavorite: Bool
     var streams = [StreamInfo]()
-    var posterURL: URL?
-    @State var posterImage: UIImage?
 }

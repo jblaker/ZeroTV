@@ -8,9 +8,7 @@
 import Foundation
 
 struct CacheManager {
-    
-    let ErrorDomain = "CacheManager"
-    
+
     enum ErrorCode: Int {
         case Cache = 1000
         case Read = 1001
@@ -48,7 +46,7 @@ struct CacheManager {
         return nil
     }
     
-    static func cached(dataWithFilename filename: String) -> (Data?, Error?) {
+    static func cachedData(filename: String) -> (Data?, Error?) {
         guard let filePathURL = CacheManager.cacheURL(forFilename: filename) else {
             return (nil, NSError(domain: "CacheManager", code: ErrorCode.Cache.rawValue, userInfo: [NSLocalizedDescriptionKey:"Could not create file path for \(filename)"]))
         }
@@ -83,11 +81,6 @@ struct CacheManager {
         } catch {
             return (nil, error)
         }
-        
-//        guard let archivedData = UserDefaults.standard.data(forKey: filename), let array = NSKeyedUnarchiver.unarchivedObject(ofClass: StreamInfo.self, from: archivedData) as? [StreamInfo] else {
-//            return nil
-//        }
-//        return array
     }
 
 }

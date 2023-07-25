@@ -26,10 +26,7 @@ struct BookmarkButton: View {
             } else {
                 modelData.bookmarks.append(streamInfo)
             }
-            if let error = CacheManager.cache(streamsList: modelData.bookmarks, filename: "bookmarks") {
-                print(error)
-            }
-            
+            BookmarkManager.cacheBookmarks(modelData.bookmarks)
         }) {
             Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
         }
