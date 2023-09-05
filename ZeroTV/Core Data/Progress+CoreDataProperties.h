@@ -16,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSFetchRequest<Progress *> *)fetchRequest NS_SWIFT_NAME(fetchRequest());
 
 @property (nullable, nonatomic, copy) NSString *name;
-@property (nonatomic) float progress;
+@property (nonatomic) int progress;
+@property (nonatomic) BOOL completed;
 
 @end
 

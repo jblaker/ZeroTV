@@ -7,16 +7,16 @@
 
 #import <Foundation/Foundation.h>
 
-@class StreamInfo, Bookmark;
+@protocol GenericStream;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BookmarkManager : NSObject
 
-+ (NSArray <Bookmark *> * _Nullable)bookmarks;
-+ (void)addBookmarkForStream:(StreamInfo *)stream;
-+ (void)removeBookmarkForStream:(StreamInfo *)stream;
-+ (BOOL)streamIsBookmarked:(StreamInfo *)stream;
++ (NSArray <id<GenericStream>> * _Nullable)bookmarks;
++ (void)addBookmarkForStream:(id<GenericStream>)stream;
++ (void)removeBookmarkForStream:(id<GenericStream>)stream;
++ (BOOL)streamIsBookmarked:(id<GenericStream>)stream;
 
 @end
 

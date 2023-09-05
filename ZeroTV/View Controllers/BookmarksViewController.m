@@ -16,7 +16,7 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 
 @interface BookmarksViewController ()
 
-@property (nonatomic, strong) NSArray<Bookmark *> *bookmarks;
+@property (nonatomic, strong) NSArray<id<GenericStream>> *bookmarks;
 
 @end
 
@@ -32,7 +32,7 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     [self.tableView reloadData];
 }
 
-- (void)showMarkAsOptions:(StreamInfo *)selectedStream
+- (void)showMarkAsOptions:(id<GenericStream>)selectedStream
 {
     if (!selectedStream)
     {
@@ -63,7 +63,7 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (NSManagedObject *)streamAtIndexPath:(NSIndexPath *)indexPath
+- (id<GenericStream>)streamAtIndexPath:(NSIndexPath *)indexPath
 {
     return self.bookmarks[indexPath.row];
 }
@@ -81,7 +81,7 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     
-    Bookmark *bookmark = self.bookmarks[indexPath.row];
+    Bookmark *bookmark = (Bookmark *)self.bookmarks[indexPath.row];
     
     cell.textLabel.text = bookmark.name;
 
@@ -94,7 +94,7 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    self.selectedStream = (NSObject<GenericStream> *)self.bookmarks[indexPath.row];
+    self.selectedStream = (id<GenericStream>)self.bookmarks[indexPath.row];
     
     [self checkForCaptions];
 }

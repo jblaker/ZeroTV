@@ -63,12 +63,12 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     {
         CGPoint location = [gesture locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
-        NSObject<GenericStream> *stream = [self streamAtIndexPath:indexPath];
+        id<GenericStream> stream = [self streamAtIndexPath:indexPath];
         [self showMarkAsOptions:stream];
     }
 }
 
-- (void)setUpPlayer:(NSObject<GenericStream> *)selectedStream
+- (void)setUpPlayer:(id<GenericStream>)selectedStream
 {
     if (selectedStream.alternateStreamURLs.count > 0)
     {

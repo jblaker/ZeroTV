@@ -116,7 +116,7 @@
     }
 }
 
-- (void)showMarkAsOptions:(StreamInfo *)selectedStream
+- (void)showMarkAsOptions:(id<GenericStream>)selectedStream
 {
     if (!selectedStream)
     {
@@ -229,7 +229,7 @@
 
 #pragma mark - SearchResultsControllerDelegate
 
-- (void)didSelectStream:(NSObject<GenericStream> *)streamInfo
+- (void)didSelectStream:(id<GenericStream>)streamInfo
 {
     self.selectedStream = streamInfo;
 

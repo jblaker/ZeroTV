@@ -7,15 +7,16 @@
 
 #import "EpisodeManager.h"
 #import "StreamInfo.h"
-#import "CacheManager.h"
+#import "CoreDataManager.h"
+#import "Progress+CoreDataClass.h"
 
 float const kPlaybackCompletionTreshold = 0.75;
-NSString * const kWatchedDataCache = @"watchedData";
-NSString * const kProgressDataCache = @"progressData";
+
+NSString * const kProgressEntityName = @"Progress";
 
 @implementation EpisodeManager
 
-+ (void)episodeDidComplete:(StreamInfo *)episode withPlaybackPosition:(float)playbackPosition
++ (void)episodeDidComplete:(id<GenericStream>)episode withPlaybackPosition:(float)playbackPosition
 {
     if (playbackPosition > kPlaybackCompletionTreshold)
     {
@@ -23,119 +24,96 @@ NSString * const kProgressDataCache = @"progressData";
     }
 }
 
-+ (void)saveProgressForEpisode:(StreamInfo *)episode withPlaybackTime:(int)playbackTime
++ (void)saveProgressForEpisode:(id<GenericStream>)episode withPlaybackTime:(int)playbackTime
 {
     if (!episode.isVOD)
     {
         return;
     }
+
+    NSManagedObjectContext *context = CoreDataManager.sharedManager.persistentContainer.viewContext;
+    Progress *progress = [EpisodeManager progressFromEpisode:episode];
     
-    NSArray *epProgresses = [CacheManager cachedArrayNamed:kProgressDataCache];
-    NSMutableArray *newProgresses = epProgresses.mutableCopy;
-        
-    if (!epProgresses)
+    if (!progress)
     {
-        newProgresses = @[].mutableCopy;
+        NSEntityDescription *newEntity = [NSEntityDescription entityForName:kProgressEntityName inManagedObjectContext:context];
+        progress = (Progress *)[[NSManagedObject alloc] initWithEntity:newEntity insertIntoManagedObjectContext:context];
+        progress.name = episode.name;
     }
     
-    NSDictionary *progress = @{
-        @"name":episode.name,
-        @"progress":@(playbackTime)
-    };
+    progress.progress = playbackTime;
     
-    BOOL updatedExisting = NO;
-    int matchingIndex = -1;
+    NSError *error;
+    [context save:&error];
     
-    int counter = 0;
+    NSLog(@"Did update episode progress : %@", !error ? @"YES" : @"NO");
+}
+
++ (void)markAsWatched:(id<GenericStream>)episode
+{
+    NSManagedObjectContext *context = CoreDataManager.sharedManager.persistentContainer.viewContext;
+    Progress *progress = [EpisodeManager progressFromEpisode:episode];
     
-    for (NSDictionary *progress in epProgresses)
+    if (!progress)
     {
-        if ([progress[@"name"] isEqualToString:episode.name])
+        NSEntityDescription *newEntity = [NSEntityDescription entityForName:kProgressEntityName inManagedObjectContext:context];
+        progress = (Progress *)[[NSManagedObject alloc] initWithEntity:newEntity insertIntoManagedObjectContext:context];
+        progress.name = episode.name;
+    }
+
+    progress.completed = YES;
+    
+    NSError *error;
+    [context save:&error];
+    
+    NSLog(@"Did update watched eps : %@", !error ? @"YES" : @"NO");
+}
+
++ (void)markAsUnwatched:(id<GenericStream>)episode
+{
+    NSManagedObjectContext *context = CoreDataManager.sharedManager.persistentContainer.viewContext;
+    
+    Progress *progress = [EpisodeManager progressFromEpisode:episode];
+    if (progress)
+    {
+        [context deleteObject:progress];
+    }
+    
+    NSError *error;
+    [context save:&error];
+    
+    NSLog(@"Did remove stream progress: %@", !error ? @"YES" : @"NO");
+}
+
++ (BOOL)episodeWasWatched:(id<GenericStream>)episode
+{
+    Progress *progress = [EpisodeManager progressFromEpisode:episode];
+    return progress.completed;
+}
+
++ (Progress *)progressFromEpisode:(id<GenericStream>)episode
+{
+    NSManagedObjectContext *context = CoreDataManager.sharedManager.persistentContainer.viewContext;
+    NSFetchRequest *request = Progress.fetchRequest;
+    
+    NSError *error;
+    NSArray *epProgresses = [context executeFetchRequest:request error:&error];
+    
+    for (Progress *progress in epProgresses)
+    {
+        if ([progress.name isEqualToString:episode.name])
         {
-            updatedExisting = YES;
-            matchingIndex = counter;
-        }
-        counter += 1;
-    }
-    
-    if (updatedExisting)
-    {
-        [newProgresses replaceObjectAtIndex:matchingIndex withObject:progress];
-    }
-    else
-    {
-        [newProgresses addObject:progress];
-    }
-    
-    BOOL success = [CacheManager cacheArray:newProgresses filename:kProgressDataCache];
-    
-    NSLog(@"Did update episode progress : %@", success ? @"YES" : @"NO");
-}
-
-+ (void)markAsWatched:(StreamInfo *)episode
-{
-    NSMutableArray *watchedEps = [CacheManager cachedArrayNamed:kWatchedDataCache].mutableCopy;
-        
-    if (!watchedEps)
-    {
-        watchedEps = @[].mutableCopy;
-    }
-    
-    if ([watchedEps indexOfObject:episode.name] == NSNotFound)
-    {
-        [watchedEps addObject:episode.name];
-    }
-    
-    BOOL success = [CacheManager cacheArray:watchedEps filename:kWatchedDataCache];
-    
-    NSLog(@"Did update watched eps : %@", success ? @"YES" : @"NO");
-}
-
-+ (void)markAsUnwatched:(StreamInfo *)episode
-{
-    NSMutableArray *watchedEps = [CacheManager cachedArrayNamed:kWatchedDataCache].mutableCopy;
-        
-    if (!watchedEps)
-    {
-        watchedEps = @[].mutableCopy;
-    }
-    
-    if ([watchedEps indexOfObject:episode.name] != NSNotFound)
-    {
-        [watchedEps removeObject:episode.name];
-    }
-    
-    [CacheManager cacheArray:watchedEps filename:kWatchedDataCache];
-}
-
-+ (BOOL)episodeWasWatched:(StreamInfo *)episode
-{
-    NSArray *watchedEps = [CacheManager cachedArrayNamed:kWatchedDataCache];
-    
-    for (NSString *name in watchedEps)
-    {
-        if ([name isEqualToString:episode.name])
-        {
-            return YES;
-        }
-    }
-    
-    return NO;
-}
-
-+ (NSNumber *)progressForEpisode:(StreamInfo *)episode
-{
-    NSArray *epProgresses = [CacheManager cachedArrayNamed:kProgressDataCache];
-        
-    for (NSDictionary *progress in epProgresses)
-    {
-        if ([progress[@"name"] isEqualToString:episode.name])
-        {
-            return progress[@"progress"];
+            return progress;
         }
     }
     
     return nil;
+}
+
++ (int)progressForEpisode:(id<GenericStream>)episode
+{
+    Progress *progress = [EpisodeManager progressFromEpisode:episode];
+    return progress.progress;
 }
 
 @end

@@ -7,23 +7,24 @@
 
 #import <Foundation/Foundation.h>
 
-@class StreamInfo;
+@class Progress;
+@protocol GenericStream;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface EpisodeManager : NSObject
 
-+ (void)episodeDidComplete:(StreamInfo *)episode withPlaybackPosition:(float)playbackPosition;
++ (void)episodeDidComplete:(id<GenericStream>)episode withPlaybackPosition:(float)playbackPosition;
 
-+ (void)markAsWatched:(StreamInfo *)episode;
++ (void)markAsWatched:(id<GenericStream>)episode;
 
-+ (void)markAsUnwatched:(StreamInfo *)episode;
++ (void)markAsUnwatched:(id<GenericStream>)episode;
 
-+ (BOOL)episodeWasWatched:(StreamInfo *)episode;
++ (BOOL)episodeWasWatched:(id<GenericStream>)episode;
 
-+ (void)saveProgressForEpisode:(StreamInfo *)episode withPlaybackTime:(int)playbackTime;
++ (void)saveProgressForEpisode:(id<GenericStream>)episode withPlaybackTime:(int)playbackTime;
 
-+ (NSNumber * _Nullable)progressForEpisode:(StreamInfo *)episode;
++ (int)progressForEpisode:(id<GenericStream>)episode;
 
 @end
 

@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VLCFullscreenMovieTVViewController : UIViewController <VLCPlaybackServiceDelegate>
 
-@property (nonatomic, strong) NSObject<GenericStream> *selectedStream;
+@property (nonatomic, strong) id<GenericStream> selectedStream;
 
 @end
 

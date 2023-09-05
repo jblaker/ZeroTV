@@ -16,5 +16,6 @@
 
 @dynamic name;
 @dynamic progress;
+@dynamic completed;
 
 @end

@@ -31,7 +31,7 @@ NSString * const kBookmarkEntityName = @"Bookmark";
     return bookmarks;
 }
 
-+ (void)addBookmarkForStream:(StreamInfo *)stream
++ (void)addBookmarkForStream:(id<GenericStream>)stream
 {
     NSManagedObjectContext *context = CoreDataManager.sharedManager.persistentContainer.viewContext;
     NSEntityDescription *newEntity = [NSEntityDescription entityForName:kBookmarkEntityName inManagedObjectContext:context];
@@ -49,7 +49,7 @@ NSString * const kBookmarkEntityName = @"Bookmark";
     NSLog(@"Did update bookmarks : %@", !error ? @"YES" : @"NO");
 }
 
-+ (void)removeBookmarkForStream:(StreamInfo *)stream
++ (void)removeBookmarkForStream:(id<GenericStream>)stream
 {
     NSManagedObjectContext *context = CoreDataManager.sharedManager.persistentContainer.viewContext;
     Bookmark *bookmark = [BookmarkManager bookmarkForStream:stream];
@@ -62,7 +62,7 @@ NSString * const kBookmarkEntityName = @"Bookmark";
     NSLog(@"Did update bookmarks : %@", !error ? @"YES" : @"NO");
 }
 
-+ (BOOL)streamIsBookmarked:(StreamInfo *)stream
++ (BOOL)streamIsBookmarked:(id<GenericStream> )stream
 {
     NSManagedObject *bookmark = [BookmarkManager bookmarkForStream:stream];
     if (bookmark)
@@ -72,7 +72,7 @@ NSString * const kBookmarkEntityName = @"Bookmark";
     return NO;
 }
 
-+ (Bookmark *)bookmarkForStream:(StreamInfo *)streamInfo
++ (Bookmark *)bookmarkForStream:(id<GenericStream>)streamInfo
 {
     NSManagedObjectContext *context = CoreDataManager.sharedManager.persistentContainer.viewContext;
     NSFetchRequest *request = Bookmark.fetchRequest;

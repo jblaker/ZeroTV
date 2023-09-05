@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PrePlaybackViewController : BaseTableViewController
 
-@property (nonatomic, strong) NSObject<GenericStream> *selectedStream;
+@property (nonatomic, strong) id<GenericStream> selectedStream;
 
 - (void)checkForCaptions;
-- (void)setUpPlayer:(NSObject<GenericStream> *)selectedStream;
-- (NSObject<GenericStream> *)streamAtIndexPath:(NSIndexPath *)indexPath;
-- (void)showMarkAsOptions:(NSObject<GenericStream> *)selectedStream;
+- (void)setUpPlayer:(id<GenericStream> _Nonnull)selectedStream;
+- (id<GenericStream> _Nullable)streamAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+- (void)showMarkAsOptions:(id<GenericStream> _Nonnull)selectedStream;
 
 @end
 

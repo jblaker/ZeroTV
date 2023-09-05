@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SubtitlesViewController : BaseTableViewController
 
-@property (nonatomic, strong) NSObject<GenericStream> *selectedStream;
+@property (nonatomic, strong) id<GenericStream> selectedStream;
 @property (nonatomic, strong) NSArray *videoSubTitlesNames;
 @property (nonatomic, assign) id<SubtitlesViewControllerDelegate> delegate;
 

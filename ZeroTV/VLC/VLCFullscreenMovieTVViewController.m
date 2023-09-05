@@ -134,8 +134,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         
         if (self.selectedStream.isVOD)
         {
-            NSNumber *episodeProgress = [EpisodeManager progressForEpisode:self.selectedStream];
-            if (episodeProgress.intValue > (60 * 1000))
+            int episodeProgress = [EpisodeManager progressForEpisode:self.selectedStream];
+            if (episodeProgress > (60 * 1000))
             {
                 [self handleEpisodePartiallyWatched:episodeProgress];
             }
@@ -188,14 +188,14 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
 #pragma mark - Helper Methods
 
-- (void)handleEpisodePartiallyWatched:(NSNumber *)progress
+- (void)handleEpisodePartiallyWatched:(int)progress
 {
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Resume from where you left off?" preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        int seconds = progress.intValue;
+        int seconds = progress;
         vpc.mediaPlayer.time = [VLCTime timeWithInt:seconds];
         [vpc play];
     }]];
