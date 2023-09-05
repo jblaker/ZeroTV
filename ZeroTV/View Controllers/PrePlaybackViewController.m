@@ -13,6 +13,7 @@
 #import "SubtitlesViewController.h"
 #import "OpenSubtitlesAdapter.h"
 #import "UIViewController+Additions.h"
+#import "Bookmark+CoreDataProperties.h"
 
 static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
 static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
@@ -62,12 +63,12 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     {
         CGPoint location = [gesture locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
-        StreamInfo *stream = [self streamAtIndexPath:indexPath];
+        NSObject<GenericStream> *stream = [self streamAtIndexPath:indexPath];
         [self showMarkAsOptions:stream];
     }
 }
 
-- (void)setUpPlayer:(StreamInfo *)selectedStream
+- (void)setUpPlayer:(NSObject<GenericStream> *)selectedStream
 {
     if (selectedStream.alternateStreamURLs.count > 0)
     {

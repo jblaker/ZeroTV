@@ -130,7 +130,7 @@
         if ([BookmarkManager streamIsBookmarked:selectedStream])
         {
             [alertController addAction:[UIAlertAction actionWithTitle:@"Remove Bookmark" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [BookmarkManager removeBookmarForStream:selectedStream];
+                [BookmarkManager removeBookmarkForStream:selectedStream];
             }]];
         }
         else
@@ -229,7 +229,7 @@
 
 #pragma mark - SearchResultsControllerDelegate
 
-- (void)didSelectStream:(StreamInfo *)streamInfo
+- (void)didSelectStream:(NSObject<GenericStream> *)streamInfo
 {
     self.selectedStream = streamInfo;
 

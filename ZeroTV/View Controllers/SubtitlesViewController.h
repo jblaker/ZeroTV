@@ -6,7 +6,7 @@
 //
 
 #import "BaseTableViewController.h"
-#import "StreamInfo.h"
+#import "GenericStream.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SubtitlesViewController : BaseTableViewController
 
-@property (nonatomic, strong) StreamInfo *selectedStream;
+@property (nonatomic, strong) NSObject<GenericStream> *selectedStream;
 @property (nonatomic, strong) NSArray *videoSubTitlesNames;
 @property (nonatomic, assign) id<SubtitlesViewControllerDelegate> delegate;
 

@@ -6,10 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GenericStream.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface StreamInfo : NSObject
+@interface StreamInfo : NSObject<GenericStream>
 
 - (instancetype)initWithName:(NSString *)name streamURL:(NSString *)streamURL NS_DESIGNATED_INITIALIZER;
 

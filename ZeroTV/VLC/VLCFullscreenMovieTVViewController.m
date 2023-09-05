@@ -10,6 +10,7 @@
 #import "UIViewController+Additions.h"
 #import "EpisodeManager.h"
 #import "ProgressView.h"
+#import "GenericStream.h"
 
 #import <GameController/GameController.h>
 

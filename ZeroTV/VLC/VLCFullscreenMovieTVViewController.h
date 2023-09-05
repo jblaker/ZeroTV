@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "VLCPlaybackService.h"
 
-@class StreamInfo;
+@protocol GenericStream;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VLCFullscreenMovieTVViewController : UIViewController <VLCPlaybackServiceDelegate>
 
-@property (nonatomic, strong) StreamInfo *selectedStream;
+@property (nonatomic, strong) NSObject<GenericStream> *selectedStream;
 
 @end
 
