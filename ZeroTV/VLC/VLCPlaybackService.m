@@ -24,20 +24,14 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 @property (nonatomic, strong) VLCMedia *selectedMedia;
 @property (nonatomic, assign) BOOL playerIsSetup;
 @property (nonatomic, assign) BOOL sessionWillRestart;
-@property (nonatomic, assign) BOOL mediaWasJustStarted;
 @property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, assign) BOOL needsMetadataUpdate;
 @property (nonatomic, strong) NSLock *playbackSessionManagementLock;
 @property (nonatomic, strong) UIView *actualVideoOutputView;
 @property (nonatomic, strong) VLCMediaPlayer *mediaPlayer;
 @property (nonatomic, copy) void (^playbackCompletion)(BOOL success, float playbackPosition);
-@property (nonatomic, assign) VLCAspectRatio currentAspectRatio;
-@property (nonatomic, assign) BOOL isInFillToScreen;
 @property (nonatomic, assign) BOOL hasSubs;
 @property (nonatomic, strong) UIView *videoOutputViewWrapper;
-
-// TODO: Implement this?
-//@property (nonatomic, strong) VLCRemoteControlService *remoteControlService;
 
 @end
 
@@ -115,20 +109,12 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
         return;
     }
 
-    self.mediaWasJustStarted = YES;
-
     self.mediaPlayer.media = self.selectedMedia;
 
     if ([self.delegate respondsToSelector:@selector(prepareForMediaPlayback:)])
     {
         [self.delegate prepareForMediaPlayback:self];
     }
-
-    self.currentAspectRatio = VLCAspectRatioDefault;
-    self.mediaPlayer.videoAspectRatio = NULL;
-    self.mediaPlayer.videoCropGeometry = NULL;
-
-    //[[self remoteControlService] subscribeToRemoteCommands];
 
     if (self.hasSubs)
     {
@@ -139,6 +125,8 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kVLCPlaybackServicePlaybackDidStart object:self];
     [self.playbackSessionManagementLock unlock];
+    
+    [self play];
 }
 
 - (void)applyCachedSubtitle
@@ -170,7 +158,6 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 - (void)stopPlayback
 {
     BOOL ret = [self.playbackSessionManagementLock tryLock];
-    self.isInFillToScreen = NO; // reset _isInFillToScreen after playback is finished
     if (!ret)
     {
         //NSLog(@"%s: locking failed", __PRETTY_FUNCTION__);
@@ -219,6 +206,17 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
         self.sessionWillRestart = NO;
         [self startPlayback];
     }
+}
+
+- (void)mediaPlayerTimeChanged:(NSNotification *)notification
+{
+    if ([self.delegate respondsToSelector:@selector(playbackPositionUpdated:)])
+    {
+        [self.delegate playbackPositionUpdated:self];
+    }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kVLCPlaybackServicePlaybackPositionUpdated
+                                                        object:self];
 }
 
 - (void)mediaPlayerStateChanged:(NSNotification *)notification
@@ -272,9 +270,6 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
                                      isPlaying:self.mediaPlayer.isPlaying
                          forPlaybackService:self];
     }
-
-    // TODO: Implement this?
-    //[self setNeedsMetadataUpdate];
 }
 
 - (VLCTime *)playedTime
@@ -334,23 +329,6 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
         [self pause];
         [self.mediaPlayer jumpBackward:interval];
         [self play];
-    }
-}
-
-#pragma mark - KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
-{
-    if ([object isEqual:self.mediaPlayer])
-    {
-        if ([self.delegate respondsToSelector:@selector(playbackPositionUpdated:)])
-        {
-            [self.delegate playbackPositionUpdated:self];
-        }
-
-        [[NSNotificationCenter defaultCenter] postNotificationName:kVLCPlaybackServicePlaybackPositionUpdated
-                                                            object:self];
-        
     }
 }
 
