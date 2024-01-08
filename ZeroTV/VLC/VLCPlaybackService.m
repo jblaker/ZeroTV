@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 
 @interface VLCPlaybackService ()<VLCMediaPlayerDelegate, VLCMediaDelegate>
 
-@property (nonatomic, strong) VLCMediaList *mediaList;
+@property (nonatomic, strong) VLCMedia *selectedMedia;
 @property (nonatomic, assign) BOOL playerIsSetup;
 @property (nonatomic, assign) BOOL sessionWillRestart;
 @property (nonatomic, assign) BOOL mediaWasJustStarted;
@@ -29,11 +29,8 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 @property (nonatomic, assign) BOOL needsMetadataUpdate;
 @property (nonatomic, strong) NSLock *playbackSessionManagementLock;
 @property (nonatomic, strong) UIView *actualVideoOutputView;
-@property (nonatomic, strong) VLCMediaListPlayer *listPlayer;
 @property (nonatomic, strong) VLCMediaPlayer *mediaPlayer;
 @property (nonatomic, copy) void (^playbackCompletion)(BOOL success, float playbackPosition);
-@property (nonatomic, strong) NSDictionary *mediaOptionsDictionary;
-//@property (nonatomic, strong) VLCRendererItem *renderer;
 @property (nonatomic, assign) VLCAspectRatio currentAspectRatio;
 @property (nonatomic, assign) BOOL isInFillToScreen;
 @property (nonatomic, assign) BOOL hasSubs;
@@ -67,10 +64,10 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
     return self;
 }
 
-- (void)playMediaList:(VLCMediaList *)mediaList hasSubs:(BOOL)hasSubs completion:(void (^ __nullable)(BOOL success, float playbackPosition))completion
+- (void)playMedia:(VLCMedia *)media hasSubs:(BOOL)hasSubs completion:(void (^ __nullable)(BOOL success, float playbackPosition))completion
 {
+    self.selectedMedia = media;
     self.playbackCompletion = completion;
-    self.mediaList = mediaList;
     self.hasSubs = hasSubs;
 
     self.sessionWillRestart = self.playerIsSetup;
@@ -92,14 +89,6 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
         return;
     }
 
-    if (!self.mediaList)
-    {
-        //NSLog(@"%s: no URL and no media list set, stopping playback", __PRETTY_FUNCTION__);
-        [self.playbackSessionManagementLock unlock];
-        [self stopPlayback];
-        return;
-    }
-
     /* video decoding permanently fails if we don't provide a UIView to draw into on init
      * hence we provide one which is not attached to any view controller for off-screen drawing
      * and disable video decoding once playback started */
@@ -107,19 +96,9 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
     self.actualVideoOutputView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.actualVideoOutputView.autoresizesSubviews = YES;
 
-    self.listPlayer = [[VLCMediaListPlayer alloc] initWithDrawable:self.actualVideoOutputView];
-
-    self.mediaPlayer = self.listPlayer.mediaPlayer;
+    self.mediaPlayer = [VLCMediaPlayer new];
+    self.mediaPlayer.drawable = self.actualVideoOutputView;
     [self.mediaPlayer setDelegate:self];
-
-    VLCMedia *media = [self.mediaList mediaAtIndex:0];
-    [media parseWithOptions:VLCMediaParseNetwork];
-    media.delegate = self;
-    [media addOptions:self.mediaOptionsDictionary];
-
-    [self.listPlayer setMediaList:self.mediaList];
-
-    [self.listPlayer setRepeatMode:VLCDoNotRepeat];
 
     [self.playbackSessionManagementLock unlock];
 
@@ -138,12 +117,7 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 
     self.mediaWasJustStarted = YES;
 
-    [self.mediaPlayer addObserver:self forKeyPath:@"time" options:0 context:nil];
-    [self.mediaPlayer addObserver:self forKeyPath:@"remainingTime" options:0 context:nil];
-
-//    [self.mediaPlayer setRendererItem:self.renderer];
-
-    [self.listPlayer playItemAtNumber:@(0)];
+    self.mediaPlayer.media = self.selectedMedia;
 
     if ([self.delegate respondsToSelector:@selector(prepareForMediaPlayback:)])
     {
@@ -205,14 +179,6 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 
     if (self.mediaPlayer)
     {
-        @try {
-            [self.mediaPlayer removeObserver:self forKeyPath:@"time"];
-            [self.mediaPlayer removeObserver:self forKeyPath:@"remainingTime"];
-        }
-        @catch (NSException *exception) {
-            //NSLog(@"we weren't an observer yet");
-        }
-
         if (self.mediaPlayer.media)
         {
             [self.mediaPlayer pause];
@@ -239,15 +205,12 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
         }
 
         self.mediaPlayer = nil;
-        self.listPlayer = nil;
     }
     if (!self.sessionWillRestart)
     {
-        self.mediaList = nil;
+        self.selectedMedia = nil;
     }
     self.playerIsSetup = NO;
-
-    //[[self remoteControlService] unsubscribeFromRemoteCommands];
 
     [self.playbackSessionManagementLock unlock];
     [[NSNotificationCenter defaultCenter] postNotificationName:kVLCPlaybackServicePlaybackDidStop object:self];
@@ -344,13 +307,13 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 
 - (void)play
 {
-    [self.listPlayer play];
+    [self.mediaPlayer play];
     [[NSNotificationCenter defaultCenter] postNotificationName:kVLCPlaybackServicePlaybackDidResume object:self];
 }
 
 - (void)pause
 {
-    [self.listPlayer pause];
+    [self.mediaPlayer pause];
     [[NSNotificationCenter defaultCenter] postNotificationName:kVLCPlaybackServicePlaybackDidPause object:self];
 }
 
@@ -380,17 +343,6 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
 {
     if ([object isEqual:self.mediaPlayer])
     {
-        
-        if ([keyPath isEqualToString:@"time"])
-        {
-            
-        }
-        
-        if ([keyPath isEqualToString:@"remainingTime"])
-        {
-            
-        }
-        
         if ([self.delegate respondsToSelector:@selector(playbackPositionUpdated:)])
         {
             [self.delegate playbackPositionUpdated:self];

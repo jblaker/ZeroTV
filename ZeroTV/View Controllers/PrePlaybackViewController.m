@@ -118,11 +118,9 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 {
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     VLCMedia *media = [VLCMedia mediaWithURL:url];
-    VLCMediaList *medialist = [[VLCMediaList alloc] init];
-    [medialist addMedia:media];
     
     __weak typeof(self) weakSelf = self;
-    [vpc playMediaList:medialist hasSubs:self.selectedStream.didDownloadSubFile completion:^(BOOL success, float playbackPosition) {
+    [vpc playMedia:media hasSubs:self.selectedStream.didDownloadSubFile completion:^(BOOL success, float playbackPosition) {
         
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
