@@ -685,7 +685,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
             break;
         }
         case VLCMediaPlayerStateEnded:
-            [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+            [self showToastMessage:@"VLCMediaPlayerStateEnded"];
+//            [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
             break;
         case VLCMediaPlayerStateError:
             [self showToastMessage:@"Encountered an error..."];
