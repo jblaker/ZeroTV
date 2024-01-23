@@ -39,7 +39,6 @@ NSString * const kBookmarkEntityName = @"Bookmark";
     
     newBookmark.name = stream.name;
     newBookmark.streamURL = stream.streamURL;
-    newBookmark.searchTerm = stream.searchTerm;
     newBookmark.isVOD = stream.isVOD;
     newBookmark.alternateStreamURLs = stream.alternateStreamURLs;
     

@@ -88,7 +88,7 @@ static NSString * const kStreamsNASegue = @"ShowStreamsNA";
 {
     NSDictionary *showDict = self.favorites[indexPath.row];
     NSString *favName = showDict[@"name"];
-    NSString *favSearchTerm = showDict[@"searchTerm"];
+    NSString *imdbID = showDict[@"imdbID"];
     StreamingGroup *favoriteGroup = [[StreamingGroup alloc] initWithName:favName];
     favoriteGroup.isFavorite = YES;
         
@@ -99,7 +99,7 @@ static NSString * const kStreamsNASegue = @"ShowStreamsNA";
         if ([streamInfo.name containsString:favName] && [addedTitles indexOfObject:streamInfo.name] == NSNotFound)
         {
             streamInfo.favoriteGroupName = favName;
-            streamInfo.searchTerm = favSearchTerm;
+            streamInfo.imdbID = imdbID;
             [favoriteGroup.streams addObject:streamInfo];
             [addedTitles addObject:streamInfo.name];
         }

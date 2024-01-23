@@ -12,7 +12,7 @@
 @property (nonatomic, strong) NSArray *subtitleOptions;
 @property (nonatomic, assign) BOOL isVOD;
 @property (nonatomic, assign) BOOL didDownloadSubFile;
-@property (nonatomic, copy) NSString *searchTerm;
+@property (nonatomic, copy) NSString *imdbID;
 @property (nonatomic, copy) NSString *favoriteGroupName;
 @property (nonatomic, strong) NSMutableArray *alternateStreamURLs;
 
