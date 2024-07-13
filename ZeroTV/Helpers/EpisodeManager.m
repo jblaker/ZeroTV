@@ -26,7 +26,7 @@ NSString * const kProgressEntityName = @"Progress";
 
 + (void)saveProgressForEpisode:(id<GenericStream>)episode withPlaybackTime:(int)playbackTime
 {
-    if (!episode.isVOD)
+    if (!episode.isVOD || playbackTime == 0)
     {
         return;
     }

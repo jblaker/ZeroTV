@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,7 +15,6 @@
 		E903E85C25951FC500F754A2 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E85B25951FC500F754A2 /* FavoritesViewController.m */; };
 		E903E8642597988800F754A2 /* UIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E8632597988800F754A2 /* UIViewController+Additions.m */; };
 		E903E86825979D0200F754A2 /* EpisodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E903E86725979D0200F754A2 /* EpisodeManager.m */; };
-		E910D79E2AA788760047D55C /* NSArrayTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E910D79D2AA788760047D55C /* NSArrayTransformer.m */; };
 		E911F8F327DD0BD2005111A5 /* BookmarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E911F8F227DD0BD2005111A5 /* BookmarksViewController.m */; };
 		E911F8F627DD0C71005111A5 /* BookmarkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E911F8F527DD0C71005111A5 /* BookmarkManager.m */; };
 		E91D1249261FD452009F3DA1 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = E91D1247261FD452009F3DA1 /* ProgressView.m */; };
@@ -88,8 +87,6 @@
 		E903E86625979D0200F754A2 /* EpisodeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EpisodeManager.h; sourceTree = "<group>"; };
 		E903E86725979D0200F754A2 /* EpisodeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EpisodeManager.m; sourceTree = "<group>"; };
 		E910D79B2AA773570047D55C /* GenericStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GenericStream.h; sourceTree = "<group>"; };
-		E910D79C2AA788760047D55C /* NSArrayTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSArrayTransformer.h; sourceTree = "<group>"; };
-		E910D79D2AA788760047D55C /* NSArrayTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSArrayTransformer.m; sourceTree = "<group>"; };
 		E911F8F127DD0BD2005111A5 /* BookmarksViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookmarksViewController.h; sourceTree = "<group>"; };
 		E911F8F227DD0BD2005111A5 /* BookmarksViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookmarksViewController.m; sourceTree = "<group>"; };
 		E911F8F427DD0C71005111A5 /* BookmarkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookmarkManager.h; sourceTree = "<group>"; };
@@ -185,8 +182,6 @@
 				E926AF272AA6619900CCAE81 /* Progress+CoreDataProperties.h */,
 				E926AF212AA65FED00CCAE81 /* Progress+CoreDataProperties.m */,
 				E926AF0B2AA6524600CCAE81 /* ZeroTV.xcdatamodeld */,
-				E910D79C2AA788760047D55C /* NSArrayTransformer.h */,
-				E910D79D2AA788760047D55C /* NSArrayTransformer.m */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -490,7 +485,6 @@
 				E903E86825979D0200F754A2 /* EpisodeManager.m in Sources */,
 				E93182402591AC630003D686 /* BaseTableViewController.m in Sources */,
 				E903E85C25951FC500F754A2 /* FavoritesViewController.m in Sources */,
-				E910D79E2AA788760047D55C /* NSArrayTransformer.m in Sources */,
 				E903E83F25940AD100F754A2 /* OpenSubtitlesAdapter.m in Sources */,
 				E911F8F627DD0C71005111A5 /* BookmarkManager.m in Sources */,
 				E903E84B2594643C00F754A2 /* SearchResultsController.m in Sources */,
@@ -711,7 +705,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -734,7 +727,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};

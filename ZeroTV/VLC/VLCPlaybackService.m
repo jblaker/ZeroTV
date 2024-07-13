@@ -242,16 +242,13 @@ typedef NS_ENUM(NSUInteger, VLCAspectRatio) {
         }
         case VLCMediaPlayerStateError:
         {
-            //NSLog(@"Playback failed");
-            dispatch_async(dispatch_get_main_queue(),^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:kVLCPlaybackServicePlaybackDidFail object:self];
-            });
-            self.sessionWillRestart = NO;
+            self.sessionWillRestart = YES;
             [self stopPlayback];
             break;
         }
         case VLCMediaPlayerStateEnded:
         {
+            self.sessionWillRestart = YES;
             [self stopPlayback];
             break;
         }

@@ -6,7 +6,6 @@
 //
 
 #import "CoreDataManager.h"
-#import "NSArrayTransformer.h"
 
 @implementation CoreDataManager
 
@@ -18,16 +17,6 @@
         sharedManager = [CoreDataManager new];
     });
     return sharedManager;
-}
-
-- (instancetype)init
-{
-    if (self = [super init])
-    {
-        [NSValueTransformer setValueTransformer:[[NSArrayTransformer alloc] init] forName:@"NSArrayTransformer"];
-
-    }
-    return self;
 }
 
 #pragma mark - Core Data stack
