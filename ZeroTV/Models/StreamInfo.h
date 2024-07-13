@@ -6,10 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GenericStream.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface StreamInfo : NSObject
+@interface StreamInfo : NSObject<GenericStream>
 
 - (instancetype)initWithName:(NSString *)name streamURL:(NSString *)streamURL NS_DESIGNATED_INITIALIZER;
 
@@ -19,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL didDownloadSubFile;
 @property (nonatomic, assign) BOOL isVOD;
 @property (nonatomic, strong) NSArray *subtitleOptions;
-@property (nonatomic, copy) NSString *searchTerm;
+@property (nonatomic, copy) NSString *imdbID;
 @property (nonatomic, copy) NSString *favoriteGroupName;
 @property (nonatomic, strong) NSMutableArray *alternateStreamURLs;
 

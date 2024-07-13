@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Bookmark" representedClassName="Bookmark" syncable="YES" codeGenerationType="class">
+        <attribute name="alternateStreamURLs" optional="YES" attributeType="Transformable" valueTransformerName=""/>
+        <attribute name="didDownloadSubFile" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="favoriteGroupName" optional="YES" attributeType="String"/>
+        <attribute name="imdbID" optional="YES" attributeType="String"/>
+        <attribute name="isVOD" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="searchTerm" optional="YES" attributeType="String"/>
+        <attribute name="streamURL" optional="YES" attributeType="String"/>
+        <attribute name="subtitleOptions" optional="YES" attributeType="Transformable" valueTransformerName=""/>
+    </entity>
+    <entity name="Progress" representedClassName="Progress" syncable="YES" codeGenerationType="class">
+        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="progress" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+</model>

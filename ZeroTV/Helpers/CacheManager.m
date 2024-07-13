@@ -29,26 +29,11 @@ NSString * const kCachedManifestFilename = @"manifest.m3u8";
     return error;
 }
 
-+ (BOOL)cacheArray:(NSArray *)array filename:(NSString *)filename
-{
-    NSString *cacheDirectoryPath = [CacheManager cacheDirectoryPath];
-    NSString *filePath = [cacheDirectoryPath stringByAppendingPathComponent:filename];
-    
-    return [array writeToFile:filePath atomically:YES];
-}
-
 + (NSData *)cachedDataNamed:(NSString *)name
 {
     NSString *cacheDirPath = [CacheManager cacheDirectoryPath];
     NSString *filePath = [cacheDirPath stringByAppendingPathComponent:name];
     return [NSData dataWithContentsOfFile:filePath];
-}
-
-+ (NSArray *)cachedArrayNamed:(NSString *)name
-{
-    NSString *cacheDirPath = [CacheManager cacheDirectoryPath];
-    NSString *filePath = [cacheDirPath stringByAppendingPathComponent:name];
-    return [NSArray arrayWithContentsOfFile:filePath];
 }
 
 @end

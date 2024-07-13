@@ -22,7 +22,7 @@ NSString * const kAPIKeyKey = @"Api-Key";
 
 + (void)subtitleSearch:(NSString *)query completionHandler:(void (^)(NSDictionary * _Nullable, NSError * _Nullable))completionHandler
 {
-    query = [NSString stringWithFormat:@"%@?query=%@", kOpenSubsTVEndpoint, query];
+    query = [NSString stringWithFormat:@"%@?%@", kOpenSubsTVEndpoint, query];
     
     NSURL *url = [NSURL URLWithString:[query stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
 

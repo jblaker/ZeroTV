@@ -10,6 +10,7 @@
 #import "UIViewController+Additions.h"
 #import "EpisodeManager.h"
 #import "ProgressView.h"
+#import "GenericStream.h"
 
 #import <GameController/GameController.h>
 
@@ -133,8 +134,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         
         if (self.selectedStream.isVOD)
         {
-            NSNumber *episodeProgress = [EpisodeManager progressForEpisode:self.selectedStream];
-            if (episodeProgress.intValue > (60 * 1000))
+            int episodeProgress = [EpisodeManager progressForEpisode:self.selectedStream];
+            if (episodeProgress > (60 * 1000))
             {
                 [self handleEpisodePartiallyWatched:episodeProgress];
             }
@@ -187,14 +188,14 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
 #pragma mark - Helper Methods
 
-- (void)handleEpisodePartiallyWatched:(NSNumber *)progress
+- (void)handleEpisodePartiallyWatched:(int)progress
 {
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Resume from where you left off?" preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        int seconds = progress.intValue;
+        int seconds = progress;
         vpc.mediaPlayer.time = [VLCTime timeWithInt:seconds];
         [vpc play];
     }]];
@@ -297,6 +298,28 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     });
 }
 
+- (void)showTopContainer
+{
+    self.selectSubtitlesButton.userInteractionEnabled = YES;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.topContainerTopConstraint.constant = 0;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.topContainerVisible = YES;
+    }];
+}
+
+- (void)hideTopContainer
+{
+    self.selectSubtitlesButton.userInteractionEnabled = NO;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.topContainerTopConstraint.constant = -(CGRectGetHeight(self.topContainerView.frame) + 70);
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.topContainerVisible = NO;
+    }];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)subtitlesButtonPressed:(UIButton *)sender
@@ -316,6 +339,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 {
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     
+    // Microseconds
+    // Equal to one millionth of a second
     NSInteger oneMil = 1000000;
     
     switch(sender.tag)
@@ -327,6 +352,12 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
             vpc.mediaPlayer.currentVideoSubTitleDelay += (oneMil/2);
             break;
         case 3:
+            vpc.mediaPlayer.currentVideoSubTitleDelay -= (oneMil/10);
+            break;
+        case 4:
+            vpc.mediaPlayer.currentVideoSubTitleDelay += (oneMil/10);
+            break;
+        case 5:
             vpc.mediaPlayer.currentVideoSubTitleDelay = 0;
             break;
     }
@@ -442,24 +473,12 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
         {
             if (gestureRecognizer.direction == UISwipeGestureRecognizerDirectionDown && !self.topContainerVisible)
             {
-                self.selectSubtitlesButton.userInteractionEnabled = YES;
-                [UIView animateWithDuration:0.25 animations:^{
-                    self.topContainerTopConstraint.constant = 0;
-                    [self.view layoutIfNeeded];
-                } completion:^(BOOL finished) {
-                    self.topContainerVisible = YES;
-                }];
+                [self showTopContainer];
             }
             
             if (gestureRecognizer.direction == UISwipeGestureRecognizerDirectionUp && self.topContainerVisible)
             {
-                self.selectSubtitlesButton.userInteractionEnabled = NO;
-                [UIView animateWithDuration:0.25 animations:^{
-                    self.topContainerTopConstraint.constant = -(CGRectGetHeight(self.topContainerView.frame) + 70);
-                    [self.view layoutIfNeeded];
-                } completion:^(BOOL finished) {
-                    self.topContainerVisible = NO;
-                }];
+                [self hideTopContainer];
             }
             break;
         }
@@ -470,6 +489,11 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
 - (void)singleClickHandlerForV1:(UITapGestureRecognizer *)singleClicker
 {
+    if (self.topContainerVisible)
+    {
+        return;
+    }
+
     if (singleClicker.state == UIGestureRecognizerStateRecognized)
     {
         VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
@@ -505,6 +529,11 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
 - (void)singleClickHandlerForV2:(UITapGestureRecognizer *)singleClicker
 {
+    if (self.topContainerVisible)
+    {
+        return;
+    }
+
     if (singleClicker.state == UIGestureRecognizerStateRecognized)
     {
         VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
@@ -555,10 +584,21 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
 
 - (void)handleMenuTapGesture:(UITapGestureRecognizer *)gestureRecognizer
 {
-    VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
-    
-    [self stopScrubbing];
-    [vpc play];
+    if (self.progressView.scrubbing)
+    {
+        VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
+        
+        [self stopScrubbing];
+        [vpc play];
+    }
+    else if (self.topContainerVisible)
+    {
+        [self hideTopContainer];
+    }
+    else
+    {
+        [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
@@ -684,7 +724,8 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
             break;
         }
         case VLCMediaPlayerStateEnded:
-            [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+//            [self showToastMessage:@"VLCMediaPlayerStateEnded"];
+//            [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
             break;
         case VLCMediaPlayerStateError:
             [self showToastMessage:@"Encountered an error..."];
@@ -768,12 +809,7 @@ typedef NS_ENUM(NSUInteger, GamepadEdge)
     {
         return !vpc.mediaPlayer.isPlaying;
     }
-    
-    if (gestureRecognizer == self.menuTapRecognizer)
-    {
-        return self.progressView.scrubbing;
-    }
-    
+
     return YES;
 }
 

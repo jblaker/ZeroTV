@@ -13,6 +13,7 @@
 #import "SubtitlesViewController.h"
 #import "OpenSubtitlesAdapter.h"
 #import "UIViewController+Additions.h"
+#import "Bookmark+CoreDataProperties.h"
 
 static NSString * const kSubtitleOptionsSegueId = @"SubtitleSelection";
 static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
@@ -62,12 +63,12 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     {
         CGPoint location = [gesture locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
-        StreamInfo *stream = [self streamAtIndexPath:indexPath];
+        id<GenericStream> stream = [self streamAtIndexPath:indexPath];
         [self showMarkAsOptions:stream];
     }
 }
 
-- (void)setUpPlayer:(StreamInfo *)selectedStream
+- (void)setUpPlayer:(id<GenericStream>)selectedStream
 {
     if (selectedStream.alternateStreamURLs.count > 0)
     {
@@ -117,11 +118,9 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
 {
     VLCPlaybackService *vpc = [VLCPlaybackService sharedInstance];
     VLCMedia *media = [VLCMedia mediaWithURL:url];
-    VLCMediaList *medialist = [[VLCMediaList alloc] init];
-    [medialist addMedia:media];
     
     __weak typeof(self) weakSelf = self;
-    [vpc playMediaList:medialist hasSubs:self.selectedStream.didDownloadSubFile completion:^(BOOL success, float playbackPosition) {
+    [vpc playMedia:media hasSubs:self.selectedStream.didDownloadSubFile completion:^(BOOL success, float playbackPosition) {
         
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
@@ -157,16 +156,20 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
     // Name format will be similar to:
     // HD : The Mandalorian S01E01
     NSArray *nameParts = [self.selectedStream.name componentsSeparatedByString:@" : "];
-    NSString *episodeName = nameParts.lastObject;
+    NSString *query = [NSString stringWithFormat:@"query=%@", nameParts.lastObject];
     
-    if (self.selectedStream.searchTerm && self.selectedStream.favoriteGroupName)
+    if (self.selectedStream.imdbID && self.selectedStream.favoriteGroupName)
     {
-        episodeName = [episodeName stringByReplacingOccurrencesOfString:self.selectedStream.favoriteGroupName withString:self.selectedStream.searchTerm];
+        NSString *specificQuery = [self episodeQueryFromStream:self.selectedStream];
+        if (specificQuery)
+        {
+            query = specificQuery;
+        }
     }
     
     __weak typeof(self) weakSelf = self;
     
-    [OpenSubtitlesAdapter subtitleSearch:episodeName completionHandler:^(NSDictionary * _Nullable response, NSError * _Nullable error) {
+    [OpenSubtitlesAdapter subtitleSearch:query completionHandler:^(NSDictionary * _Nullable response, NSError * _Nullable error) {
         
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
@@ -184,6 +187,34 @@ static NSString * const kStreamPlaybackSegueId = @"StreamPlayback";
         }
         
     }];
+}
+
+- (NSString *)episodeQueryFromStream:(StreamInfo *)stream
+{
+    // Define the regex pattern
+    NSString *pattern = @"^(.+)\\sS(\\d{2})E(\\d{2})$";
+
+    // Create a regular expression object
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                           options:0
+                                                                             error:NULL];
+
+    // Match the regex pattern against the input string
+    NSTextCheckingResult *match = [regex firstMatchInString:stream.name
+                                                    options:0
+                                                      range:NSMakeRange(0, [stream.name length])];
+
+    // Check if there is a match
+    if (match) {
+        // Extract the show name, season number, and episode number
+        // NSString *showName = [stream.name substringWithRange:[match rangeAtIndex:1]];
+        NSString *seasonNumber = [stream.name substringWithRange:[match rangeAtIndex:2]];
+        NSString *episodeNumber = [stream.name substringWithRange:[match rangeAtIndex:3]];
+
+        return [NSString stringWithFormat:@"parent_imdb_id=%@&season_number=%@&episode_number=%@", stream.imdbID, seasonNumber, episodeNumber];
+    }
+
+    return nil;
 }
 
 - (void)handleOpenSubtitlesResponse:(NSDictionary *)response

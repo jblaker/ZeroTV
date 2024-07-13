@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,8 @@
 		E911F8F327DD0BD2005111A5 /* BookmarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E911F8F227DD0BD2005111A5 /* BookmarksViewController.m */; };
 		E911F8F627DD0C71005111A5 /* BookmarkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E911F8F527DD0C71005111A5 /* BookmarkManager.m */; };
 		E91D1249261FD452009F3DA1 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = E91D1247261FD452009F3DA1 /* ProgressView.m */; };
+		E926AF052AA650E400CCAE81 /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E926AF042AA650E400CCAE81 /* CoreDataManager.m */; };
+		E926AF0D2AA6524600CCAE81 /* ZeroTV.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E926AF0B2AA6524600CCAE81 /* ZeroTV.xcdatamodeld */; };
 		E9318231259181440003D686 /* VLCPlaybackService.m in Sources */ = {isa = PBXBuildFile; fileRef = E9318230259181440003D686 /* VLCPlaybackService.m */; };
 		E93182352591815F0003D686 /* VLCFullscreenMovieTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E93182342591815F0003D686 /* VLCFullscreenMovieTVViewController.m */; };
 		E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E931823B2591AA650003D686 /* SubtitlesViewController.m */; };
@@ -37,6 +39,7 @@
 		E969162E25914AF6005D5217 /* StreamingGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E969162D25914AF6005D5217 /* StreamingGroup.m */; };
 		E969163225914B2A005D5217 /* StreamInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E969163125914B2A005D5217 /* StreamInfo.m */; };
 		E969163625914E36005D5217 /* StreamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E969163525914E36005D5217 /* StreamsViewController.m */; };
+		EC7A42803016624A4B82EA22 /* Pods_ZeroTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE49DB3FF28C5D701FD3458 /* Pods_ZeroTV.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +67,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4EE49DB3FF28C5D701FD3458 /* Pods_ZeroTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZeroTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80081968587998BAC0376F18 /* Pods-ZeroTV.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZeroTV.debug.xcconfig"; path = "Target Support Files/Pods-ZeroTV/Pods-ZeroTV.debug.xcconfig"; sourceTree = "<group>"; };
+		8EB4D3BAE24484C055DCAD94 /* Pods-ZeroTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZeroTV.release.xcconfig"; path = "Target Support Files/Pods-ZeroTV/Pods-ZeroTV.release.xcconfig"; sourceTree = "<group>"; };
 		E903E83D25940AD100F754A2 /* OpenSubtitlesAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenSubtitlesAdapter.h; sourceTree = "<group>"; };
 		E903E83E25940AD100F754A2 /* OpenSubtitlesAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenSubtitlesAdapter.m; sourceTree = "<group>"; };
 		E903E8412594149E00F754A2 /* DownloadUploadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadUploadManager.h; sourceTree = "<group>"; };
@@ -80,12 +86,24 @@
 		E903E8632597988800F754A2 /* UIViewController+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additions.m"; sourceTree = "<group>"; };
 		E903E86625979D0200F754A2 /* EpisodeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EpisodeManager.h; sourceTree = "<group>"; };
 		E903E86725979D0200F754A2 /* EpisodeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EpisodeManager.m; sourceTree = "<group>"; };
+		E910D79B2AA773570047D55C /* GenericStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GenericStream.h; sourceTree = "<group>"; };
 		E911F8F127DD0BD2005111A5 /* BookmarksViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookmarksViewController.h; sourceTree = "<group>"; };
 		E911F8F227DD0BD2005111A5 /* BookmarksViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookmarksViewController.m; sourceTree = "<group>"; };
 		E911F8F427DD0C71005111A5 /* BookmarkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookmarkManager.h; sourceTree = "<group>"; };
 		E911F8F527DD0C71005111A5 /* BookmarkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookmarkManager.m; sourceTree = "<group>"; };
 		E91D1247261FD452009F3DA1 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
 		E91D1248261FD452009F3DA1 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+		E926AF032AA650E400CCAE81 /* CoreDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
+		E926AF042AA650E400CCAE81 /* CoreDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
+		E926AF0C2AA6524600CCAE81 /* ZeroTV.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZeroTV.xcdatamodel; sourceTree = "<group>"; };
+		E926AF1A2AA65FED00CCAE81 /* Bookmark+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bookmark+CoreDataProperties.h"; path = "/Users/jblaker/Documents/Projects/ZeroTV/ZeroTV/Core Data/Bookmark+CoreDataProperties.h"; sourceTree = "<absolute>"; };
+		E926AF1B2AA65FED00CCAE81 /* Bookmark+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Bookmark+CoreDataProperties.m"; path = "/Users/jblaker/Documents/Projects/ZeroTV/ZeroTV/Core Data/Bookmark+CoreDataProperties.m"; sourceTree = "<absolute>"; };
+		E926AF1C2AA65FED00CCAE81 /* Progress+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Progress+CoreDataClass.h"; path = "/Users/jblaker/Documents/Projects/ZeroTV/ZeroTV/Core Data/Progress+CoreDataClass.h"; sourceTree = "<absolute>"; };
+		E926AF1E2AA65FED00CCAE81 /* Bookmark+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Bookmark+CoreDataClass.m"; path = "/Users/jblaker/Documents/Projects/ZeroTV/ZeroTV/Core Data/Bookmark+CoreDataClass.m"; sourceTree = "<absolute>"; };
+		E926AF1F2AA65FED00CCAE81 /* Bookmark+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bookmark+CoreDataClass.h"; path = "/Users/jblaker/Documents/Projects/ZeroTV/ZeroTV/Core Data/Bookmark+CoreDataClass.h"; sourceTree = "<absolute>"; };
+		E926AF202AA65FED00CCAE81 /* Progress+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Progress+CoreDataClass.m"; path = "/Users/jblaker/Documents/Projects/ZeroTV/ZeroTV/Core Data/Progress+CoreDataClass.m"; sourceTree = "<absolute>"; };
+		E926AF212AA65FED00CCAE81 /* Progress+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Progress+CoreDataProperties.m"; path = "/Users/jblaker/Documents/Projects/ZeroTV/ZeroTV/Core Data/Progress+CoreDataProperties.m"; sourceTree = "<absolute>"; };
+		E926AF272AA6619900CCAE81 /* Progress+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Progress+CoreDataProperties.h"; sourceTree = "<group>"; };
 		E931822F259181440003D686 /* VLCPlaybackService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCPlaybackService.h; sourceTree = "<group>"; };
 		E9318230259181440003D686 /* VLCPlaybackService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLCPlaybackService.m; sourceTree = "<group>"; };
 		E93182332591815F0003D686 /* VLCFullscreenMovieTVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCFullscreenMovieTVViewController.h; sourceTree = "<group>"; };
@@ -134,6 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC7A42803016624A4B82EA22 /* Pods_ZeroTV.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,8 +163,92 @@
 			isa = PBXGroup;
 			children = (
 				E93BE9F026ACFA3B00C381AF /* TVServices.framework */,
+				4EE49DB3FF28C5D701FD3458 /* Pods_ZeroTV.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E926AF062AA6513200CCAE81 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				E926AF1F2AA65FED00CCAE81 /* Bookmark+CoreDataClass.h */,
+				E926AF1E2AA65FED00CCAE81 /* Bookmark+CoreDataClass.m */,
+				E926AF1A2AA65FED00CCAE81 /* Bookmark+CoreDataProperties.h */,
+				E926AF1B2AA65FED00CCAE81 /* Bookmark+CoreDataProperties.m */,
+				E926AF032AA650E400CCAE81 /* CoreDataManager.h */,
+				E926AF042AA650E400CCAE81 /* CoreDataManager.m */,
+				E926AF1C2AA65FED00CCAE81 /* Progress+CoreDataClass.h */,
+				E926AF202AA65FED00CCAE81 /* Progress+CoreDataClass.m */,
+				E926AF272AA6619900CCAE81 /* Progress+CoreDataProperties.h */,
+				E926AF212AA65FED00CCAE81 /* Progress+CoreDataProperties.m */,
+				E926AF0B2AA6524600CCAE81 /* ZeroTV.xcdatamodeld */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		E926AF072AA6515400CCAE81 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E903E83D25940AD100F754A2 /* OpenSubtitlesAdapter.h */,
+				E903E83E25940AD100F754A2 /* OpenSubtitlesAdapter.m */,
+				E903E8412594149E00F754A2 /* DownloadUploadManager.h */,
+				E903E8422594149E00F754A2 /* DownloadUploadManager.m */,
+				E903E84525941C5A00F754A2 /* M3U8Manager.h */,
+				E903E84625941C5A00F754A2 /* M3U8Manager.m */,
+				E903E8562594FDFD00F754A2 /* CacheManager.h */,
+				E903E8572594FDFD00F754A2 /* CacheManager.m */,
+				E903E86625979D0200F754A2 /* EpisodeManager.h */,
+				E903E86725979D0200F754A2 /* EpisodeManager.m */,
+				E911F8F427DD0C71005111A5 /* BookmarkManager.h */,
+				E911F8F527DD0C71005111A5 /* BookmarkManager.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		E926AF082AA6517900CCAE81 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E969162C25914AF6005D5217 /* StreamingGroup.h */,
+				E969162D25914AF6005D5217 /* StreamingGroup.m */,
+				E969163025914B2A005D5217 /* StreamInfo.h */,
+				E969163125914B2A005D5217 /* StreamInfo.m */,
+				E910D79B2AA773570047D55C /* GenericStream.h */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E926AF092AA6518000CCAE81 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E903E8492594643C00F754A2 /* SearchResultsController.h */,
+				E903E84A2594643C00F754A2 /* SearchResultsController.m */,
+				E903E8622597988800F754A2 /* UIViewController+Additions.h */,
+				E903E8632597988800F754A2 /* UIViewController+Additions.m */,
+				E931823E2591AC630003D686 /* BaseTableViewController.h */,
+				E931823F2591AC630003D686 /* BaseTableViewController.m */,
+				E969160E25914098005D5217 /* GroupsViewController.h */,
+				E969160F25914098005D5217 /* GroupsViewController.m */,
+				E903E85A25951FC500F754A2 /* FavoritesViewController.h */,
+				E903E85B25951FC500F754A2 /* FavoritesViewController.m */,
+				E911F8F127DD0BD2005111A5 /* BookmarksViewController.h */,
+				E911F8F227DD0BD2005111A5 /* BookmarksViewController.m */,
+				E969163425914E36005D5217 /* StreamsViewController.h */,
+				E969163525914E36005D5217 /* StreamsViewController.m */,
+				E93991AB27EB6C7B00D5F3A8 /* PrePlaybackViewController.h */,
+				E93991AC27EB6C7B00D5F3A8 /* PrePlaybackViewController.m */,
+				E931823A2591AA650003D686 /* SubtitlesViewController.h */,
+				E931823B2591AA650003D686 /* SubtitlesViewController.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E926AF0A2AA651A500CCAE81 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E91D1248261FD452009F3DA1 /* ProgressView.h */,
+				E91D1247261FD452009F3DA1 /* ProgressView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E931817A259173840003D686 /* VLC */ = {
@@ -195,42 +298,11 @@
 			children = (
 				E969160B25914098005D5217 /* AppDelegate.h */,
 				E969160C25914098005D5217 /* AppDelegate.m */,
-				E903E8622597988800F754A2 /* UIViewController+Additions.h */,
-				E903E8632597988800F754A2 /* UIViewController+Additions.m */,
-				E931823E2591AC630003D686 /* BaseTableViewController.h */,
-				E931823F2591AC630003D686 /* BaseTableViewController.m */,
-				E969160E25914098005D5217 /* GroupsViewController.h */,
-				E969160F25914098005D5217 /* GroupsViewController.m */,
-				E903E85A25951FC500F754A2 /* FavoritesViewController.h */,
-				E903E85B25951FC500F754A2 /* FavoritesViewController.m */,
-				E911F8F127DD0BD2005111A5 /* BookmarksViewController.h */,
-				E911F8F227DD0BD2005111A5 /* BookmarksViewController.m */,
-				E969163425914E36005D5217 /* StreamsViewController.h */,
-				E969163525914E36005D5217 /* StreamsViewController.m */,
-				E93991AB27EB6C7B00D5F3A8 /* PrePlaybackViewController.h */,
-				E93991AC27EB6C7B00D5F3A8 /* PrePlaybackViewController.m */,
-				E931823A2591AA650003D686 /* SubtitlesViewController.h */,
-				E931823B2591AA650003D686 /* SubtitlesViewController.m */,
-				E969162C25914AF6005D5217 /* StreamingGroup.h */,
-				E969162D25914AF6005D5217 /* StreamingGroup.m */,
-				E969163025914B2A005D5217 /* StreamInfo.h */,
-				E969163125914B2A005D5217 /* StreamInfo.m */,
-				E903E83D25940AD100F754A2 /* OpenSubtitlesAdapter.h */,
-				E903E83E25940AD100F754A2 /* OpenSubtitlesAdapter.m */,
-				E903E8412594149E00F754A2 /* DownloadUploadManager.h */,
-				E903E8422594149E00F754A2 /* DownloadUploadManager.m */,
-				E903E84525941C5A00F754A2 /* M3U8Manager.h */,
-				E903E84625941C5A00F754A2 /* M3U8Manager.m */,
-				E903E8492594643C00F754A2 /* SearchResultsController.h */,
-				E903E84A2594643C00F754A2 /* SearchResultsController.m */,
-				E903E8562594FDFD00F754A2 /* CacheManager.h */,
-				E903E8572594FDFD00F754A2 /* CacheManager.m */,
-				E903E86625979D0200F754A2 /* EpisodeManager.h */,
-				E903E86725979D0200F754A2 /* EpisodeManager.m */,
-				E911F8F427DD0C71005111A5 /* BookmarkManager.h */,
-				E911F8F527DD0C71005111A5 /* BookmarkManager.m */,
-				E91D1248261FD452009F3DA1 /* ProgressView.h */,
-				E91D1247261FD452009F3DA1 /* ProgressView.m */,
+				E926AF092AA6518000CCAE81 /* View Controllers */,
+				E926AF082AA6517900CCAE81 /* Models */,
+				E926AF072AA6515400CCAE81 /* Helpers */,
+				E926AF0A2AA651A500CCAE81 /* Views */,
+				E926AF062AA6513200CCAE81 /* Core Data */,
 				E931817A259173840003D686 /* VLC */,
 				E969161125914098005D5217 /* Main.storyboard */,
 				E96916142591409A005D5217 /* Assets.xcassets */,
@@ -245,6 +317,8 @@
 		EDC6EF9F65FAAFC752B9DAC2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				80081968587998BAC0376F18 /* Pods-ZeroTV.debug.xcconfig */,
+				8EB4D3BAE24484C055DCAD94 /* Pods-ZeroTV.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -273,10 +347,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E969161E2591409A005D5217 /* Build configuration list for PBXNativeTarget "ZeroTV" */;
 			buildPhases = (
+				7ED48F83EFC1CACEC65156E1 /* [CP] Check Pods Manifest.lock */,
 				E969160425914098005D5217 /* Sources */,
 				E969160525914098005D5217 /* Frameworks */,
 				E969160625914098005D5217 /* Resources */,
 				E93BE9F926ACFA3B00C381AF /* Embed App Extensions */,
+				F0C9DDA98CA2854DE405DE5A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -346,6 +422,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7ED48F83EFC1CACEC65156E1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZeroTV-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0C9DDA98CA2854DE405DE5A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZeroTV/Pods-ZeroTV-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZeroTV/Pods-ZeroTV-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZeroTV/Pods-ZeroTV-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E93BEA4126AD0BA700C381AF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -371,6 +489,8 @@
 				E911F8F627DD0C71005111A5 /* BookmarkManager.m in Sources */,
 				E903E84B2594643C00F754A2 /* SearchResultsController.m in Sources */,
 				E903E8432594149E00F754A2 /* DownloadUploadManager.m in Sources */,
+				E926AF052AA650E400CCAE81 /* CoreDataManager.m in Sources */,
+				E926AF0D2AA6524600CCAE81 /* ZeroTV.xcdatamodeld in Sources */,
 				E903E84725941C5A00F754A2 /* M3U8Manager.m in Sources */,
 				E911F8F327DD0BD2005111A5 /* BookmarksViewController.m in Sources */,
 				E931823C2591AA650003D686 /* SubtitlesViewController.m in Sources */,
@@ -419,14 +539,14 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
 				INFOPLIST_FILE = Favorites/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.companyname.ZeroTV.Favorites;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTVs.Favorites;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -439,14 +559,14 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
 				INFOPLIST_FILE = Favorites/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.companyname.ZeroTV.Favorites;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTVs.Favorites;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -568,47 +688,45 @@
 		};
 		E969161F2591409A005D5217 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80081968587998BAC0376F18 /* Pods-ZeroTV.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
 				INFOPLIST_FILE = ZeroTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.companyname.ZeroTV;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTVs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
 		E96916202591409A005D5217 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8EB4D3BAE24484C055DCAD94 /* Pods-ZeroTV.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C3M494T2TQ;
 				INFOPLIST_FILE = ZeroTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.companyname.ZeroTV;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fivesigmastudio.ZeroTVs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
@@ -643,6 +761,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E926AF0B2AA6524600CCAE81 /* ZeroTV.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E926AF0C2AA6524600CCAE81 /* ZeroTV.xcdatamodel */,
+			);
+			currentVersion = E926AF0C2AA6524600CCAE81 /* ZeroTV.xcdatamodel */;
+			path = ZeroTV.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E969160025914098005D5217 /* Project object */;
 }

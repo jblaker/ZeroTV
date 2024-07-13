@@ -18,11 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSError *)cacheData:(NSData *)data filename:(NSString *)filename;
 
-+ (BOOL)cacheArray:(NSArray *)array filename:(NSString *)filename;
-
 + (NSData *)cachedDataNamed:(NSString *)name;
-
-+ (NSArray *)cachedArrayNamed:(NSString *)name;
 
 @end
 

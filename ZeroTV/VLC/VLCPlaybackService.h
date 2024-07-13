@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (VLCTime *)remainingTime;
 - (NSInteger)mediaDuration;
 
-- (void)playMediaList:(VLCMediaList *)mediaList hasSubs:(BOOL)hasSubs completion:(void (^ __nullable)(BOOL success, float playbackPosition))completion;
+- (void)playMedia:(VLCMedia *)media hasSubs:(BOOL)hasSubs completion:(void (^ __nullable)(BOOL success, float playbackPosition))completion;
 
 @property (nonatomic, weak) id<VLCPlaybackServiceDelegate> delegate;
 @property (nonatomic, strong, nullable) UIView *videoOutputView;
